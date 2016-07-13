@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html> 
+	<head> 
+		<title>Bone Noise 3D Drum</title>
+		<link rel="stylesheet" href="css/animations.css">
+		<link rel="stylesheet" media="all and (orientation:landscape)" href="css/landscape.css">
+		<link rel="stylesheet" media="all and (orientation:portrait)" href="css/portrait.css">
+	</head> 
+	<body>
+		<div id="loading">
+		  <img id="loading-image" src="images/Load.png" alt="Loading..."
+				onmousedown="rockButton()"
+				ontouchstart="rockButton()">
+		</div>
+		<div class="intro" id="intro-cont">
+			<div id="tet-intro"></div>
+			<div id="bn-intro"></div>
+		</div>
+		<!--
+		<a href="https://plus.google.com/115997774153211420553" rel="publisher">Google+</a>
+		-->
+		<div id='hud'>
+			<div class='hud' id='sound-switch'>
+				<img class='hud' id='mute-image' src="images/MusicIcon.png" alt="Sound Control"
+					 onmousedown="muteButton()"
+					 ontouchstart="muteButton()">
+			</div>
+			<div class='hud' id='music-switch'>
+				<img class='hud' id='playpause-image' src="images/PlayIcon.png" alt="Music Control"
+					 onmousedown="musicButton()"
+					 ontouchstart="musicButton()">
+			</div>
+			<div class='hud' id='lockCam-switch'>
+				<img class='hud' id='lockCam_Body-image' src="images/Candado.png" alt="Camera Control"
+					 onmousedown="lockCamButton()"
+					 ontouchstart="lockCamButton()">
+				<img class='hud' id='lockCam_U-image' src="images/Herradura.png" alt="Camera Control"
+					 onmousedown="lockCamButton()"
+					 ontouchstart="lockCamButton()">
+			</div>
+			<div class='hud' id='rock-switch'>
+				<img class='hud' id='rock-image' src="images/BoneRock.png" alt="Rock Mode Control"
+					 onmousedown="rockButton()"
+					 ontouchstart="rockButton()">
+			</div>
+			<div class='hud' id='sound-slider'>
+				<img class='volume' id ='vol_0' src='images/Volume0.png' alt="Volume" max-width="256" max-height="325">
+				<img class='volume' id ='vol_1' src='images/Volume1.png' alt="Volume" max-width="256" max-height="325">
+				<img class='volume' id ='vol_2' src='images/Volume2.png' alt="Volume" max-width="256" max-height="325">
+				<img class='volume' id ='vol_3' src='images/Volume3.png' alt="Volume" max-width="256" max-height="325">
+				<img class='volume' id ='vol_4' src='images/Volume4.png' alt="Volume" max-width="256" max-height="325">
+				<img class='volume' id ='vol_5' src='images/Volume5.png' alt="Volume" max-width="256" max-height="325">
+				<img class='volume' id ='vol_6' src='images/Volume6.png' alt="Volume" max-width="256" max-height="325">
+			</div>
+			<div id = 'talkingSkull' class=''>
+				<div class='hud' id ='jaw-sprite'>
+					<img id ='jaw-image' src='images/Mandibula.png' alt="Jaw">
+				</div>
+				<div class='hud' id ='skull-sprite'>
+					<img id ='skull-image' src='images/Craneo.png' alt="Skull" max-width="256" max-height="256">
+				</div>
+				<div class='hud floating' id ='message-sprite'>
+					<img id ='message-image' src="images/MessageHit_ES.png" alt='Hit the drum!'
+						onmousedown="swapLang()"
+						ontouchstart="swapLang()">
+				</div>
+			</div>
+			<a class='hud' id='tet-logo'>
+					
+					<img class='social' src='images/social_facebook.png' alt='Facebook'
+					onclick="openInNewTab('https://www.facebook.com/3ETGames')" 
+					ontouchstart="openInNewTab('https://www.facebook.com/3ETGames')">
+					<img class='social' src='images/social_google.png' alt='Google+'
+					onclick="openInNewTab('https://plus.google.com/115997774153211420553')" 
+					ontouchstart="openInNewTab('https://plus.google.com/115997774153211420553')">
+					<img class='social' src='images/social_tumblr.png' alt='Tumblr'
+					onclick="openInNewTab('http://game-dev.tumblr.com')" 
+					ontouchstart="openInNewTab('http://game-dev.tumblr.com')">
+
+					<img src='images/ThirdEyeIcon.png' alt='Third Eye Team'
+						 onmouseover= "this.src='images/ThirdEyeIconColor.png'"
+         				 onmouseout= "this.src='images/ThirdEyeIcon.png'"
+         				 onmousedown="toggleSocial()"
+						 ontouchstart="toggleSocial()">
+         	</a>
+		</div>
+    	
+		<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+		
+		<!-- jQuery and Velocity.js -->
+		<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script src="js/velocity.min.js"></script>
+		<script src="js/js.cookie.js"></script>
+		<!-- Basic Three.js and other libraries scripts -->
+		<script src="js/three.min.js"></script>
+		<script src="js/Detector.js"></script> 
+		<script src="js/OBJLoader.js"></script> 
+		<script src="js/OrbitControls.js"></script>
+		<script src="js/TrackballControls.js"></script>
+		<script src="js/Tween.js"></script>
+		<script src='js/THREEx.FullScreen.js'></script>
+		<!-- Custom Shaders -->
+		<script src="js/shaders/three_lambertoon_b.js"></script>
+		<script src="js/shaders/RGBShiftShader.js"></script>
+		<script src="js/shaders/SepiaShader.js"></script>
+		<script src="js/shaders/GrayScaleShader.js"></script>
+		<!-- Postprocesing and shader libraries -->
+		<script src="js/shaders/CopyShader.js"></script>
+		<script src="js/postprocessing/EffectComposer.js"></script>
+		<script src="js/postprocessing/RenderPass.js"></script>
+		<script src="js/postprocessing/MaskPass.js"></script>
+		<script src="js/postprocessing/ShaderPass.js"></script>
+		<script src="js/app.js"></script>
+		<!-- App script -->
+	</body> 
+</html>
