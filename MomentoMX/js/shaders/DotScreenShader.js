@@ -1,0 +1,115 @@
+/**
+ * @author alteredq / http://alteredqualia.com/
+ *
+ * Dot screen shader
+ * based on glfx.js sepia shader
+ * https://github.com/evanw/glfx.js
+ */
+
+THREE.DotScreenShader = {
+
+  uniforms: {
+
+    "tDiffuse": { value: null },
+    "tSize":    { value: new THREE.Vector2( 256, 256 ) },
+    "center":   { value: new THREE.Vector2( 0.5, 0.5 ) },
+    "angle":    { value: 1.57 },
+    "scale":    { value: 1.0 }
+
+  },
+
+  vertexShader: [
+
+    "varying vec2 vUv;",
+
+    "void main() {",
+
+    "vUv = uv;",
+    "gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );",
+
+    "}"
+
+  ].join( "\n" ),
+
+  fragmentShader: [
+
+    "#define SEED1 (1.705)",
+    "#define SEED2 (1.379)",
+    "#define DMUL 8.12235325",
+
+    "uniform sampler2D tDiffuse;",
+
+    // Las coordenadas vUv son relativas [0,1]
+    "varying vec2 vUv;",
+
+    "void main() {",
+    "vec4 texel = texture2D( tDiffuse, vUv );",
+    "float f = texel.r*0.3+ texel.g*0.6 + texel.b*0.1;",
+    "float d = 0.5;",
+    "mat3 mat = mat3(vec3(d), vec3(d,2.0,d), vec3(d));",
+    "float f1 = "
+    
+    "if (vUv.y < 0.1)",
+    "gl_FragColor = vec4(0.0,1.0,1.0,1.0);",
+    "else",
+    "gl_FragColor = vec4(texel.r*0.3 + texel.g*0.59 + texel.b*0.11);",
+    "}"
+    
+
+    /*
+    // simple x-y decorrelated noise seems enough
+    "#define stepnoise0(p, size) rnd( floor(p/size)*size ) ",
+    "#define rnd(U) fract(sin( 1e3*(U)*mat2(1,-7.131, 12.9898, 1.233) )* 43758.5453) ",
+    "#define s(x,y) dot( texture2D(tDiffuse, (vUv+vec2(x,y))/tSize ), vec4(.3,.6,.1,0) ) // luminance",
+
+
+    "float mask(vec2 p) {",
+      "#define SEED1 1.705",
+      "#define DMUL  8.12235325",
+      "p += ( stepnoise0(p, 5.5) - .5 ) *DMUL;",
+      "float f = fract( p.x*SEED1 + p.y/(SEED1+.15555) );",
+      "return f;",
+      "f *= 1.03;",
+      "return  (pow(f, 150.) + 1.3*f ) / 2.3;",
+    "}",     
+
+    "uniform vec2 center;",
+    "uniform float angle;",
+    "uniform float scale;",
+    "uniform vec2 tSize;",
+
+    "uniform sampler2D tDiffuse;",
+
+    "varying vec2 vUv;",
+
+    "float pattern() {",
+
+    "float s = sin( angle ), c = cos( angle );",
+
+    "vec2 tex = vUv * tSize - center;",
+    "vec2 point = vec2( c * tex.x - s * tex.y, s * tex.x + c * tex.y ) * scale;",
+
+    "return ( sin( point.x ) * sin( point.y ) ) * 4.0;",
+
+    "}",
+
+    "void main() {",
+
+    "float f = s(0,0);",
+
+    //"vec4 color = vec4(0.0);",
+
+    "vec4 color = texture2D( tDiffuse, vUv );",
+
+    //"float average = ( color.r + color.g + color.b ) / 3.0;",
+
+    //"gl_FragColor = vec4( vec3( average * 10.0 - 5.0 + pattern() ), color.a );",
+
+    "gl_FragColor = color + step(mask(vUv), f);",
+
+    "}"
+    */
+
+  ].join( "\n" )
+
+};
