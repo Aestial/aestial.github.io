@@ -47,6 +47,7 @@
 	<script src="js/shaders/CopyShader.js"></script>
 	<script src="js/shaders/FilmShader.js"></script>
 	<script src="js/shaders/FocusShader.js"></script>
+	<script src="js/shaders/VignetteShader.js"></script>
 
 	<script src="js/postprocessing/EffectComposer.js"></script>
 	<script src="js/postprocessing/MaskPass.js"></script>
@@ -143,10 +144,18 @@
 	     } );
 	     
 	     // Post procesamiento.
+
+	     var shaderVignette = THREE.VignetteShader;
 	     
 	     var renderModel = new THREE.RenderPass( scene, camera );
 	     var effectBloom = new THREE.BloomPass( 0.75 );
 	     var effectFilm = new THREE.FilmPass( 0.5, 0.5, 1448, false );
+	     var effectVignette = new THREE.ShaderPass( shaderVignette );
+
+	     effectVignette.uniforms[ "offset" ].value = 0.95;
+	     effectVignette.uniforms[ "darkness" ].value = 1.6;
+
+	     effectVignette.renderToScreen = true;
 
 	     effectFocus = new THREE.ShaderPass( THREE.FocusShader );
 
@@ -160,6 +169,7 @@
 	     composer.addPass( renderModel );
 	     //composer.addPass( effectBloom );
 	     //composer.addPass( effectFilm );
+	     composer.addPass( effectVignette );
 	     composer.addPass( effectFocus );
 
 	     //
@@ -197,7 +207,7 @@
 	 function createMesh( geometry, parent, scale, x, y, z, wire ) {
 
 	     //var color = (wire) ? 0xff0000 : 0x000000
-	     var color = (wire) ? 0xff0000 : 0x262626;
+	     var color = (wire) ? 0xff0000 : 0x262626
 		 
 	     var meshMat = new THREE.MeshBasicMaterial( {
 		 color: color,
