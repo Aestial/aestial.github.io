@@ -143,9 +143,11 @@
 	     var books = 50;
 	     var bookHeight = 35;
 
+	     /*
+	     
 	     aloader.load( "obj/BooksOutline.json", function( geometry ) {
 		 for ( var b = -books/2; b < books/2; b++) {
-		     createPointMesh( geometry, parent, 1.0,  0, b*bookHeight, 0,  0xffffff, 4, 2, 2, true );
+		     createPointMesh( geometry, parent, 1.0,  0, b*bookHeight, 0,  0xffffff, 4, 2, 2, false );
 		 }     
 	     } );
 
@@ -160,6 +162,25 @@
 		     createMesh( geometry, parent , 1.0, 0, b*bookHeight, 0, false );
 		 }     
 	     } );
+	     
+	     */
+
+	     aloader.load( "obj/BooksOutline.json", function( geometryOutline ) {
+		 aloader.load( "obj/BooksSheets.json", function( geometrySheets ) {
+		     aloader.load( "obj/BooksMask.json", function( geometryMask ) {
+			 for ( var b = -books/2; b < books/2; b++) {
+			     var yRot = Math.PI * ( Math.random() - 0.5 );
+			     createMesh( geometryMask, parent , 1.0, 0, b*bookHeight, 0, yRot, false );
+			     createPointMesh( geometrySheets, parent, 1.0,  0, b*bookHeight, 0, yRot, 0xa0a0a0, 1, 1, 1, false );
+			     createPointMesh( geometryOutline, parent, 1.0,  0, b*bookHeight, 0, yRot, 0xffffff, 4, 2, 2, false );
+			 }     
+		     } );  
+		 } );   
+	     } );
+
+	     
+
+	    
 	     
 	     // Post procesamiento.
 	     
@@ -202,7 +223,7 @@
 
 	 }
 	     
-	 function createMesh( geometry, parent, scale, x, y, z, wire ) {
+	 function createMesh( geometry, parent, scale, x, y, z, yRot, wire ) {
 
 	     //var color = (wire) ? 0xff0000 : 0x000000
 	     var color = (wire) ? 0xff0000 : 0x262626;
@@ -215,12 +236,13 @@
 
 	     mesh = new THREE.Mesh( geometry, meshMat );
 	     mesh.position.set( x, y, z );
+	     mesh.rotation.y = yRot;
 	     mesh.scale.set( scale, scale, scale );
 	     parent.add( mesh );
 
 	 }
 
-	 function createPointMesh( originalGeometry, scene, scale, x, y, z, color, pointSize, clones, dScale, dynamic ) {
+	 function createPointMesh( originalGeometry, scene, scale, x, y, z, yRot, color, pointSize, clones, dScale, dynamic ) {
 
 	     var i, j, c;
 
@@ -262,6 +284,8 @@
 	     mesh.position.x = x;
 	     mesh.position.y = y;
 	     mesh.position.z = z;
+	     
+	     mesh.rotation.y = yRot;
 
 	     parent.add( mesh );
 

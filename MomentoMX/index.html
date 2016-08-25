@@ -47,7 +47,6 @@
 	<script src="js/shaders/CopyShader.js"></script>
 	<script src="js/shaders/FilmShader.js"></script>
 	<script src="js/shaders/FocusShader.js"></script>
-	<script src="js/shaders/BokehShader2.js"></script>
 
 	<script src="js/postprocessing/EffectComposer.js"></script>
 	<script src="js/postprocessing/MaskPass.js"></script>
@@ -67,10 +66,7 @@
 
 	 var container;
 	 var camera, scene, renderer, mesh, directionalLight;
-	 
-	 var materialDepth;
 	 var controls;
-
 	 var parent, meshes = [], clonemeshes = [];
 
 	 var p;
@@ -78,13 +74,6 @@
 
 	 var composer, effectFocus;
 	 var clock = new THREE.Clock();
-	 var postprocessing = { enabled : true };3
-
-	 var shaderSettings = {
-	     rings: 3,
-	     samples: 4
-	 };
-	     
 
 	 init();
 	 animate();
@@ -96,23 +85,20 @@
 	     // Configuracion de escena y camara.
 
 	     scene = new THREE.Scene();
-	     scene.background = new THREE.Color( 0x262626 );
+	     scene.background = new THREE.Color( 0x000000 );
 	     //scene.fog = new THREE.FogExp2( 0x000104, 0.0000675 );
 
 	     camera = new THREE.PerspectiveCamera( 20, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 50000 );
-	     camera.position.set( 0, 500, 2500 );
+	     camera.position.set( 0, 500, 4000 );
 
 	     controls = new THREE.OrbitControls( camera );
 	     controls.addEventListener( 'change', render );
-	     controls.minDistance = 1000.0;
-	     controls.maxDistance = 5000.0;
-
-	     /*
+	     controls.minDistance = 3500.0;
+	     controls.maxDistance = 8000.0;
 	     controls.minPolarAngle = Math.PI/3;
 	     controls.maxPolarAngle = Math.PI/2;
 	     controls.minAzimuthAngle = -Math.PI/4;
 	     controls.maxAzimuthAngle = Math.PI/4;
-	     */
 	     
 	     camera.lookAt( scene.position );
 
@@ -134,31 +120,26 @@
 	     // Objeto padre. Contiene particulas y mesh de nucleo.
 
 	     parent = new THREE.Object3D();
-	     //parent.position.set(0, -200, 0);
-	     parent.position.set(0, 0, 0);
+	     parent.position.set(0, -200, 0);
 	     scene.add( parent );
 
 	     // Carga modelo.
+	     
+	     aloader.load( "obj/Suzanne.json", function( geometry ) {
 
-	     var books = 50;
-	     var bookHeight = 35;
-
-	     aloader.load( "obj/BooksOutline.json", function( geometry ) {
-		 for ( var b = -books/2; b < books/2; b++) {
-		     createPointMesh( geometry, parent, 1.0,  0, b*bookHeight, 0,  0xffffff, 4, 2, 2, true );
-		 }     
-	     } );
-
-	     aloader.load( "obj/BooksSheets.json", function( geometry ) {
-		 for ( var b = -books/2; b < books/2; b++) {
-		     createPointMesh( geometry, parent, 1.0,  0, b*bookHeight, 0,  0xa0a0a0, 1, 1, 1, false );
-		 }     
-	     } );
-
-	     aloader.load( "obj/BooksMask.json", function( geometry ) {
-		 for ( var b = -books/2; b < books/2; b++) {
-		     createMesh( geometry, parent , 1.0, 0, b*bookHeight, 0, false );
-		 }     
+		 var d = 650;
+		 
+		 createObject ( geometry, parent, 1.0, 0, 0, 0, 0xffffff, true );
+		 createObject ( geometry, parent, 0.8, -d, 0, -d, 0xffffff, false );
+		 createObject ( geometry, parent, 1.2, d, 0, -d, 0xffffff, false );
+		 createObject ( geometry, parent, 1.0, -d, 0, d+300, 0xffffff, false );
+		 createObject ( geometry, parent, 1.7, d*2, 0, d*2, 0xffffff, false );
+		 
+		 /*
+		 createPointMesh( geometry, parent, 1.0,  0, 0, 0, 0xffffff, true );
+		 createMesh( geometry, parent , 0.97, 0, 0, 0, false );
+		 */
+		 
 	     } );
 	     
 	     // Post procesamiento.
@@ -201,12 +182,22 @@
 	     effectFocus.uniforms[ "screenHeight" ].value = window.innerHeight;
 
 	 }
+
+	 // Crea objeto en escena a partir de mesh.
+
+	 function createObject ( geometry, parent, scale, x, y, z, color, dynamic ) {
+
+	     //createLineMesh( geometry, parent, scale, x, y, z ); 
+	     createPointMesh( geometry, parent, 1.0 * scale,  x, y, z, color, dynamic );
+	     createMesh( geometry, parent , 0.97 * scale, x, y, z, false );
 	     
+	 }
+	     
+
 	 function createMesh( geometry, parent, scale, x, y, z, wire ) {
 
-	     //var color = (wire) ? 0xff0000 : 0x000000
-	     var color = (wire) ? 0xff0000 : 0x262626;
-		 
+	     var color = (wire) ? 0xff0000 : 0x000000
+
 	     var meshMat = new THREE.MeshBasicMaterial( {
 		 color: color,
 		 wireframe: wire,
@@ -220,12 +211,32 @@
 
 	 }
 
-	 function createPointMesh( originalGeometry, scene, scale, x, y, z, color, pointSize, clones, dScale, dynamic ) {
+	 function createLineMesh( geometry, parent, scale, x, y, z ) {
+
+	     // *** ERROR ***
+	     geometry.computeLineDistances();
+	     
+	     var lineMat = new THREE.LineDashedMaterial( {
+		 color : 0xffffff,
+		 linewidth: 1,
+		 scale: 0.1,
+		 dashSize: 0.1,
+		 gapSize: 1
+	     } );
+
+	     mesh = new THREE.LineSegments( geometry, lineMat );
+	     mesh.position.set( x, y, z );
+	     mesh.scale.set( scale, scale, scale );
+	     parent.add(mesh);
+
+	 }	 
+
+	 function createPointMesh( originalGeometry, scene, scale, x, y, z, color, dynamic ) {
 
 	     var i, j, c;
 
-	     var vertexClones = clones;
-	     var distScale = dScale;
+	     var vertexClones = 25;
+	     var distScale = 100;
 
 	     var vertices = originalGeometry.vertices;
 	     var vl = vertices.length;
@@ -250,13 +261,19 @@
 		     newP.z += distScale * (Math.random() -0.5);
 		     geometry.vertices[ i + j*vl ] = newP;
 		     
+		     /*
+		     geometry.vertices[ i + j*vl ] = p.clone();
+		     geometry.vertices[ i + j*vl ].x += distScale * Math.random();
+		     geometry.vertices[ i + j*vl ].y += distScale * Math.random();
+		     geometry.vertices[ i + j*vl ].z += distScale * Math.random();
+		     */
+		     
 		     vertices_tmp[ i + j*vl ] = [ newP.x, newP.y, newP.z, 0, 0 ];
-
 		 }		 
 
 	     }
 
-	     mesh = new THREE.Points( geometry, new THREE.PointsMaterial( { size: pointSize, sizeAttenuation: true, color: color } ) );
+	     mesh = new THREE.Points( geometry, new THREE.PointsMaterial( { size: 15, sizeAttenuation: true, color: color } ) );
 	     mesh.scale.x = mesh.scale.y = mesh.scale.z = scale;
 
 	     mesh.position.x = x;
