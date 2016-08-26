@@ -322,6 +322,7 @@
 
 	     var livingSpeed = 2.0;
 	     var slow = 0.08;
+	     var slow = 0.2;
 	 
 	     delta = 10 * clock.getDelta();
 	     delta = delta < 2 ? delta : 2;
@@ -427,9 +428,9 @@
 			 // Si hay una distancia considerable, mover el punto
 			 
 			 if ( d > 1 ) {
-			     p.x += - ( p.x - vt[ 0 ] ) / d * data.speed * delta * ( 0.85 - Math.random() );
-			     p.y += - ( p.y - vt[ 1 ] ) / d * data.speed * delta * ( 1 + Math.random() );
-			     p.z += - ( p.z - vt[ 2 ] ) / d * data.speed * delta * ( 0.85 - Math.random() );
+			     p.x += - ( p.x - vt[ 0 ] ) / d * data.speed * delta;
+			     p.y += - ( p.y - vt[ 1 ] ) / d * data.speed * delta;
+			     p.z += - ( p.z - vt[ 2 ] ) / d * data.speed * delta;
 			 }
 			 
 			 else {
