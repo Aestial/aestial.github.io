@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	<title>WebGL Dynamic Particles + Postprocessing - Momento MX</title>
+	<title> Demo - Momento MX</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<style>
@@ -33,9 +33,6 @@
     <body>
 
 	<div id="container"></div>
-	<div id="info">
-	    WebGL Dynamic Particles + Postprocessing - Momento MX
-	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r79/three.min.js"></script>
 
@@ -100,7 +97,7 @@
 	     //scene.fog = new THREE.FogExp2( 0x000104, 0.0000675 );
 
 	     camera = new THREE.PerspectiveCamera( 20, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 50000 );
-	     camera.position.set( 0, 500, 2500 );
+	     camera.position.set( 0, 500, 1500 );
 
 	     controls = new THREE.OrbitControls( camera );
 	     controls.addEventListener( 'change', render );
@@ -140,7 +137,7 @@
 
 	     // Carga modelo.
 
-	     var books = 50;
+	     var books = 1;
 	     var bookHeight = 35;
 
 	     /*
@@ -169,10 +166,11 @@
 		 aloader.load( "obj/BooksSheets.json", function( geometrySheets ) {
 		     aloader.load( "obj/BooksMask.json", function( geometryMask ) {
 			 for ( var b = -books/2; b < books/2; b++) {
-			     var yRot = Math.PI * ( Math.random() - 0.5 );
+			     //var yRot = Math.PI * ( Math.random() - 0.5 );
+			     var yRot = -Math.PI/2.0;
 			     createMesh( geometryMask, parent , 1.0, 0, b*bookHeight, 0, yRot, false );
-			     createPointMesh( geometrySheets, parent, 1.0,  0, b*bookHeight, 0, yRot, 0xa0a0a0, 1, 1, 1, false );
-			     createPointMesh( geometryOutline, parent, 1.0,  0, b*bookHeight, 0, yRot, 0xffffff, 4, 2, 2, false );
+			     createPointMesh( geometrySheets, parent, 1.0,  0, b*bookHeight, 0, yRot, 0xa0a0a0, 1, 1, 1, true );
+			     createPointMesh( geometryOutline, parent, 1.0,  0, b*bookHeight, 0, yRot, 0xffffff, 4, 2, 2, true );
 			 }     
 		     } );  
 		 } );   
@@ -291,10 +289,19 @@
 
 	     vl *= vertexClones;
 
+	     /*	     
 	     meshes.push( {
 		 mesh: mesh, vertices: geometry.vertices, vertices_tmp: vertices_tmp, vl: vl,
 		 down: 0, up: 0, direction: 0, speed: 35, delay: Math.floor( 200 + 200 * Math.random() ),
 		 started: false, start: Math.floor( 100 + 200 * Math.random() ),
+		 dynamic: dynamic
+	     } );
+	     */
+	     
+	     meshes.push( {
+		 mesh: mesh, vertices: geometry.vertices, vertices_tmp: vertices_tmp, vl: vl,
+		 down: 0, up: 0, direction: 0, speed: 35, delay: 200,
+		 started: false, start: 300,
 		 dynamic: dynamic
 	     } );
 
@@ -312,14 +319,19 @@
 	 }
 
 	 function render () {
+
+	     var livingSpeed = 2.0;
+	     var slow = 0.08;
 	 
 	     delta = 10 * clock.getDelta();
 	     delta = delta < 2 ? delta : 2;
 	     //parent.rotation.y += -0.02 * delta;
 
-	     var dest = new THREE.Vector3(300, -50, 200);
+	     var dest = new THREE.Vector3(0, 50, 0);
 
 	     for( j = 0, jl = meshes.length; j < jl; j ++ ) {
+
+		 //dest -= meshes[ j ].position;
 
 		 data = meshes[ j ];
 		 mesh = data.mesh;
@@ -327,7 +339,7 @@
 		 vertices_tmp = data.vertices_tmp;
 		 vl = data.vl;
 
-		 if ( ! data.dynamic ) continue;
+		 //if ( ! data.dynamic )  continue;
 
 		 if ( data.start > 0 ) {
 		     data.start -= 1;
@@ -342,6 +354,23 @@
 
 		     p = vertices[ i ];
 		     vt = vertices_tmp[ i ];
+
+		     p.x += ( 0.5 - Math.random() ) * delta * livingSpeed;
+		     p.y += ( 0.5 - Math.random() ) * delta * livingSpeed;
+		     p.z += ( 0.5 - Math.random() ) * delta * livingSpeed;
+
+		     d = Math.abs( p.x - vt[ 0 ] ) + Math.abs( p.y - vt[ 1 ] ) + Math.abs( p.z - vt[ 2 ] );
+
+		     // Si hay una distancia considerable, mover el punto a su lugar de origen.
+		     
+		     if ( d > 5 && data.direction == 0 ) {
+			 p.x =  vt[ 0 ];
+			 p.y =  vt[ 1 ];
+			 p.z =  vt[ 2 ];
+		     }
+		     
+
+		     if ( ! data.dynamic )  continue
 
 		     // falling down
 		  
@@ -359,10 +388,15 @@
 			 }
 			 */
 			 
-			 if ( d > 80 ) {
-			     p.x += - ( p.x - dest.x ) / d * data.speed * delta * ( 0.85 - Math.random() );
-			     p.y += - ( p.y - dest.y ) / d * data.speed * delta * ( 1 + Math.random() );
+			 if ( d > 20 ) {
+			     /*
+			     p.x += - ( p.x - dest.x ) / d * data.speed * delta * ( 1 - Math.random() );
+			     p.y += - ( p.y - dest.y ) / d * data.speed * delta * ( 0.85 - Math.random() );
 			     p.z += - ( p.z - dest.z ) / d * data.speed * delta * ( 0.85 - Math.random() );
+			     */
+			     p.x += - ( p.x - dest.x ) / d * data.speed * delta * slow;
+			     p.y += - ( p.y - dest.y ) / d * data.speed * delta * slow;
+			     p.z += - ( p.z - dest.z ) / d * data.speed * delta * slow;
 			 }
 			 /*
 			 if ( p.y > 0 ) {
@@ -411,12 +445,14 @@
 
 		 if ( data.down === vl ) {
 
+		     //data.direction = 0;
+
 		     if ( data.delay === 0 ) {
 
 			 data.direction = 1;
 			 data.speed = 10;
 			 data.down = 0;
-			 data.delay = 320;
+			 data.delay = 800;
 
 			 for ( i = 0; i < vl; i ++ ) {
 
@@ -437,12 +473,14 @@
 
 		 if ( data.up === vl ) {
 
+		     data.direction = 0;
+
 		     if ( data.delay === 0 ) {
 
 			 data.direction = -1;
 			 data.speed = 35;
 			 data.up = 0;
-			 data.delay = 120;
+			 data.delay = 100;
 
 			 for ( i = 0; i < vl; i ++ ) {
 
