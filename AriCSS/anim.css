@@ -1,0 +1,61 @@
+/* Center the demo */
+html, body { height: 100%; }
+
+body {
+    background-color: lightblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 0 0;
+    overflow: hidden;
+}
+
+div {
+    width: 100%;
+    height: 100%;
+    background: #fafafa;
+    -webkit-clip-path: polygon(25% 0%, 75% 0%, 50% 100%, 0% 100%);
+    clip-path: polygon(25% 0%, 75% 0%, 50% 100%, 0% 100%);
+    transition: 0.4s;
+}
+
+#goku {
+    background: #009595;
+}
+
+#piccolo {
+    background: #0090ff;
+}
+
+#vegeta {
+    background: #984595;
+}
+
+img {
+    width: auto;
+    height: 100%;
+    transition: 0.4s;
+} 
+    
+div:hover {
+    -webkit-clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+    clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+    //animation: move 1s infinite
+}
+
+div:hover > img {
+    width: auto;
+    height: 150%;
+}   
+
+@keyframes move {
+    0% {
+	-webkit-clip-path: polygon(25% 0%, 75% 0%, 50% 100%, 0% 100%);
+	clip-path: polygon(25% 0%, 75% 0%, 50% 100%, 0% 100%);
+    }
+    100% {
+	-webkit-clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+	clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+    }
+    
+}
