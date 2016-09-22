@@ -8,8 +8,13 @@
  */
 
 @font-face {
-    font-family: samsungRegular;
-    src: url(webfonts/SamsungSharpSans-Regular.woff);
+    font-family: samsungBold;
+    src: url(webfonts/SamsungSharpSans-Bold.otf);
+}
+
+@font-face {
+    font-family: samsungInterFace;
+    src: url(webfonts/SamsungInterFace-Regular.woff);
 }
 
 html {
@@ -23,7 +28,7 @@ body {
     background: #f5f5f5; /* DO set a background color! */
     min-height: 100%;
     cursor: pointer;
-    font-family: samsungRegular;
+    font-family: samsungBold;
     font-size: 100%;
 }
 
@@ -35,7 +40,7 @@ body {
     bottom: 0;
     background: #f5f5f5;	
     background: url('hdr-on.jpg') 0 0 no-repeat;
-    background-size: 55%;
+    background-size: 100%;
     background-position: center bottom;
     //background: linear-gradient(to bottom, #ffdb0f, #fff4a4);
     //background: -moz-linear-gradient(to bottom, #ffdb0f, #fff4a4);
@@ -65,12 +70,12 @@ body {
 
 .logo {
     position: absolute;
-    top: 0%;
-    right: 5%;
-    max-width: 180px;
-    min-width: 100px;
-    width: 15%;
-    height: 100px;
+    top: 2%;
+    right: 2%;
+    max-width: 170px;
+    min-width: 120px;
+    width: 18%;
+    height: 40px;
     margin: 0;
     padding: 0;
     z-index: 200;
@@ -84,12 +89,28 @@ body {
 }
 
 p {
-    color: DarkSlateGray;
-    font-size: 1.2em;
+    color: #000;
+    font-size: 3.5em;
     position: absolute;
     bottom: 10%;
     //left: 10%;
-    right: 7%;
+    right: 3%;
+    margin: 0;
+    padding: 0;
+    z-index: 100;
+    //transform: translate3d(-50%, -50%, 0);
+    //-moz-transform: translate3d(-50%, -50%, 0);
+    //-webkit-transform: translate3d(-50%, -50%, 0);
+}
+
+.tagline {
+    font-family: samsungInterFace;
+    color: #000;
+    font-size: 2.2em;
+    position: absolute;
+    bottom: 8%;
+    //left: 10%;
+    right: 3%;
     margin: 0;
     padding: 0;
     z-index: 100;
