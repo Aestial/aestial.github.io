@@ -13,6 +13,7 @@ body {
 div {
     width: 100%;
     height: 100%;
+    position: fixed;
     background: #fafafa;
     -webkit-clip-path: polygon(25% 0%, 75% 0%, 50% 100%, 0% 100%);
     clip-path: polygon(25% 0%, 75% 0%, 50% 100%, 0% 100%);
@@ -21,14 +22,17 @@ div {
 
 #goku {
     background: #009595;
+    left: 0%;
 }
 
 #piccolo {
     background: #0090ff;
+    left: 25%;
 }
 
 #vegeta {
     background: #984595;
+    left: 50%;
 }
 
 img {

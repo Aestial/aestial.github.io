@@ -1,0 +1,42 @@
+<!doctype html public>
+<html lang="en_US">
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="assets/css/app.css">
+	<script type="text/javascript">
+
+	// ### HERE'S WHERE YOU ENTER YOUR BACKGROUNDS ###
+	// Enter each background filename as an item in the backgrounds array, it can be an 
+	// absolute or relative path. For example: var backgrounds = ['./advert1/index.html', './advert2/index.html'];
+	var backgrounds = [
+		'walls/sheep/index.html',
+		'walls/samsung/index.html',
+	];
+
+	// Note: This test environment is only intented for HTML5 Wallpaper Testing, 
+	// it will not load Flash Wallpapers or photos.
+
+	// ### HERE'S WHERE YOU ENTER THE LANGUAGE ###
+	// If your wallpaper tries to detect the WeTransfer UI language it will get the specified value,
+	// you can change it for testing using an ISO 639-1 code or leave it as default.
+
+	// Supported languages: https://www.wetransfer.com/language
+	var language = 'en';
+	</script>
+</head>
+<body>
+
+
+	<!-- this element represents the WeTransfer Application -->
+	<div id="app"></div>
+
+
+	<!-- this iframe will contain your wallpaper, no need to change the source manually -->
+	<iframe id="wallpaper" sandbox="allow-same-origin allow-scripts allow-popups" seamless="seamless" scrolling="no" border="0" frameborder="0" src="about:blank"></iframe>
+
+
+	<!-- this loads the WeTransfer Simulator -->
+	<script type="text/javascript" src="assets/js/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+/*
+ * NOTE:
+ *
+ * This example is not meant for production use and should not be used
+ * as the base of your project. Please keep in mind best practices and 
+ * cross-browser/platform compability and best practices concerning 
+ * number of requests, bandwidth, animation performance, etc.
+ */
+
+html { height: 100%; }
+
+body {
+  overflow: hidden;
+  min-height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+
+#stage {
+  background: url(background.jpg) 0 0 no-repeat;
+  width: 1680px;
+  height: 1050px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+#sheep1 {
+  width: 156px;
+  height: 164px;
+  display: block;
+  background: url(sheep_left.png) 0 0 no-repeat;
+  position: absolute;
+  left: 315px;
+  top: 540px;
+  animation: sheep1 .2s infinite alternate;
+  -ms-animation: sheep1 .2s infinite alternate;
+  -moz-animation: sheep1 .2s infinite alternate;
+  -webkit-animation: sheep1 .2s infinite alternate;
+}
+
+#ground {
+  width: 96px;
+  height: 75px;
+  display: block;
+  background: url(ground.png) 0 0 no-repeat;
+  position: absolute;
+  left: 340px;
+  top: 690px;
+}
+
+#sheep2 {
+  width: 165px;
+  height: 154px;
+  display: block;
+  position: absolute;
+  background: url(sheep_right.png) 0 0 no-repeat;
+  top: 400px;
+  left: 1150px;
+  animation: sheep1 .2s infinite alternate;
+  -ms-animation: sheep1 .2s infinite alternate;
+  -moz-animation: sheep1 .2s infinite alternate;
+  -webkit-animation: sheep1 .2s infinite alternate;
+}
+
+
+@-webkit-keyframes sheep1 {
+  0% { -webkit-transform: translateY(15px); }
+  100% { -webkit-transform: translateY(-5px); }
+}
+
+@keyframes sheep1 {
+  0% { transform: translateY(15px); }
+  100% { transform: translateY(-5px); }
+}
+
+@-moz-keyframes sheep1 {
+  0% { -moz-transform: translateY(15px); }
+  100% { -moz-transform: translateY(-5px); }
+}
+
+@-ms-keyframes sheep1 {
+  0% { -ms-transform: translateY(15px); }
+  100% { -ms-transform: translateY(-5px); }
+}
