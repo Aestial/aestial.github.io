@@ -69,6 +69,10 @@ var Wallpaper = (function(){
 		wmode: 'transparent',
 		html5: 1,
 		iv_load_policy: 3,
+		start: 20,
+		end: 40,
+		loop: 1
+		playlist: "hBmnOyhlE_c",
 	    },
 	    events: {
 		'onStateChange': window['onPlayerStateChange']
