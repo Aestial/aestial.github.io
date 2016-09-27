@@ -1,231 +1,533 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	<title>Simple Boid</title>
+	<title> Demo - Momento MX</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<style>
 	 body {
-	     color: #808080;
+	     color: #fff;
 	     font-family:Monospace;
 	     font-size:13px;
 	     text-align:center;
-	     background-color: #000000;
+	     font-weight: bold;
+
+	     background-color: #000;
 	     margin: 0px;
 	     overflow: hidden;
 	 }
 
-	 div#container {
-	     -ms-transform: translate(0, 30px);
-	     -webkit-transform: translate(0, 30px);
-	     transform: translate(0, 30px);
-	 }
 	 #info {
+	     color:#fff;
 	     position: absolute;
 	     top: 0px; width: 100%;
 	     padding: 5px;
+	 }
+
+	 a {
+	     color: red;
 	 }
 	</style>
     </head>
     <body>
 
 	<div id="container"></div>
-	<div id="info">Simple Boid - MomentoMX</div>
 
-	<script src="build/three.js"></script>
-	<script src="js/libs/stats.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r79/three.min.js"></script>
+	<script src="js/Detector.js"></script>
 	<script src="js/controls/OrbitControls.js"></script>
 	<script src="js/loaders/BinaryLoader.js"></script>
+	<script src="js/libs/stats.min.js"></script>
+	<script src='js/libs/dat.gui.min.js'></script>
 
-	<script src="obj/Triangle.js"></script>
-	<script src="js/Boid.js"></script>
-	<script src="js/Path.js"></script>
+	<script src="js/shaders/ConvolutionShader.js"></script>
+	<script src="js/shaders/CopyShader.js"></script>
+	<script src="js/shaders/FilmShader.js"></script>
+	<script src="js/shaders/FocusShader.js"></script>
+	<script src="js/shaders/BokehShader2.js"></script>
+
+	<script src="js/postprocessing/EffectComposer.js"></script>
+	<script src="js/postprocessing/MaskPass.js"></script>
+	<script src="js/postprocessing/RenderPass.js"></script>
+	<script src="js/postprocessing/BloomPass.js"></script>
+	<script src="js/postprocessing/ShaderPass.js"></script>
+	<script src="js/postprocessing/FilmPass.js"></script>
+
+	
+
 	<script>
 
-	 var SCREEN_WIDTH = window.innerWidth,
-	     SCREEN_HEIGHT = window.innerHeight,
-	     SCREEN_WIDTH_HALF = SCREEN_WIDTH  / 2,
-	     SCREEN_HEIGHT_HALF = SCREEN_HEIGHT / 2;
+	 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-	 var camera, scene, renderer, controls, mesh,
-	     particles, particle;
+	 var SCREEN_HEIGHT = window.innerHeight;
+	 var SCREEN_WIDTH = window.innerWidth;
 
-	 var boid, boids, path, modelIndex;
+	 var container, stats;
+	 var camera, scene, renderer, mesh, directionalLight;
+	 
+	 var materialDepth;
+	 var controls;
 
-	 var pathNodes = [
-	     { x:500, y:0, z:-850 },
-	     { x:-500, y:0, z:-600 },
-	     { x:300, y:0, z:-300 },
-	     { x:50, y:0, z:0 },
-	     { x:-200, y:0, z:300 },
-	     { x:350, y:0, z:600 },
-	     { x:-400, y:0, z:850 }
-	 ];
+	 var parent, meshes = [], clonemeshes = [];
+	 var cameraObj, chairObj;
+	 
+	 var p;
+	 var aloader, bloader;
 
-	 var stats;
+	 var composer, effectFocus;
+	 var clock = new THREE.Clock();
+	 var postprocessing = { enabled : true };3
+
+	 var shaderSettings = {
+	     rings: 3,
+	     samples: 4
+	 };
+	 
 
 	 init();
 	 animate();
 
 	 function init() {
 
-	     camera = new THREE.PerspectiveCamera( 75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000 );
-	     camera.position.set(500,200,400);
+	     container = document.getElementById( 'container' );
+
+	     // Configuracion de escena y camara.
+
+	     scene = new THREE.Scene();
+	     scene.background = new THREE.Color( 0x262626 );
+	     //scene.fog = new THREE.FogExp2( 0x000104, 0.0000675 );
+
+	     camera = new THREE.PerspectiveCamera( 20, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 50000 );
+	     camera.position.set( 0, 500, 1500 );
+	     camera.lookAt( scene.position );
 	     
 	     controls = new THREE.OrbitControls( camera );
 	     controls.addEventListener( 'change', render );
-	     controls.minDistance = 500.0;
-	     controls.maxDistance = 3000.0;
+	     controls.minDistance = 1000.0;
+	     controls.maxDistance = 5000.0;
 	     controls.enableDamping = true;
 	     controls.dampingFactor = 0.2;
+	     
 	     /*
 	     controls.minPolarAngle = Math.PI/3;
 	     controls.maxPolarAngle = Math.PI/2;
-	     controls.minAzimuthAngle = Math.PI;
-	     controls.maxAzimuthAngle = Math.PI;
+	     controls.minAzimuthAngle = -Math.PI/4;
+	     controls.maxAzimuthAngle = Math.PI/4;
 	     */
-	     scene = new THREE.Scene();
-	     
-	     path = new Path();
-	     for ( var i = 0; i < pathNodes.length; i++ ) {
-		 var vec = pathNodes[i];
-		 var node = new THREE.Vector3(vec.x, vec.y, vec.z);
-		 path.addNode (node);
-	     }
 
-	     var source = { x: 200, y:0, z:-1000 };
-	     modelIndex = 4;
-	     particles = [];
-	     boids = [];
-	     for ( var i = 0; i < 1024; i ++ ) {
-		 boid = boids[ i ] = new Boid();
-		 //boid.position.x = Math.random() * 1000 + source.x;
-		 //boid.position.y = Math.random() * 1000 + source.y;
-		 boid.position.x = source.x;
-		 boid.position.y = source.y;
-		 boid.position.z = -Math.random() * 2000 + source.z;
-		 boid.velocity.x = Math.random() * 2 - 1;
-		 boid.velocity.y = Math.random() * 2 - 1;
-		 boid.velocity.z = Math.random() * 2 - 1;
-		 //boid.setAvoidWalls( true );
-		 boid.setIndex(i);
-		 boid.setSource(source.x, source.y, source.z);
-		 boid.setModelIndex(modelIndex);
-		 //boid.setWorldSize( 250, 250, 200 );
-		 boid.setPath(path);
-		 
-		 var meshMat = new THREE.PointsMaterial( {
-		     size: 3,
-		     sizeAttenuation: true,
-		     color: 0xffffff
-		 } );
-		 
-		 particle = particles[ i ] = new THREE.Points( new Triangle(), meshMat );
-		 particle.scale.set(1,1,1);
-		 scene.add( particle );
-	     }
+	     // GUI Control
+	     var camController = {
+		 fieldOfView: 45
+	     };
 
-	     var cloader = new THREE.JSONLoader();
-	     cloader.load( "obj/Suzanne.json", function ( geometry ) {
-		 console.log(geometry);
-		 var wired = false;
-		 var color = wired ? 0x505050 : 0x000000;
-		 var scale = 1;
-		 var meshMat = new THREE.MeshBasicMaterial( {
-		     color: color,
-		     wireframe: wired
-		 } );
-		 mesh = new THREE.Mesh( geometry, meshMat );
-		 scene.add(mesh);
-		 for ( var i = 0; i < geometry.vertices.length; i++ ) {
-		     boids[i].setMeshGoal(geometry.vertices[i].multiplyScalar(scale));
-		     //path.addNode(geometry.vertices[i].multiplyScalar(scale));
-		 }
-		 path.DEBUG_ShowNodes();
-	     } );
+	     var camConfig = function ( ) {
+		 camera.fov = camController.fieldOfView;
+		 camera.updateProjectionMatrix();
+	     };	 
 	     
-   	     renderer = new THREE.WebGLRenderer();
-	     renderer.setClearColor( 0x000000 );
+	     var gui = new dat.GUI();
+	     gui.add( camController, "fieldOfView", 5, 80).onChange( camConfig );
+
+	     camConfig();
+
+	     // Medidor de FPS.
+	     stats = new Stats();
+	     container.appendChild( stats.dom );
+
+	     // Cargadores.
+
+	     aloader = new THREE.JSONLoader();
+	     bloader = new THREE.BinaryLoader();
+	     cloader = new THREE.ObjectLoader();
+	     
+	     // Configuracion del renderer.
+
+	     renderer = new THREE.WebGLRenderer( { antialias: false } );
+	     renderer.setClearColor( scene.background );
 	     renderer.setPixelRatio( window.devicePixelRatio );
 	     renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+	     renderer.autoClear = false;
+	     renderer.sortObjects = false;
+	     container.appendChild( renderer.domElement );
 
-	     document.addEventListener( 'mousemove', onDocumentMouseMove, false );
-	     document.body.appendChild( renderer.domElement );
+	     // Objeto padre. Contiene particulas y mesh de nucleo.
 
-	     stats = new Stats();
-	     document.getElementById( 'container' ).appendChild(stats.dom);
+	     parent = new THREE.Object3D();
+	     parent.rotation.set(-Math.PI/2, 0, 0);
+	     parent.position.set(0, -80, 0);
+	     scene.add( parent );
+
+	     // Carga modelo.
+
+	     var books = 1;
+	     var bookHeight = 35;
+
+	     cloader.load( "obj/Camera.json", function ( loadedObj ) {
+		 console.log(loadedObj);
+		 cameraObj = new THREE.Object3D();
+		 //var surface = loadedObj.getObjectByName("Surface");
+		 var outline = loadedObj.getObjectByName("Outline");
+		 var mask = loadedObj.getObjectByName("Mask");
+		 //console.log(surface);
+		 console.log(outline);
+		 console.log(mask);
+		 createMesh( mask.geometry, cameraObj, 0.7, 0, 0, 0, 0, false );
+		 //createPointMesh( surface.geometry, cameraObj, 1.0,  0, 0, 0, 0, 0xa0a0a0, 2, 12, 23, true );
+		 createPointMesh( outline.geometry, cameraObj, 0.7,  0, 0, 0, 0, 0xffffff, 5, 6, 9, false );
+		 //cameraObj.position.set(0, 0, -100);
+		 parent.add(cameraObj);
+	     } );
+	     
+	     cloader.load( "obj/Chair.json", function ( loadedObj ) {
+5		 console.log(loadedObj);
+		 chairObj = new THREE.Object3D();
+		 //chairObj.position.set(-300, 0, 0);
+		 var yRot = -Math.PI/2.0;
+		 var surface = loadedObj.getObjectByName("Surface");
+		 var outline = loadedObj.getObjectByName("Outline");
+		 var mask = loadedObj.getObjectByName("Mask");
+		 console.log(surface);
+		 console.log(outline);
+		 console.log(mask);
+		 var pos = new THREE.Vector3(500, 700, 0);
+		 createMesh( mask.geometry, chairObj, 1.0, pos.x, pos.y, pos.z, 0, false );
+		 createPointMesh( surface.geometry, chairObj, 1.0, pos.x, pos.y, pos.z, 0, 0xa0a0a0, 2, 12, 23, true );
+		 createPointMesh( outline.geometry, chairObj, 1.0, pos.x, pos.y, pos.z, 0, 0xffffff, 5, 6, 9, true );
+		 //chairObj.position.set(-300, 0, 0);
+		 parent.add(chairObj);
+	     } );
+
+	     // Post procesamiento.
+	     
+	     var renderModel = new THREE.RenderPass( scene, camera );
+	     var effectBloom = new THREE.BloomPass( 0.75 );
+	     var effectFilm = new THREE.FilmPass( 0.5, 0.5, 1448, false );
+
+	     effectFocus = new THREE.ShaderPass( THREE.FocusShader );
+
+	     effectFocus.uniforms[ "screenWidth" ].value = window.innerWidth;
+	     effectFocus.uniforms[ "screenHeight" ].value = window.innerHeight;
+
+	     effectFocus.renderToScreen = true;
+
+	     composer = new THREE.EffectComposer( renderer );
+
+	     composer.addPass( renderModel );
+	     //composer.addPass( effectBloom );
+	     //composer.addPass( effectFilm );
+	     composer.addPass( effectFocus );
 
 	     //
-
 	     window.addEventListener( 'resize', onWindowResize, false );
-
-	 }
-
-	 function onWindowResize() {
-
-	     camera.aspect = window.innerWidth / window.innerHeight;
-	     camera.updateProjectionMatrix();
-
-	     renderer.setSize( window.innerWidth, window.innerHeight );
-
-	 }
-
-	 function onDocumentMouseMove( event ) {
-
-	     var vector = new THREE.Vector3( event.clientX - SCREEN_WIDTH_HALF, - event.clientY + SCREEN_HEIGHT_HALF, 0 );
-
-	     for ( var i = 0, il = boids.length; i < il; i++ ) {
-
-		 boid = boids[ i ];
-
-		 vector.z = boid.position.z;
-
-		 //boid.repulse( vector );
-		 //boid.setGoal(vector);
-
-	     }
 
 	 }
 
 	 //
 
-	 function animate() {
+	 function onWindowResize( event ) {
 
-	     requestAnimationFrame( animate );
+	     renderer.setSize( window.innerWidth, window.innerHeight );
 
-	     stats.begin();
-	     //controls.update();
-	     render();
-	     stats.end();
+	     camera.aspect = window.innerWidth / window.innerHeight;
+	     camera.updateProjectionMatrix();
+	     camera.lookAt( scene.position );
+
+	     composer.reset();
+	     effectFocus.uniforms[ "screenWidth" ].value = window.innerWidth;
+	     effectFocus.uniforms[ "screenHeight" ].value = window.innerHeight;
+
+	 }
+	 
+	 function createMesh( geometry, parent, scale, x, y, z, yRot, wire ) {
+
+	     //var color = (wire) ? 0xff0000 : 0x000000
+	     var color = (wire) ? 0xff0000 : 0x262626;
+	     
+	     var meshMat = new THREE.MeshBasicMaterial( {
+		 color: color,
+		 wireframe: wire,
+		 wireframeLinewidth : 0.1
+	     } );
+
+	     mesh = new THREE.Mesh( geometry, meshMat );
+	     mesh.position.set( x, y, z );
+	     mesh.rotation.y = yRot;
+	     mesh.scale.set( scale, scale, scale );
+	     parent.add( mesh );
 
 	 }
 
-	 function render() {
+	 function createPointMesh( originalGeometry, scene, scale, x, y, z, yRot, color, pointSize, clones, dScale, dynamic ) {
 
-	     for ( var i = 0, il = particles.length; i < il; i++ ) {
+	     var i, j, c;
 
-		 boid = boids[ i ];
-		 boid.run( boids );
+	     var vertexClones = clones;
+	     var distScale = dScale;
 
-		 particle = particles[ i ];
-		 particle.position.copy( boids[ i ].position );
+	     var vertices = originalGeometry.vertices;
+	     var vl = vertices.length; 
+	     console.log(vl);
 
-		 for ( var j = 0, v = particle.geometry.vertices.length; j < v; j++ ) {
-		     particle.geometry.vertices[j].x = Math.random() * 30 -15;
-		     particle.geometry.vertices[j].y = Math.random() * 30 -15;
-		     particle.geometry.vertices[j].z = Math.random() * 30 -15;
-		 }
+	     var geometry = new THREE.Geometry();
+	     var vertices_tmp = [];
+
+	     for ( i = 0; i < vl; i ++ ) {
+
+		 p = vertices[ i ];
+
+		 geometry.vertices[ i ] = p.clone();
 		 
-		 color = particle.material.color;
-		 color.r = color.g = color.b = ( 1000 - Math.abs(particle.position.z) ) / 2000;
-		 //particle.material.opacity = ( 1500 + particle.position.x ) / 3000;		 
+		 vertices_tmp[ i ] = [ p.x, p.y, p.z, 0, 0 ];
+		 
+		 for ( j = 0; j < vertexClones; j++ ) {
+
+		     var newP = p.clone();
+		     newP.x += distScale * (Math.random() -0.5);
+		     newP.y += distScale * (Math.random() -0.5);
+		     newP.z += distScale * (Math.random() -0.5);
+		     geometry.vertices[ i + j*vl ] = newP;
+		     
+		     vertices_tmp[ i + j*vl ] = [ newP.x, newP.y, newP.z, 0, 0 ];
+
+		 }		 
+
 	     }
 
-	     renderer.render( scene, camera );
+	     mesh = new THREE.Points( geometry, new THREE.PointsMaterial( { size: pointSize, sizeAttenuation: true, color: color } ) );
+	     mesh.scale.x = mesh.scale.y = mesh.scale.z = scale;
+
+	     mesh.position.x = x;
+	     mesh.position.y = y;
+	     mesh.position.z = z;
+	     
+	     mesh.rotation.y = yRot;
+
+	     parent.add( mesh );
+
+	     vl *= vertexClones;
+
+	     /*	     
+		meshes.push( {
+		mesh: mesh, vertices: geometry.vertices, vertices_tmp: vertices_tmp, vl: vl,
+		down: 0, up: 0, direction: 0, speed: 35, delay: Math.floor( 200 + 200 * Math.random() ),
+		started: false, start: Math.floor( 100 + 200 * Math.random() ),
+		dynamic: dynamic
+		} );
+	      */
+	     
+	     meshes.push( {
+		 mesh: mesh, vertices: geometry.vertices, vertices_tmp: vertices_tmp, vl: vl,
+		 down: 0, up: 0, direction: 0, speed: 35, delay: 200,
+		 started: false, start: 300,
+		 dynamic: dynamic
+	     } );
+
+	 }
+
+
+	 var j, jl, cm, data, vertices, vertices_tmp, vl, d, vt;
+
+	 function animate () {
+
+	     requestAnimationFrame( animate );
+	     controls.update();
+	     render();
+	     stats.update();
+
+	 }
+
+	 function render () {
+
+	     var livingSpeed = 2.0;
+	     var slow = 0.08;
+	     var slow = 0.2;
+	     
+	     delta = 10 * clock.getDelta();
+	     delta = delta < 2 ? delta : 2;
+	     //parent.rotation.y += -0.02 * delta;
+	     //chairObj.rotation.y += -0.02 * delta;
+
+	     var dest = new THREE.Vector3(0, 50, 100);
+
+	     for( j = 0, jl = meshes.length; j < jl; j ++ ) {
+
+		 //dest -= meshes[ j ].position;
+
+		 data = meshes[ j ];
+		 mesh = data.mesh;
+		 vertices = data.vertices;
+		 vertices_tmp = data.vertices_tmp;
+		 vl = data.vl;
+
+		 //if ( ! data.dynamic )  continue;
+
+		 if ( data.start > 0 ) {
+		     data.start -= 1;
+		 } else {
+		     if ( !data.started ) {
+			 data.direction = -1;
+			 data.started = true;
+		     }
+		 }
+
+		 for ( i = 0; i < vl; i ++ ) {
+
+		     p = vertices[ i ];
+		     vt = vertices_tmp[ i ];
+
+		     p.x += ( 0.5 - Math.random() ) * delta * livingSpeed;
+		     p.y += ( 0.5 - Math.random() ) * delta * livingSpeed;
+		     p.z += ( 0.5 - Math.random() ) * delta * livingSpeed;
+
+		     d = Math.abs( p.x - vt[ 0 ] ) + Math.abs( p.y - vt[ 1 ] ) + Math.abs( p.z - vt[ 2 ] );
+
+		     // Si hay una distancia considerable, mover el punto a su lugar de origen.
+			 
+			 if ( d > 5 && data.direction == 0 ) {
+			     p.x =  vt[ 0 ];
+			     p.y =  vt[ 1 ];
+			     p.z =  vt[ 2 ];
+			 }
+		     
+
+		     if ( ! data.dynamic )  continue
+
+		     // falling down
+		     
+		     if ( data.direction < 0 ) {
+
+			 d = Math.abs( p.x - dest.x ) + Math.abs( p.y - dest.y ) + Math.abs( p.z - dest.z );
+
+			 // if ( d < 200 ) {
+			 /*
+			    if ( d > 1 ) {
+			    // p.y += data.direction * data.speed * delta;
+			    p.x += 1.5 * ( 0.50 - Math.random() ) * data.speed * delta;
+			    p.y += 3.0 * ( 0.25 - Math.random() ) * data.speed * delta;
+			    p.z += 1.5 * ( 0.50 - Math.random() ) * data.speed * delta;
+			    }
+			  */
+			 
+			 if ( d > 20 ) {
+			     /*
+				p.x += - ( p.x - dest.x ) / d * data.speed * delta * ( 1 - Math.random() );
+				p.y += - ( p.y - dest.y ) / d * data.speed * delta * ( 0.85 - Math.random() );
+				p.z += - ( p.z - dest.z ) / d * data.speed * delta * ( 0.85 - Math.random() );
+			      */
+			     p.x += - ( p.x - dest.x ) / d * data.speed * delta * slow;
+			     p.y += - ( p.y - dest.y ) / d * data.speed * delta * slow;
+			     p.z += - ( p.z - dest.z ) / d * data.speed * delta * slow;
+			 }
+			 /*
+			    if ( p.y > 0 ) {
+			    // p.y += data.direction * data.speed * delta;
+			    p.x += 1.5 * ( 0.50 - Math.random() ) * data.speed * delta;
+			    p.y += 3.0 * ( 0.25 - Math.random() ) * data.speed * delta;
+			    p.z += 1.5 * ( 0.50 - Math.random() ) * data.speed * delta;
+			    }
+			  */
+			 else {
+			     if ( ! vt[ 3 ] ) {
+				 vt[ 3 ] = 1;
+				 data.down += 1;
+			     }
+			 }
+		     }
+
+		     // rising up
+
+		     if ( data.direction > 0 ) {
+			 //if ( p.y < vertices_tmp[ i ][ 1 ] ) {
+			 //	p.y += data.direction * data.speed * delta;
+
+			 // Calcula distancia de la posicion actual a la posicion deseada del punto
+			 
+			 d = Math.abs( p.x - vt[ 0 ] ) + Math.abs( p.y - vt[ 1 ] ) + Math.abs( p.z - vt[ 2 ] );
+
+			 // Si hay una distancia considerable, mover el punto
+			 
+			 if ( d > 1 ) {
+			     p.x += - ( p.x - vt[ 0 ] ) / d * data.speed * delta;
+			     p.y += - ( p.y - vt[ 1 ] ) / d * data.speed * delta;
+			     p.z += - ( p.z - vt[ 2 ] ) / d * data.speed * delta;
+			 }
+			 
+			 else {
+			     if ( ! vt[ 4 ] ) {
+				 vt[ 4 ] = 1;
+				 data.up += 1;
+			     }
+			 }
+		     }
+		 }
+
+		 // all down
+
+		 if ( data.down === vl ) {
+
+		     //data.direction = 0;
+
+		     if ( data.delay === 0 ) {
+
+			 data.direction = 1;
+			 data.speed = 10;
+			 data.down = 0;
+			 data.delay = 800;
+
+			 for ( i = 0; i < vl; i ++ ) {
+
+			     vertices_tmp[ i ][ 3 ] = 0;
+
+			 }
+
+		     } else {
+
+			 data.delay -= 1;
+
+		     }
+
+
+		 }
+
+		 // all up
+
+		 if ( data.up === vl ) {
+
+		     data.direction = 0;
+
+		     if ( data.delay === 0 ) {
+
+			 data.direction = -1;
+			 data.speed = 35;
+			 data.up = 0;
+			 data.delay = 100;
+
+			 for ( i = 0; i < vl; i ++ ) {
+
+			     vertices_tmp[ i ][ 4 ] = 0;
+
+			 }
+
+		     } else {
+
+			 data.delay -= 1;
+
+		     }
+
+
+		 }
+
+		 mesh.geometry.verticesNeedUpdate = true;
+
+	     }
+
+	     renderer.clear();
+	     composer.render( 0.01 );
 
 	 }
 
 	</script>
 
     </body>
+
 </html>

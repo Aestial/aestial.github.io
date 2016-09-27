@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+	<title>Simple Boid</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<style>
+	 body {
+	     color: #808080;
+	     font-family:Monospace;
+	     font-size:13px;
+	     text-align:center;
+	     background-color: #000000;
+	     margin: 0px;
+	     overflow: hidden;
+	 }
+
+	 div#container {
+	     -ms-transform: translate(0, 30px);
+	     -webkit-transform: translate(0, 30px);
+	     transform: translate(0, 30px);
+	 }
+	 #info {
+	     position: absolute;
+	     top: 0px; width: 100%;
+	     padding: 5px;
+	 }
+	</style>
+    </head>
+    <body>
+
+	<div id="container"></div>
+	<div id="info">Simple Boid - MomentoMX</div>
+
+	<script src="build/three.js"></script>
+	<script src="js/libs/stats.min.js"></script>
+	<script src="js/controls/OrbitControls.js"></script>
+	<script src="js/loaders/BinaryLoader.js"></script>
+
+	<script src="obj/Triangle.js"></script>
+	<script src="js/Boid.js"></script>
+	<script src="js/Path.js"></script>
+	<script>
+
+	 var SCREEN_WIDTH = window.innerWidth,
+	     SCREEN_HEIGHT = window.innerHeight,
+	     SCREEN_WIDTH_HALF = SCREEN_WIDTH  / 2,
+	     SCREEN_HEIGHT_HALF = SCREEN_HEIGHT / 2;
+
+	 var camera, cameraTarget, scene, renderer, controls, mesh, clock,
+	     spaceParticles, particles, particle;
+
+	 var boid, boids, path, modelIndex;
+
+	 var pathNodes = [
+	     { x:-600, y:   0, z: 500 },
+	     { x:-500, y:  20, z: 100 },
+	     { x:-200, y:  10, z: 200 },
+	     { x:   0, y:  50, z:  50 },
+	     { x:  75, y:  20, z: -50 },
+	     { x: 550, y:  30, z: 100 },
+	     { x: 850, y:  10, z: 700 }
+	 ];
+
+	 var stats;
+
+	 init();
+	 animate();
+
+	 function init() {
+
+	     cameraTarget = new THREE.Vector3(0, 100, 0);
+	     camera = new THREE.PerspectiveCamera( 75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000 );
+	     camera.position.set(0,400,500);
+	     //camera.lookAt(cameraTarget);
+
+	     clock = new THREE.Clock();
+	     clock.start();
+	     
+	     controls = new THREE.OrbitControls( camera );
+	     controls.addEventListener( 'change', render );
+	     controls.minDistance = 500.0;
+	     controls.maxDistance = 3000.0;
+	     controls.enableDamping = true;
+	     controls.dampingFactor = 0.2;
+	     /*
+	     controls.minPolarAngle = Math.PI/3;
+	     controls.maxPolarAngle = Math.PI/2;
+	     controls.minAzimuthAngle = -Math.PI/5;
+	     controls.maxAzimuthAngle = Math.PI/5;
+	     */
+	     //controls.target = cameraTarget;
+	     
+	     scene = new THREE.Scene();
+	     
+	     path = new Path();
+	     for ( var i = 0; i < pathNodes.length; i++ ) {
+		 var vec = pathNodes[i];
+		 var node = new THREE.Vector3(vec.x, vec.y, vec.z);
+		 path.addNode (node);
+	     }
+	     /*
+	     var spaceSize = { x: 3000, y:1000, z:1500 };
+	     spaceParticles = [];
+	     var spaceMat = new THREE.PointsMaterial( {
+		     size: 3,
+		     sizeAttenuation: true,
+		     color: 0xffffff
+	     } );
+	     
+	     for ( var i = 0; i < 128; i++ ) {
+		 var particle = spaceParticles[ i ] = new THREE.Points( new Triangle(), spaceMat );
+		 particle.position.x = (Math.random() - 0.5) * spaceSize.x;
+		 particle.position.y = (Math.random() - 0.5) * spaceSize.y;
+		 particle.position.z = (Math.random() - 0.5) * spaceSize.z;
+		 scene.add( particle );
+	     }
+	     */
+	     
+	     particles = [];
+	     boids = [];
+	     modelIndex = 4;
+	     var source = { x: -800, y:0, z:200 };
+	     var sourceAmp = { x: -3000, y:100, z:100 };
+	     var meshMat = new THREE.PointsMaterial( {
+		 size: 3,
+		 sizeAttenuation: true,
+		 color: 0xffffff
+	     } );
+	     
+	     for ( var i = 0; i < 1800; i ++ ) {
+		 boid = boids[ i ] = new Boid();
+		 boid.position.x = Math.random() * sourceAmp.x + source.x;
+		 boid.position.y = Math.random() * sourceAmp.y + source.y;
+		 boid.position.z = Math.random() * sourceAmp.z + source.z;
+		 boid.velocity.x = Math.random() * 2 - 1;
+		 boid.velocity.y = Math.random() * 2 - 1;
+		 boid.velocity.z = Math.random() * 2 - 1;
+		 boid.setIndex(i);
+		 boid.setSource(source.x, source.y, source.z);
+		 boid.setRandomSource(sourceAmp.x, sourceAmp.y, sourceAmp.z);
+		 boid.setModelIndex(modelIndex);
+		 boid.setPath(path);
+		
+		 particle = particles[ i ] = new THREE.Points( new Triangle(), meshMat );
+		 for ( var j = 0; j < particle.geometry.vertices.length; j++ ) {
+		     particle.geometry.vertices[j].x = Math.random() * 30 -15;
+		     particle.geometry.vertices[j].y = Math.random() * 30 -15;
+		     particle.geometry.vertices[j].z = Math.random() * 30 -15;		     
+		 }
+		 particle.scale.set(1,1,1);
+		 scene.add( particle );
+	     }
+
+	     var cloader = new THREE.JSONLoader();
+	     //var cloader = new THREE.ObjectLoader();
+	     cloader.load( "obj/suzanne2.json", function ( object ) {
+		 console.log(object);
+		 /*
+		 var surface = object.getObjectByName("Surface");
+		 var outline = object.getObjectByName("Outline");
+		 var mask = object.getObjectByName("Mask");
+		 */
+		 var wired = false;
+		 var color = wired ? 0x505050 : 0x000000;
+		 var scale = 1.5;
+		 var meshMat = new THREE.MeshBasicMaterial( {
+		     color: color,
+		     wireframe: wired
+		 } );
+		 mesh = new THREE.Mesh(object, meshMat );
+		 mesh.scale.set(0.9,0.9,0.9);
+		 scene.add(mesh);
+		 for ( var i = 0; i < object.vertices.length; i++ ) {
+		     boids[i].setMeshGoal(object.vertices[i].multiplyScalar(scale));
+		 }
+	     } );
+	     
+   	     renderer = new THREE.WebGLRenderer();
+	     renderer.setClearColor( 0x000000 );
+	     renderer.setPixelRatio( window.devicePixelRatio );
+	     renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+
+	     document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+	     document.body.appendChild( renderer.domElement );
+
+	     stats = new Stats();
+	     document.getElementById( 'container' ).appendChild(stats.dom);
+
+	     window.addEventListener( 'resize', onWindowResize, false );
+
+	 }
+
+	 function onWindowResize() {
+
+	     camera.aspect = window.innerWidth / window.innerHeight;
+	     camera.updateProjectionMatrix();
+
+	     renderer.setSize( window.innerWidth, window.innerHeight );
+
+	 }
+
+	 function onDocumentMouseMove( event ) {
+
+	     var vector = new THREE.Vector3( event.clientX - SCREEN_WIDTH_HALF, - event.clientY + SCREEN_HEIGHT_HALF, 0 );
+
+	     for ( var i = 0, il = boids.length; i < il; i++ ) {
+
+		 boid = boids[ i ];
+
+		 vector.z = boid.position.z;
+
+		 //boid.repulse( vector );
+		 //boid.setGoal(vector);
+
+	     }
+
+	 }
+
+	 //
+
+	 function animate() {
+
+	     requestAnimationFrame( animate );
+
+	     stats.begin();
+	     controls.update();
+	     render();
+	     stats.end();
+
+	 }
+
+	 function render() {
+
+	     for ( var i = 0, il = particles.length; i < il; i++ ) {
+
+		 boid = boids[ i ];
+		 boid.run( boids );
+
+		 particle = particles[ i ];
+		 particle.position.copy( boids[ i ].position );
+		 color = particle.material.color;
+		 color.r = color.g = color.b = ( 1000 - Math.abs(particle.position.x) ) / 2000;
+		 //particle.material.opacity = ( 1500 + particle.position.x ) / 3000;		 
+	     }
+
+	     renderer.render( scene, camera );
+
+	 }
+
+	</script>
+
+    </body>
+</html>

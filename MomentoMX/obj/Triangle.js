@@ -5,10 +5,10 @@ var Triangle = function () {
     THREE.Geometry.call( this );
 
     v(   0,   0,   0 );
-    v(   1,  -1,   0 );
-    v( - 1,  -1,   0 );
-    v(   1,   1,   0 );
-    v(  -1,   1,   0 );
+    //v(   1,  -1,   0 );
+    //v( - 1,  -1,   0 );
+    //v(   1,   1,   0 );
+    //v(  -1,   1,   0 );
 
     //f3( 0, 2, 1 );
     
@@ -18,7 +18,7 @@ var Triangle = function () {
 
 	scope.vertices.push( new THREE.Vector3( x, y, z ) );
 
-    }
+    }	
 
     function f3( a, b, c ) {
 

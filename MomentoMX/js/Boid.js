@@ -3,38 +3,39 @@
 var Boid = function() {
 
     var vector = new THREE.Vector3(),
-	_index,
+	_index, _formMesh = true,
 	_acceleration, _width = 500, _height = 500,
-	_depth = 200, _goal, _neighborhoodRadius = 25,
-	_maxSpeed = 5, _maxSteerForce = 0.1, _avoidWalls = false;
+	_depth = 200, _goal, _neighborhoodRadius = 20,
+	_maxSpeed = 5, _minSpeed = 0.15, _maxSteerForce = 0.2, _avoidWalls = false;
 
-    var _path, _meshGoal, _source, _modelIndex;
+    var _path, _meshGoal, _source, _slowingRadius = 100;
     var _currentNode = 0;
 
     this.position = new THREE.Vector3();
     this.velocity = new THREE.Vector3();
     _acceleration = new THREE.Vector3();
 
-    this.pathFollowing = function () {
+    this.pathFollowing = function ( amount ) {
 	var target = new THREE.Vector3();
 	if ( _path != null ) {
 	    //console.log("Path found");
 	    var nodes = _path.getNodes();
 	    target = nodes[_currentNode];
-	    if ( boid.position.distanceTo(target) <= 100 ) {
+	    if ( this.position.distanceTo(target) <= 100 ) {
 		_currentNode +=1;
 		if ( _currentNode >= _modelIndex ) {
-		    if ( _meshGoal != null ) {
+		    if ( _meshGoal != null && _formMesh) {
 			this.setGoal(_meshGoal);
 			this.setPath(null);
 		    }
 		}
 		if ( _currentNode >= nodes.length ) {
+		    this.setPath(null);
+		    _formMesh = true;
 		    _currentNode = 0;
-		    boid.position.x = _source.x;
-		    //boid.position.y = Math.random() * 1000 + _source.y;
-		    boid.position.y = _source.y;
-		    boid.position.z = -Math.random() * 2500 + _source.z;
+		    this.position.x = Math.random() * _randomSource.x + _source.x;
+		    this.position.y = Math.random() * _randomSource.y + _source.y;
+		    this.position.z = Math.random() * _randomSource.z + _source.z;
 		} 
 	    }
 	 
@@ -42,7 +43,7 @@ var Boid = function() {
 	else {
 	    console.log("Path not found!");
 	}    
-	return target != null ? this.reach(target, 0.001) : new THREE.Vector3();
+	return target != null ? this.reach(target, amount) : new THREE.Vector3();
     };
 
     this.setModelIndex = function ( index ) {
@@ -55,8 +56,12 @@ var Boid = function() {
 
     this.setSource = function ( x, y, z ) {
 	_source = new THREE.Vector3(x, y, z);
-    }	
+    }
 
+    this.setRandomSource = function (x, y, z ) {
+	_randomSource = new THREE.Vector3(x, y, z);
+    }
+    
     this.setPath = function ( path ) {
 	_path = path;
     }
@@ -130,14 +135,14 @@ this.checkBounds();
 
     this.flock = function ( boids ) {
 	if ( _goal ) {
-	    _acceleration.add( this.reach( _goal, 0.5 ) );
+	    _acceleration.add( this.reach( _goal, 0.05 ) );
 	}
 	if ( _path ) {
-	    _acceleration.add( this.pathFollowing() );
+	    _acceleration.add( this.pathFollowing( 0.0012 ) );
 	}
 	//_acceleration.add( this.alignment( boids ) );
 	//_acceleration.add( this.cohesion( boids ) );
-	_acceleration.add( this.separation( boids ) );
+	//_acceleration.add( this.separation( boids ) );
     };
 
     this.move = function () {
@@ -148,8 +153,8 @@ this.checkBounds();
 
 	if ( l > _maxSpeed ) {
 
-	    this.velocity.divideScalar( l / _maxSpeed );
-	    //this.velocity.multiplyScalar( _maxSpeed );
+	    //this.velocity.divideScalar( l / _maxSpeed );
+	    this.velocity.multiplyScalar( _maxSpeed / l);
 
 	}
 
@@ -188,7 +193,7 @@ this.checkBounds();
 
 	var distance = this.position.distanceTo( target );
 	
-	if ( distance < 150 ) {
+	if ( distance < 50 ) {
 	    var steer = new THREE.Vector3();
 
 	    steer.subVectors( this.position, target );
@@ -201,14 +206,23 @@ this.checkBounds();
     };
 
     this.reach = function ( target, amount ) {
-
+	var ratio = 1;
 	var steer = new THREE.Vector3();
-
 	steer.subVectors( target, this.position );
 	steer.multiplyScalar( amount );
 
+	if ( _goal != null ) {   
+	    var distance = this.position.distanceTo(_goal);
+	    if ( distance < _slowingRadius ) {
+		ratio = distance/_slowingRadius;
+		_maxSpeed *= ratio;
+		if ( _maxSpeed < _minSpeed ) {
+		    //_maxSpeed = 0;
+		    _maxSpeed = _minSpeed;
+		}
+	    }
+	}
 	return steer;
-
     };
 
     this.alignment = function ( boids ) {
