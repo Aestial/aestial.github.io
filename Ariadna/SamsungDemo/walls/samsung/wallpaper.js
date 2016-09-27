@@ -95,6 +95,10 @@ var Wallpaper = (function(){
 	defaultCopies[1] = line2.innerHTML;
 	// Change style
 	line1.style.color = line2.style.color = "white";
+	// Change Content
+	line1.innerHTML = copies[copyIndex][0];
+	line2.innerHTML = copies[copyIndex][1];
+	copyIndex++;
 	// Set loop function
 	interval = setInterval(loop_copies, copyTimeInterval);	    
     };
