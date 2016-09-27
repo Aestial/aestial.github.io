@@ -15,6 +15,7 @@ var Wallpaper = (function(){
 	["Title Two", "Sub Two"],
 	["Title Three", "Sub Three"]
     ];
+    var defaultCopies = [];
     var copyIndex = 0;
     var copyTimeInterval = 5000;
     var interval;
@@ -68,11 +69,13 @@ var Wallpaper = (function(){
 		enablejsapi: '1',
 		wmode: 'transparent',
 		html5: 1,
-		iv_load_policy: 3,
-		start: 20,
-		end: 40,
-		loop: 1
-		playlist: "hBmnOyhlE_c",
+		iv_load_policy: 3,		
+		start: 208,
+		end: 224,
+		/*
+		loop: 1,
+		playlist: "hBmnOyhlE_c?start=208&end=224"
+		*/
 	    },
 	    events: {
 		'onStateChange': window['onPlayerStateChange']
@@ -87,6 +90,9 @@ var Wallpaper = (function(){
 	// Get doms
 	line1 = document.getElementById("line1");
 	line2 = document.getElementById("line2");
+	// Get Original Messaage
+	defaultCopies[0] = line1.innerHTML;
+	defaultCopies[1] = line2.innerHTML;
 	// Change style
 	line1.style.color = line2.style.color = "white";
 	// Set loop function
@@ -101,7 +107,13 @@ var Wallpaper = (function(){
 	    copyIndex = 0;
 	}	    
     };
-	
+
+    function reset_copies () {
+	line1.innerHTML = defaultCopies[0];
+	line2.innerHTML = defaultCopies[1];
+	line1.style.color = line2.style.color = "black";
+	clearInterval(interval);
+    }
 
     /* public */
     function VideoBackground()
@@ -157,7 +169,6 @@ var Wallpaper = (function(){
 	    self.showVideo();
 	    e.stopPropagation();
 	    e.preventDefault();
-	    change_copies();
 	    return false;
 	}, false);
     };
@@ -173,6 +184,7 @@ var Wallpaper = (function(){
 	    wetransfer.vast('play'); // Track the play event
 	}
 	player.playVideo();
+	change_copies();
     };
 
     VideoBackground.prototype.hideVideo = function()
@@ -183,7 +195,7 @@ var Wallpaper = (function(){
 	    wetransfer.appShow(); // Move the WeTransfer Uploader to it's normal position
 	    wetransfer.resumeTimer(); // Resume the WeTransfer Rotation timer.
 	}
-	clearInterval(interval);
+	reset_copies();
     };
 
     // Fix video placement to fit screen.
