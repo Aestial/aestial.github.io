@@ -6,9 +6,9 @@ var Boid = function() {
 	_index, _formMesh = true,
 	_acceleration, _width = 500, _height = 500,
 	_depth = 200, _goal, _neighborhoodRadius = 20,
-	_maxSpeed = 5, _minSpeed = 0.15, _maxSteerForce = 0.2, _avoidWalls = false;
+	_maxSpeed = 5.5, _minSpeed = 0.2, _maxSteerForce = 0.2, _avoidWalls = false;
 
-    var _path, _meshGoal, _source, _slowingRadius = 100;
+    var _path, _meshGoal, _source, _slowingRadius = 100, _pathGoalRadius = 120;
     var _currentNode = 0;
 
     this.position = new THREE.Vector3();
@@ -21,7 +21,7 @@ var Boid = function() {
 	    //console.log("Path found");
 	    var nodes = _path.getNodes();
 	    target = nodes[_currentNode];
-	    if ( this.position.distanceTo(target) <= 100 ) {
+	    if ( this.position.distanceTo(target) <= _path.radius ) {
 		_currentNode +=1;
 		if ( _currentNode >= _modelIndex ) {
 		    if ( _meshGoal != null && _formMesh) {
@@ -125,7 +125,7 @@ this.checkBounds();
 }
 	 */
 
-	if ( Math.random() > 0.3 ) {
+	if ( Math.random() > 0.5 ) {
 	    this.flock( boids );
 	}
 	
@@ -135,10 +135,10 @@ this.checkBounds();
 
     this.flock = function ( boids ) {
 	if ( _goal ) {
-	    _acceleration.add( this.reach( _goal, 0.05 ) );
+	    _acceleration.add( this.reach( _goal, 0.1 ) );
 	}
 	if ( _path ) {
-	    _acceleration.add( this.pathFollowing( 0.0012 ) );
+	    _acceleration.add( this.pathFollowing( 0.002 ) );
 	}
 	//_acceleration.add( this.alignment( boids ) );
 	//_acceleration.add( this.cohesion( boids ) );

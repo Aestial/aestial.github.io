@@ -1,6 +1,7 @@
 var Path = function() {
     
     var nodes = [];
+    var radius;
 
     this.addNode = function ( node ) {
 	nodes.push(node);
