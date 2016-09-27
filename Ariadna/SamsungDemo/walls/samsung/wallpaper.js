@@ -70,7 +70,7 @@ var Wallpaper = (function(){
 		wmode: 'transparent',
 		html5: 1,
 		iv_load_policy: 3,		
-		start: 208,
+		start: 180,
 		end: 224,
 		/*
 		loop: 1,
