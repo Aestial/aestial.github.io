@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-	<title>Simple Boid</title>
+	<title> Particle Demo - MomentoMX </title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<style>
@@ -32,7 +32,7 @@
     <body>
 
 	<div id="container"></div>
-	<div id="info">Simple Boid - MomentoMX</div>
+	<div id="info">Particle Demo - MomentoMX</div>
 
 	<script src="build/three.js"></script>
 	<script src="js/libs/stats.min.js"></script>
@@ -55,21 +55,19 @@
 	 var debugScene;
 	 
 	 var spaceParticles, spacePositions, spaceSize, particles, particle;
-	 var boid, boids, path, modelIndex;
+	 var boid, boids, path, modelIndex, reachedCount, maskMat;
 
 	 var pathNodes = [
 	     { x:-600, y: -50, z: 500 },
 	     { x:-500, y: 100, z: 100 },
-	     { x:-250, y:   0, z: 300 },
-	     { x:   0, y:  50, z:  50 },
-	     { x: 150, y: -20, z: -50 }
-	     //{ x: 550, y:  30, z: 100 },
-	     //{ x: 850, y:  10, z: 700 }
+	     { x:-250, y: -60, z: 300 },
+	     { x:   0, y: 100, z:   0 },
+	     { x: 150, y:   0, z: -100 }
 	 ];
 
 	 var stats;
-
-	 var debug = false;
+	 var nodeGizmos, sphereGizmos;
+	 var debug = false; 
 
 	 init();
 	 animate();
@@ -90,49 +88,62 @@
 	     controls.maxDistance = 3000.0;
 	     controls.enableDamping = true;
 	     controls.dampingFactor = 0.2;
-	     
 	     controls.minPolarAngle = Math.PI/3;
 	     controls.maxPolarAngle = Math.PI/2;
-	     controls.minAzimuthAngle = -Math.PI/2.5;
-	     controls.maxAzimuthAngle = Math.PI/2.5;
-
+	     controls.minAzimuthAngle = -Math.PI/3;
+	     controls.maxAzimuthAngle = Math.PI/3;
 	     //controls.target = cameraTarget;
 	     
 	     scene = new THREE.Scene();
 	     debugScene = new THREE.Scene();
+
+	     modelIndex = 3;
+	     reachedCount = 0;
 	     
 	     path = new Path();
 	     path.radius = 120;
-	     var pathMat = new THREE.MeshBasicMaterial( {
-		 color: 0xffff00,
-		 vertexColors: THREE.VertexColors,
-		 wireframe: true
-	     } );
-	     var radGizmoMat = new THREE.MeshBasicMaterial( {
-		 color: 0xffff00,
-		 vertexColors: THREE.VertexColors,
-		 wireframe: false,
-		 transparent: true,
-		 opacity: 0.3
-	     } );
+	     nodeGizmos = [];
+	     sphereGizmos = [];
+	     
 	     for ( var i = 0; i < pathNodes.length; i++ ) {
 		 var vec = pathNodes[i];
 		 var node = new THREE.Vector3(vec.x, vec.y, vec.z);
 		 path.addNode (node);
+		 
+		 // Path debug
 		 if ( debug ) {
-		     // Path debug
-		     var nodeGizmo = new THREE.Mesh( new Triangle(), pathMat );
-		     var nodeRadGizmo = new THREE.Mesh ( new THREE.SphereGeometry( path.radius, 16, 16 ), radGizmoMat);
-		     nodeGizmo.position.x = nodeRadGizmo.position.x = node.x;
-		     nodeGizmo.position.y = nodeRadGizmo.position.y = node.y;
-		     nodeGizmo.position.z = nodeRadGizmo.position.z = node.z;
+		     var pathMat = new THREE.MeshBasicMaterial( {
+			 color: 0x00ff00,
+			 vertexColors: THREE.VertexColors,
+			 wireframe: true
+		     } );
+		     var radGizmoMat = new THREE.MeshBasicMaterial( {
+			 color: 0x00ff00,
+			 vertexColors: THREE.VertexColors,
+			 wireframe: false,
+			 transparent: true,
+			 opacity: 0.25
+		     } );
+		     var nodeGizmo = nodeGizmos[i] = new THREE.Mesh( new Triangle(), pathMat );
+		     var sphereGizmo = sphereGizmos[i] = new THREE.Mesh ( new THREE.SphereGeometry( path.radius, 16, 16 ), radGizmoMat);
+		     nodeGizmo.position.x = sphereGizmo.position.x = node.x;
+		     nodeGizmo.position.y = sphereGizmo.position.y = node.y;
+		     nodeGizmo.position.z = sphereGizmo.position.z = node.z;
 		     var scale = 10;
 		     nodeGizmo.scale.set(scale,scale,scale);
+		     
+		     if ( i == modelIndex ) {
+			 sphereGizmo.material.color.set(0x00ffff);
+		     } else if ( i > modelIndex ) {
+			 sphereGizmo.material.color.set(0xff0000);
+		     }
+		     
 		     debugScene.add(nodeGizmo);
-		     debugScene.add(nodeRadGizmo);
+		     debugScene.add(sphereGizmo);
 		 }
+		 
 	     }
-	     spaceSize = { x: 3000, y:1000, z:1500 };
+	     spaceSize = { x: 3000, y:2000, z:1500 };
 	     spaceParticles = [];
 	     spaceInfo = [];
 	     
@@ -160,11 +171,10 @@
 	     particles = [];
 	     boids = [];
 	     streamInfo = [];
-	     modelIndex = 4;
 	     var source = { x: -800, y:0, z:200 };
 	     var sourceAmp = { x: -3000, y:100, z:100 }
 	     
-	     for ( var i = 0; i < 1800; i ++ ) {
+	     for ( var i = 0; i < 2600; i ++ ) {
 		 boid = boids[ i ] = new Boid();
 		 boid.position.x = Math.random() * sourceAmp.x + source.x;
 		 boid.position.y = Math.random() * sourceAmp.y + source.y;
@@ -194,27 +204,37 @@
 		 scene.add( particle );
 	     }
 
-	     var cloader = new THREE.JSONLoader();
-	     //var cloader = new THREE.ObjectLoader();
-	     cloader.load( "obj/suzanne2.json", function ( object ) {
-		 console.log(object);
-		 /*
-		    var surface = object.getObjectByName("Surface");
-		    var outline = object.getObjectByName("Outline");
-		    var mask = object.getObjectByName("Mask");
-		  */
-		 var wired = false;
-		 var color = wired ? 0x505050 : 0x000000;
-		 var scale = 1.5;
-		 var meshMat = new THREE.MeshBasicMaterial( {
+	     //var cloader = new THREE.JSONLoader();
+	     var cloader = new THREE.ObjectLoader();
+	     cloader.load( "obj/Chair.json", function ( object ) {
+		 var surface = object.getObjectByName("Surface");
+		 var outline = object.getObjectByName("Outline");
+		 var mask = object.getObjectByName("Mask");
+		 if ( debug ) {
+		     console.log(object);
+		     console.log(surface.geometry);
+		     console.log(outline.geometry);
+		     console.log(mask.geometry);
+		 }
+		 var color = debug ? 0x505050 : 0x000000;
+		 var scale = 1;
+		 maskMat = new THREE.MeshBasicMaterial( {
 		     color: color,
-		     wireframe: wired
+		     transparent: true,
+		     opacity: 0,
+		     wireframe: debug
 		 } );
-		 var mesh = new THREE.Mesh(object, meshMat );
+		 var mesh = new THREE.Mesh(mask.geometry, maskMat );
 		 mesh.scale.set(0.9,0.9,0.9);
 		 scene.add(mesh);
-		 for ( var i = 0; i < object.vertices.length; i++ ) {
-		     boids[i].setMeshGoal(object.vertices[i].multiplyScalar(scale));
+		 var meshVertices = surface.geometry.vertices.length + outline.geometry.vertices.length;
+		 for ( var i = 0; i < meshVertices; i++ ) {
+		     if ( i < surface.geometry.vertices.length ) {
+			 boids[i].setMeshGoal(surface.geometry.vertices[i].multiplyScalar(scale));
+		     } else {
+			 var j = i - surface.geometry.vertices.length;
+			 boids[i].setMeshGoal(outline.geometry.vertices[j].multiplyScalar(scale));
+		     }	 
 		 }
 	     } );
 	     
@@ -235,55 +255,70 @@
 	 }
 
 	 function onWindowResize() {
-
 	     camera.aspect = window.innerWidth / window.innerHeight;
 	     camera.updateProjectionMatrix();
-
 	     renderer.setSize( window.innerWidth, window.innerHeight );
-
 	 }
 
 	 function onDocumentMouseMove( event ) {
-
 	     var vector = new THREE.Vector3( event.clientX - SCREEN_WIDTH_HALF, - event.clientY + SCREEN_HEIGHT_HALF, 0 );
-
 	     for ( var i = 0, il = boids.length; i < il; i++ ) {
 		 boid = boids[ i ];
 		 vector.z = boid.position.z;
 		 //boid.repulse( vector );
 		 //boid.setGoal(vector);
 	     }
-
 	 }
 
 	 //
-
 	 function animate() {
-
 	     requestAnimationFrame( animate );
-
 	     stats.begin();
 	     controls.update();
 	     render();
 	     stats.end();
-
 	 }
 
 	 function render() {
-
+	     // Path nodes movement
+	     var nodes = path.getNodes();
+	     var originalPos = path.getOriginalPos();
+	     var offsets = path.getOffset();
+	     var amplitude = 50;
+	     for ( var i = 0; i < nodes.length; i++ ) {
+		 var yPos = originalPos[i].y + Math.sin(clock.getElapsedTime() + offsets[i]) * amplitude -amplitude/2;
+		 nodes[i].y = yPos;
+		 
+		 if ( debug ) {
+		     nodeGizmos[i].position.y = sphereGizmos[i].position.y = yPos;
+		 }
+	     }
+	     
+	     // Boid particles movement
 	     for ( var i = 0, il = particles.length; i < il; i++ ) {
 		 boid = boids[ i ];
 		 boid.run( boids );
+		 if ( !boid.getCounted() && boid.getReached() ) {
+		     reachedCount++;
+		     boid.setCounted(true);
+		     if (debug) console.log(reachedCount);
+		 }   
 		 particle = particles[ i ];
 		 particle.position.copy( boids[ i ].position );
-		 //color = particle.material.color;
-		 opacity = particle.material.opacity;
 		 particle.material.opacity = streamInfo [i] * ( spaceSize.x/2 - Math.abs(particle.position.x) ) / spaceSize.x;
 	     }
+	     
+	     // Space particles movement
 	     for ( var i = 0; i < 128; i++ ) {
 		 particle = spaceParticles[ i ];
-		 particle.position.y = spaceInfo[i].y + Math.sin(clock.getElapsedTime ()+spaceInfo[i].x)*20 -10;
+		 particle.position.y = spaceInfo[i].y + Math.sin(clock.getElapsedTime()+spaceInfo[i].x)*20 -10;
 	     }
+
+	     // Mask material opacity
+	     if ( maskMat != null ) {
+		 maskMat.opacity = reachedCount/particles.length;
+	     }
+	     // Render scenes
 	     renderer.clear();
 	     renderer.render( scene, camera );
 	     renderer.clearDepth();

@@ -3,12 +3,12 @@
 var Boid = function() {
 
     var vector = new THREE.Vector3(),
-	_index, _formMesh = true,
+	_index, _formMesh = true, _reached = false, _counted = false,
 	_acceleration, _width = 500, _height = 500,
 	_depth = 200, _goal, _neighborhoodRadius = 20,
-	_maxSpeed = 5.5, _minSpeed = 0.2, _maxSteerForce = 0.2, _avoidWalls = false;
+	_maxSpeed = 5.8, _minSpeed = 0.085, _maxSteerForce = 0.2, _avoidWalls = false;
 
-    var _path, _meshGoal, _source, _slowingRadius = 100, _pathGoalRadius = 120;
+    var _path, _meshGoal, _source, _slowingRadius = 100, _pathGoalRadius = 100, _modelIndex;
     var _currentNode = 0;
 
     this.position = new THREE.Vector3();
@@ -23,7 +23,7 @@ var Boid = function() {
 	    target = nodes[_currentNode];
 	    if ( this.position.distanceTo(target) <= _path.radius ) {
 		_currentNode +=1;
-		if ( _currentNode >= _modelIndex ) {
+		if ( _currentNode > _modelIndex ) {
 		    if ( _meshGoal != null && _formMesh) {
 			this.setGoal(_meshGoal);
 			this.setPath(null);
@@ -46,6 +46,18 @@ var Boid = function() {
 	return target != null ? this.reach(target, amount) : new THREE.Vector3();
     };
 
+    this.getReached = function () {
+	return _reached;
+    }
+
+    this.getCounted = function () {
+	return _counted;
+    }
+
+    this.setCounted = function ( value ) {
+	_counted = value;
+    }
+    
     this.setModelIndex = function ( index ) {
 	_modelIndex = index;
     }
@@ -135,7 +147,7 @@ this.checkBounds();
 
     this.flock = function ( boids ) {
 	if ( _goal ) {
-	    _acceleration.add( this.reach( _goal, 0.1 ) );
+	    _acceleration.add( this.reach( _goal, 0.15 ) );
 	}
 	if ( _path ) {
 	    _acceleration.add( this.pathFollowing( 0.002 ) );
@@ -216,6 +228,7 @@ this.checkBounds();
 	    if ( distance < _slowingRadius ) {
 		ratio = distance/_slowingRadius;
 		_maxSpeed *= ratio;
+		_reached = true;
 		if ( _maxSpeed < _minSpeed ) {
 		    //_maxSpeed = 0;
 		    _maxSpeed = _minSpeed;

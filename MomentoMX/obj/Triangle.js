@@ -14,7 +14,7 @@ var Triangle = function () {
     c(   1,   0,   0 );
     
     f3( 0, 2, 1 );
-    
+Color    
     this.colorsNeedUpdate = true;
     this.computeFaceNormals();
 
