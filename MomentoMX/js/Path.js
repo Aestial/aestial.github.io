@@ -3,13 +3,19 @@ var Path = function() {
     var nodes = [];
     var originalPos = [];
     var offsets = [];
-    var radius;
+    var radiuses = [];
 
-    this.addNode = function ( node ) {
+    this.addNode = function ( node, radius ) {
 	nodes.push(node);
 	originalPos.push(node.clone());
+	radiuses.push(radius);
 	offsets.push(Math.random()*20);
     }
+
+    this.getRadius = function ( index ) {
+	return radiuses[index];
+    }
+	
 
     this.getOffset = function() {
 	return offsets;
