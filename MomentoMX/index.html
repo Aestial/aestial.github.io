@@ -229,8 +229,9 @@
 		 }
 
 		 // Load object
-		 cloader.load( "obj/Chair.json", function ( object ) {
+		 cloader.load( "obj/ChairVert.json", function ( object ) {
 		     var rot = -Math.PI/4;
+		     var correction = -Math.PI/2;
 		     surface = object.getObjectByName("Surface");
 		     var outline = object.getObjectByName("Outline");
 		     var mask = object.getObjectByName("Mask");
@@ -250,15 +251,21 @@
 		     } );
 		     var mesh = new THREE.Mesh(mask.geometry, maskMat );
 		     mesh.scale.set(scale, scale, scale);
-		     mesh.rotateY(rot);
+		     mesh.rotateX(correction);
+		     var q = new THREE.Quaternion();
+		     //q.setFromAxisAngle( new THREE.Vector3(1,0,0), correction ); // axis must be normalized, angle in radians
+		     q.setFromAxisAngle( new THREE.Vector3(0,1,0), rot ); // axis must be normalized, angle in radians
+		     mesh.quaternion.multiplyQuaternions( q, mesh.quaternion );
+		    
+		     //mesh.rotateY(rot);
 		     scene.add(mesh);
 		     var meshVertices = surface.geometry.vertices.length + outline.geometry.vertices.length;
 		     for ( var i = 0; i < meshVertices; i++ ) {
 			 if ( i < surface.geometry.vertices.length ) {
-			     boids[i].setMeshGoal(surface.geometry.vertices[i].applyAxisAngle(new THREE.Vector3(0,1,0), rot).multiplyScalar(scale));
+			     boids[i].setMeshGoal(surface.geometry.vertices[i].applyAxisAngle(new THREE.Vector3(1,0,0), correction).applyAxisAngle(new THREE.Vector3(0,1,0), rot).multiplyScalar(scale));
 			 } else {
 			     var j = i - surface.geometry.vertices.length;
-			     boids[i].setMeshGoal(outline.geometry.vertices[j].applyAxisAngle(new THREE.Vector3(0,1,0), rot).multiplyScalar(scale));
+			     boids[i].setMeshGoal(outline.geometry.vertices[j].applyAxisAngle(new THREE.Vector3(1,0,0), correction).applyAxisAngle(new THREE.Vector3(0,1,0), rot).multiplyScalar(scale));
 			     particles[i].material.size *= 1.5;
 			     particles[i].material.opacity = 0.95;
 			     streamInfo[i].x = 0.95;
