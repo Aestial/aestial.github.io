@@ -23,13 +23,18 @@
 	     position: absolute;
 	     top: 0px; width: 100%;
 	     padding: 5px;
-	     
+	 }
+	 .test {
+	     color: #ffffff;
+	     background-color: #ffffff;
+	     position: absolute;
 	 }
 	</style>
     </head>
     <body>
 	<div id="container"></div>
 	<div id="info">Particle Demo - MomentoMX</div>
+	<div class="test">Test div</div>
 	<script src="build/three.js"></script>
 	<script src="js/libs/stats.min.js"></script>
 	<script src="js/controls/OrbitControls.js"></script>
@@ -55,10 +60,12 @@
 	 var spaceParticles, spacePositions, spaceSize, particles, particle;
 	 var boid, boids, path, modelIndex, reachedCount, maskMat, labelMaterial;
 
+	 var divElem, divObj, surface;
+
 	 var pathNodes = [
 	     { x:-700, y: -50, z: 500 },
 	     { x:-500, y: 100, z: 100 },
-	     { x:   0, y: 100, z:   0 },
+	     { x: -80, y: 100, z:  80 },
 	     { x: 250, y: -50, z: -100 }
 	 ];
 
@@ -74,23 +81,30 @@
 	     cameraTarget = new THREE.Vector3(0, 100, 0);
 	     camera = new THREE.PerspectiveCamera( 75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000 );
 	     camera.position.set(0,100,800);
+	     /*
+	     camera.addEventListener('change', function() {
+		 onCameraChange();
+	     });
+	     */
 	     //camera.lookAt(cameraTarget);
 
 	     clock = new THREE.Clock();
 	     clock.start();
-	     /*
-	     controls = new THREE.OrbitControls( camera );
-	     controls.addEventListener( 'change', render );
-	     controls.minDistance = 200.0;
-	     controls.maxDistance = 2500.0;
-	     controls.enableDamping = true;
-	     controls.dampingFactor = 0.2;
-	     controls.minPolarAngle = Math.PI/3;
-	     controls.maxPolarAngle = Math.PI/2;
-	     controls.minAzimuthAngle = -Math.PI/3;
-	     controls.maxAzimuthAngle = Math.PI/3;
-	     //controls.target = cameraTarget;
-	     */
+
+	     if (debug) {	 
+		 controls = new THREE.OrbitControls( camera );
+		 controls.addEventListener( 'change', render );
+		 controls.minDistance = 200.0;
+		 controls.maxDistance = 2500.0;
+		 controls.enableDamping = true;
+		 controls.dampingFactor = 0.2;
+		 controls.minPolarAngle = Math.PI/3;
+		 controls.maxPolarAngle = Math.PI/2;
+		 controls.minAzimuthAngle = -Math.PI/3;
+		 controls.maxAzimuthAngle = Math.PI/3;
+		 //controls.target = cameraTarget;
+	     }
+	     
 	     scene = new THREE.Scene();
 	     debugScene = new THREE.Scene();
 
@@ -110,6 +124,10 @@
 	     var goalRadius = 150;
 	     nodeGizmos = [];
 	     sphereGizmos = [];
+
+	     ////////////
+	     // PATH //
+	     ////////////
 	     
 	     for ( var i = 0; i < pathNodes.length; i++ ) {
 		 var vec = pathNodes[i];
@@ -156,102 +174,109 @@
 	     var source = { x: -800, y:0, z:200 };
 	     var sourceAmp = { x: -800, y:80, z:80 }
 
-	     aloader.load(
-		 // resource URL
-		 'img/particle-4.png',
-		 // Function when resource is loaded
-		 function ( texture ) {
-		     // do something with the texture
-		     var spaceMat = new THREE.PointsMaterial( {
+	     aloader.load( 'img/particle-4.png', function ( texture ) {
+		 var spaceMat = new THREE.PointsMaterial( {
+		     map: texture,
+		     size: Math.random()*5+5,
+		     sizeAttenuation: true,
+		     color: 0xffffff,
+		     transparent: true,
+		     opacity: Math.random()*0.3 + 0.15
+		 } );
+		 // Space particles
+		 for ( var i = 0; i < 128; i++ ) {
+		     var particle = spaceParticles[ i ] = new THREE.Points( new Vertex(), spaceMat );
+		     particle.position.x = (Math.random() - 0.5) * spaceSize.x;
+		     particle.position.y = (Math.random() - 0.5) * spaceSize.y;
+		     particle.position.z = (Math.random() - 0.5) * spaceSize.z;
+		     
+		     // Save the original position
+		     spaceInfo[i] = particle.position.clone();
+		     // Save a random offset for sinoidal movement
+		     spaceInfo[i].x = Math.random() * 10;
+		     // Save the original opacity
+		     spaceInfo[i].z = particle.material.opacity;
+		     scene.add( particle );
+		 }
+		 // Stream particles
+		 for ( var i = 0; i < 2550; i ++ ) {
+		     boid = boids[ i ] = new Boid();
+		     boid.position.x = Math.random() * sourceAmp.x + source.x;
+		     boid.position.y = Math.random() * sourceAmp.y + source.y;
+		     boid.position.z = Math.random() * sourceAmp.z + source.z;
+		     boid.velocity.x = Math.random() * 2 - 1;
+		     boid.velocity.y = Math.random() * 2 - 1;
+		     boid.velocity.z = Math.random() * 2 - 1;
+		     boid.setIndex(i);
+		     boid.setSource(source.x, source.y, source.z);
+		     boid.setRandomSource(sourceAmp.x, sourceAmp.y, sourceAmp.z);
+		     boid.setModelIndex(modelIndex);
+		     boid.setPath(path);
+		     var meshMat = new THREE.PointsMaterial( {
 			 map: texture,
-			 size: Math.random()*5+5,
+			 size: Math.random()*4+4,
 			 sizeAttenuation: true,
 			 color: 0xffffff,
 			 transparent: true,
-			 opacity: Math.random()*0.3 + 0.15
+			 opacity: Math.random()*0.4 + 0.6
 		     } );
-		     // Space particles
-		     for ( var i = 0; i < 128; i++ ) {
-			 var particle = spaceParticles[ i ] = new THREE.Points( new Vertex(), spaceMat );
-			 particle.position.x = (Math.random() - 0.5) * spaceSize.x;
-			 particle.position.y = (Math.random() - 0.5) * spaceSize.y;
-			 particle.position.z = (Math.random() - 0.5) * spaceSize.z;
-			 // Save the original position
-			 spaceInfo[i] = particle.position.clone();
-			 // Save a random offset for sinoidal movement
-			 spaceInfo[i].x = Math.random() * 10;
-			 // Save the original opacity
-			 spaceInfo[i].z = particle.material.opacity;
-			 scene.add( particle );
-		     }
-		     // Stream particles
-		     for ( var i = 0; i < 2550; i ++ ) {
-			 boid = boids[ i ] = new Boid();
-			 boid.position.x = Math.random() * sourceAmp.x + source.x;
-			 boid.position.y = Math.random() * sourceAmp.y + source.y;
-			 boid.position.z = Math.random() * sourceAmp.z + source.z;
-			 boid.velocity.x = Math.random() * 2 - 1;
-			 boid.velocity.y = Math.random() * 2 - 1;
-			 boid.velocity.z = Math.random() * 2 - 1;
-			 boid.setIndex(i);
-			 boid.setSource(source.x, source.y, source.z);
-			 boid.setRandomSource(sourceAmp.x, sourceAmp.y, sourceAmp.z);
-			 boid.setModelIndex(modelIndex);
-			 boid.setPath(path);
-			 var meshMat = new THREE.PointsMaterial( {
-			     map: texture,
-			     size: Math.random()*4+4,
-			     sizeAttenuation: true,
-			     color: 0xffffff,
-			     transparent: true,
-			     opacity: Math.random()*0.5 + 0.5
-			 } );
-			 particle = particles[ i ] = new THREE.Points( new Vertex(), meshMat );
-			 for ( var j = 0; j < particle.geometry.vertices.length; j++ ) {
-			     particle.geometry.vertices[j].x = Math.random() * 30 -15;
-			     particle.geometry.vertices[j].y = Math.random() * 30 -15;
-			     particle.geometry.vertices[j].z = Math.random() * 30 -15;		     
-			 }
-			 streamInfo [i] = particle.material.opacity;
-			 scene.add( particle );
-		     }
-
-		     // Load object
-		     cloader.load( "obj/Chair.json", function ( object ) {
-			 var surface = object.getObjectByName("Surface");
-			 var outline = object.getObjectByName("Outline");
-			 var mask = object.getObjectByName("Mask");
-			 if ( debug ) {
-			     console.log(object);
-			     console.log(surface.geometry);
-			     console.log(outline.geometry);
-			     console.log(mask.geometry);
-			 }
-			 var color = debug ? 0x505050 : 0x000000;
-			 var scale = 1.5;
-			 maskMat = new THREE.MeshBasicMaterial( {
-			     color: color,
-			     transparent: true,
-			     opacity: 0,
-			     wireframe: debug
-			 } );
-			 var mesh = new THREE.Mesh(mask.geometry, maskMat );
-			 mesh.scale.set(0.9*scale,0.9*scale,0.9*scale);
-			 scene.add(mesh);
-			 var meshVertices = surface.geometry.vertices.length + outline.geometry.vertices.length;
-			 for ( var i = 0; i < meshVertices; i++ ) {
-			     if ( i < surface.geometry.vertices.length ) {
-				 boids[i].setMeshGoal(surface.geometry.vertices[i].multiplyScalar(scale));
-			     } else {
-				 var j = i - surface.geometry.vertices.length;
-				 boids[i].setMeshGoal(outline.geometry.vertices[j].multiplyScalar(scale));
-				 particles[i].material.size *= 1.75;
-				 particles[i].material.opacity = 0.95;
-				 streamInfo[i].x = 0.95;
-			     }	 
-			 }
-		     } );
+		     particle = particles[ i ] = new THREE.Points( new Vertex(), meshMat );
+		     particle.geometry.vertices[0].x = Math.random() * 15 -7.5;
+		     particle.geometry.vertices[0].y = Math.random() * 15 -7.5;
+		     particle.geometry.vertices[0].z = Math.random() * 15 -7.5;
+		     streamInfo [i] = particle.material.opacity;
+		     scene.add( particle );
 		 }
+
+		 // Load object
+		 cloader.load( "obj/Chair.json", function ( object ) {
+		     var rot = -Math.PI/4;
+		     surface = object.getObjectByName("Surface");
+		     var outline = object.getObjectByName("Outline");
+		     var mask = object.getObjectByName("Mask");
+		     if ( debug ) {
+			 console.log(object);
+			 console.log(surface.geometry);
+			 console.log(outline.geometry);
+			 console.log(mask.geometry);
+		     }
+		     var color = debug ? 0x505050 : 0x000000;
+		     var scale = 1.5;
+		     maskMat = new THREE.MeshBasicMaterial( {
+			 color: color,
+			 transparent: true,
+			 opacity: 0,
+			 wireframe: debug
+		     } );
+		     var mesh = new THREE.Mesh(mask.geometry, maskMat );
+		     mesh.scale.set(scale, scale, scale);
+		     mesh.rotateY(rot);
+		     scene.add(mesh);
+		     var meshVertices = surface.geometry.vertices.length + outline.geometry.vertices.length;
+		     for ( var i = 0; i < meshVertices; i++ ) {
+			 if ( i < surface.geometry.vertices.length ) {
+			     boids[i].setMeshGoal(surface.geometry.vertices[i].applyAxisAngle(new THREE.Vector3(0,1,0), rot).multiplyScalar(scale));
+			 } else {
+			     var j = i - surface.geometry.vertices.length;
+			     boids[i].setMeshGoal(outline.geometry.vertices[j].applyAxisAngle(new THREE.Vector3(0,1,0), rot).multiplyScalar(scale));
+			     particles[i].material.size *= 1.5;
+			     particles[i].material.opacity = 0.95;
+			     streamInfo[i].x = 0.95;
+			 }	 
+		     }
+		     ////////////
+		     // BUTTON //
+		     ////////////
+		     
+		     divElem = document.getElementsByClassName('test')[0];
+		     console.log(divElem);
+		     divObj = new THREE.Object3D();
+		     divObj.position = surface.geometry.vertices[0].clone();
+		     console.log(divObj);
+		     scene.add(divObj);
+		     
+		 } );
+	     }
 	     );
 
 	     ////////////
@@ -260,7 +285,7 @@
 	     
 	     bloader.load( "obj/Diseno.json", function ( geometry ) {
 		 var color = debug ? 0x505050 : 0x000000;
-		 var scale = 2;
+		 var scale = 2.5;
 		 labelMaterial = new THREE.MeshBasicMaterial( {
 		     color: 0xffffff,
 		     transparent: true,
@@ -269,10 +294,11 @@
 		 } );
 		 var mesh = new THREE.Mesh(geometry, labelMaterial );
 		 mesh.rotateX ( Math.PI/2 )
-		 mesh.position.set(450, 0, -300);
+		 mesh.position.set(150, 0, -250);
 		 mesh.scale.set(scale, scale, scale);
 		 scene.add(mesh);
 	     } );
+
 	     
    	     renderer = new THREE.WebGLRenderer({ antialias: true });
 	     renderer.autoClear = false;
@@ -313,8 +339,10 @@
 	 //
 	 function animate() {
 	     requestAnimationFrame( animate );
-	     if (debug) stats.begin();
-	     //controls.update();
+	     if (debug) {
+		 stats.begin();
+		 controls.update();
+	     } 
 	     render();
 	     if (debug) stats.end();
 	 }
@@ -367,14 +395,65 @@
 		 labelMaterial.opacity = opacity;
 	     }
 
-	     camera.position.x += ( mouseX - camera.position.x ) * .025;
-	     camera.lookAt( scene.position );
+	     if (!debug) {
+		 camera.position.x += ( mouseX - camera.position.x ) * .025;
+		 camera.lookAt( scene.position );
+		 //onCameraChange();
+	     }
 	     
 	     // Render scenes
 	     renderer.clear();
 	     renderer.render( scene, camera );
 	     renderer.clearDepth();
 	     renderer.render( debugScene, camera );
+	 }
+
+	 function Reset () {
+	     // Stream particles
+	     for ( var i = 0; i < 2550; i ++ ) {
+		 boid.position.x = Math.random() * sourceAmp.x + source.x;
+		 boid.position.y = Math.random() * sourceAmp.y + source.y;
+		 boid.position.z = Math.random() * sourceAmp.z + source.z;
+		 boid.velocity.x = Math.random() * 2 - 1;
+		 boid.velocity.y = Math.random() * 2 - 1;
+		 boid.velocity.z = Math.random() * 2 - 1;
+		 boid.setSource(source.x, source.y, source.z);
+		 boid.setRandomSource(sourceAmp.x, sourceAmp.y, sourceAmp.z);
+		 boid.setModelIndex(modelIndex);
+		 boid.setPath(path);
+	     }
+	 }
+
+	 function onCameraChange()
+	 {
+	     console.log(divObj);
+	     var proj = toScreenPosition(divObj, camera);
+	     console.log(proy);
+	     divElem.style.left = proj.x + 'px';
+	     divElem.style.top = proj.y + 'px';
+	     
+	 }
+
+	 function toScreenPosition(obj, camera)
+	 {
+	     var vector = new THREE.Vector3();
+	     
+	     // TODO: need to update this when resize window
+	     var widthHalf = 0.5*renderer.context.canvas.width;
+	     var heightHalf = 0.5*renderer.context.canvas.height;
+	     
+	     obj.updateMatrixWorld();
+	     vector.setFromMatrixPosition(obj.matrixWorld);
+	     vector.project(camera);
+	     
+	     vector.x = ( vector.x * widthHalf ) + widthHalf;
+	     vector.y = - ( vector.y * heightHalf ) + heightHalf;
+	     
+	     return { 
+		 x: vector.x,
+		 y: vector.y
+	     };
+
 	 }
 
 	</script>
