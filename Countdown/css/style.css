@@ -1,0 +1,27 @@
+body {
+    font-family: 'Tangerine', serif;
+    font-size: 48px;
+    background-color: lightblue;
+    background-image: url("/images/winter_lsp.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    //background-position: center;
+    background-position: 90% 40%;
+    background-size: auto 50%;
+    position: relative;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+p {
+    font-family: verdana;
+    font-size: 20px;
+}
