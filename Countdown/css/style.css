@@ -2,12 +2,6 @@ body {
     font-family: 'Tangerine', serif;
     font-size: 48px;
     background-color: lightblue;
-    background-image: url("../images/winter_lsp.png");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    //background-position: center;
-    background-position: 90% 40%;
-    background-size: auto 50%;
     position: relative;
 }
 
@@ -20,8 +14,39 @@ h1 {
     transform: translate(-50%, -50%);
 }
 
+div {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("../images/winter_lsp.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 90% 40%;
+    background-size: auto 50%;
+}
 
-p {
-    font-family: verdana;
-    font-size: 20px;
+.floating{
+    float: left;
+    -webkit-animation-name: Floatingx;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: ease-in-out;
+    -moz-animation-name: Floating;
+    -moz-animation-duration: 3s;
+    -moz-animation-iteration-count: infinite;
+    -moz-animation-timing-function: ease-in-out;
+    margin-left: 30px;
+    margin-top: 5px;
+}
+
+@-webkit-keyframes Floatingx{
+    from {-webkit-transform:translate(0, 0px);}
+    65% {-webkit-transform:translate(0, 15px);}
+    to {-webkit-transform: translate(0, -0px);    }    
+}
+    
+@-moz-keyframes Floating{
+    from {-moz-transform:translate(0, 0px);}
+    65% {-moz-transform:translate(0, 15px);}
+    to {-moz-transform: translate(0, -0px);}    
 }
