@@ -2,7 +2,7 @@ body {
     font-family: 'Tangerine', serif;
     font-size: 48px;
     background-color: lightblue;
-    background-image: url("/images/winter_lsp.png");
+    background-image: url("../images/winter_lsp.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     //background-position: center;
