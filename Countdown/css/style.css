@@ -28,7 +28,7 @@ body {
 }
 
 h1 {
-    font-size: 88px;
+    font-size: 10vmin;;
     /*
     color: black;
     -webkit-text-fill-color: black; /* Will override color (regardless of order) */
@@ -46,7 +46,7 @@ h1 {
 }
 
 #lsp-space{
-    position: absolute;
+    position: inherit;
     width: 50%;
     height: 100%;
 }
