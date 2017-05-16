@@ -43,19 +43,19 @@
 		version="1.1"
 		viewBox="0 0 270.93333 270.93334"
 		height="2048"
-		width="2048">
+width="2048">
 		<g
 		    transform="translate(0,-26.06665)"
 		    id="layer1">
 		    <ellipse
-			style="fill:#ffffff;stroke-width:0.0918636"
+			style="stroke-width:0.07460432"
 			ry="2.2670977"
 			rx="1.2813781"
 			cy="153.26266"
 			cx="122.20228"
 			id="path3695" />
 		    <ellipse
-			style="fill:#ffffff;stroke-width:0.0918636"
+			style="stroke-width:0.0799168"
 			ry="2.2670977"
 			rx="1.4703662"
 			cy="153.13368"
@@ -64,8 +64,14 @@
 		    <path
 			id="path3714"
 			d="m 130.54375,162.45293 c -0.005,0 4.88798,6.20249 9.3412,-0.48412"
-			style="fill:none;stroke:#ffffff;stroke-width:0.60481453;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+			style="fill:none;stroke:#000000;stroke-width:0.60481453;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+		    <path
+			transform="matrix(0.46801728,0,0,0.78624578,74.495436,27.60319)"
+			d="m 140.08743,130.42826 c 0.18182,0.68274 -4.94763,4.00882 -5.19858,4.66655 -0.25095,0.65773 1.42777,6.64088 0.84213,7.02652 -0.58564,0.38564 -5.3437,-3.37708 -6.04407,-3.40883 -0.70037,-0.0318 -5.80871,3.36192 -6.35705,2.91974 -0.54835,-0.44218 1.55595,-6.16958 1.36311,-6.84718 -0.19283,-0.67761 -5.05196,-4.54281 -4.81707,-5.20262 0.2349,-0.65981 6.41385,-0.35391 6.99551,-0.74327 0.58167,-0.38935 2.65303,-6.03507 3.35741,-6.00913 0.70439,0.0259 2.43179,6.00778 2.98558,6.4398 0.55378,0.43203 6.6912,0.47567 6.87303,1.15842 z"
+			id="path4551"
+			style="fill:#ffe84e;fill-opacity:1;stroke:#bf6500;stroke-width:1.40097344;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.67336683;paint-order:stroke fill markers" />
 		</g>
+
 	    </svg>
 	</div>
 
@@ -336,13 +342,15 @@
 
 	 void main() {
 	     /*
-	     float yaw = .5 - atan( vReflect.z, - vReflect.x ) / ( 2.0 * PI );
-	     float pitch = .5 - asin( vReflect.y ) / PI;
-	     vec2 pos = vec2( yaw, pitch );
-	     */
-	     vec3 diffColor = texture2D( tDiff, vUv ).rgb;
-	     vec3 faceColor = texture2D( tFace, vUv ).rgb;
-	     vec4 color = vec4(diffColor*(1.0-faceColor), 1.0); 
+		float yaw = .5 - atan( vReflect.z, - vReflect.x ) / ( 2.0 * PI );
+		float pitch = .5 - asin( vReflect.y ) / PI;
+		vec2 pos = vec2( yaw, pitch );
+	      */
+	     vec4 diffColor = texture2D( tDiff, vUv );
+	     vec4 faceColor = texture2D( tFace, vUv );
+	     vec3 color = mix( diffColor.rgb, faceColor.rgb, faceColor.a );
+	     //vec4 color = vec4(diffColor + (1.0-faceColor), 1.0); 
+	     vec4 finalColor = vec4(color,1.0);
 
 	     float diffuse_value1 = .0015 * max(dot(vNormal, vec3( -490.0, 29.8, -85.8 ) ), 0.0);
 	     float diffuse_value2 = .0005 * max(dot(vNormal, vec3( -460.0, 40.27, 187.4 ) ), 0.0);
@@ -355,7 +363,7 @@
 	     if (offset > 0.0){
 		 gl_FragColor = vec4(0.0,0.0,0.0,1.0);
 	     }else {
-		 gl_FragColor = color;
+		 gl_FragColor = finalColor;
 	     }
 
 	 }
@@ -466,8 +474,8 @@
 	 function render() {
 
 	     var dateNow = Date.now();
-	     var time = .00015 * ( dateNow - start );
-	     var weight =  6.0 * ( .5 + .5 * Math.sin( .00025 * ( dateNow - start ) ) );
+	     var time = .00035 * ( dateNow - start );
+	     var weight =  9.0 * ( .5 + .5 * Math.sin( .00025 * ( dateNow - start ) ) );
 
 	     if (outlineMaterial) {		 
 		 outlineMaterial.uniforms[ 'time' ].value = material.uniforms[ 'time' ].value = time;
@@ -486,7 +494,7 @@
 </html>
 
 
-	 }
+}
 
 	</script>
 
