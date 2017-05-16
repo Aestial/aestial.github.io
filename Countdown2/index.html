@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-	<title>LSP - Perlin noise | displacement</title>
+	<title>LSP - Perlin noise displacement</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 	<style>
@@ -32,7 +32,7 @@
 	<p><b>Animated LSP</b> | Click and drag to rotate, mouse wheel to zoom.
 	</p>
 
-	<div id="svgContainer" style="width: 2000px; height: 2000px;">
+	<div id="svgContainer" style="width:2048px; height:2048px;">
 	    <svg
 		xmlns:dc="http://purl.org/dc/elements/1.1/"
 		xmlns:cc="http://creativecommons.org/ns#"
@@ -42,31 +42,29 @@
 		id="svg8"
 		version="1.1"
 		viewBox="0 0 270.93333 270.93334"
-		height="1024"
-		width="1024">
-		<defs
-		    id="defs2" />
+		height="2048"
+		width="2048">
 		<g
 		    transform="translate(0,-26.06665)"
 		    id="layer1">
 		    <ellipse
-			style="stroke-width:0.0918636"
+			style="fill:#ffffff;stroke-width:0.0918636"
 			ry="2.2670977"
-			rx="1.9428365"
-			cy="152.97919"
-			cx="127.39946"
+			rx="1.2813781"
+			cy="153.26266"
+			cx="122.20228"
 			id="path3695" />
 		    <ellipse
-			style="stroke-width:0.0918636"
+			style="fill:#ffffff;stroke-width:0.0918636"
 			ry="2.2670977"
-			rx="1.9428365"
-			cy="153.32268"
+			rx="1.4703662"
+			cy="153.13368"
 			cx="147.89325"
 			id="path3695-6" />
 		    <path
 			id="path3714"
-			d="m 130.84783,161.16395 c 0,0 7.49409,6.05465 13.96962,-0.48531"
-			style="fill:none;stroke:#000000;stroke-width:0.73332542;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+			d="m 130.54375,162.45293 c -0.005,0 4.88798,6.20249 9.3412,-0.48412"
+			style="fill:none;stroke:#ffffff;stroke-width:0.60481453;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
 		</g>
 	    </svg>
 	</div>
@@ -330,30 +328,34 @@
 	 varying vec3 vReflect;
 	 varying float ao;
 	 uniform sampler2D tDiff;
+	 uniform sampler2D tFace;
 	 uniform float time;
 	 uniform float offset;
 
 	 float PI = 3.14159265358979323846264;
 
 	 void main() {
-
+	     /*
 	     float yaw = .5 - atan( vReflect.z, - vReflect.x ) / ( 2.0 * PI );
 	     float pitch = .5 - asin( vReflect.y ) / PI;
 	     vec2 pos = vec2( yaw, pitch );
-	     //vec3 color = texture2D( tShine, pos ).rgb;
-	     vec3 color = texture2D(tDiff, vUv).rgb;
+	     */
+	     vec3 diffColor = texture2D( tDiff, vUv ).rgb;
+	     vec3 faceColor = texture2D( tFace, vUv ).rgb;
+	     vec4 color = vec4(diffColor*(1.0-faceColor), 1.0); 
 
 	     float diffuse_value1 = .0015 * max(dot(vNormal, vec3( -490.0, 29.8, -85.8 ) ), 0.0);
 	     float diffuse_value2 = .0005 * max(dot(vNormal, vec3( -460.0, 40.27, 187.4 ) ), 0.0);
 	     float diffuse_value3 = .0010 * max(dot(vNormal, vec3( 175.5, 30.04, 466.4 ) ), 0.0);
 	     float diffuse_value4 = .0005 * max(dot(vNormal, vec3( 466.0, 45.3, 172.9 ) ), 0.0);
 
-	     gl_FragColor = vec4( color - .15 * ao + .5 * vec3( diffuse_value1 + diffuse_value2 + diffuse_value3 + diffuse_value4 ), 1.0 );
+	     //gl_FragColor = vec4( color - .15 * ao + .5 * vec3( diffuse_value1 + diffuse_value2 + diffuse_value3 + diffuse_value4 ), 1.0 );
+	     //color *= face;
 
 	     if (offset > 0.0){
 		 gl_FragColor = vec4(0.0,0.0,0.0,1.0);
 	     }else {
-		 gl_FragColor = vec4(color.r,color.g,color.b,1.0);
+		 gl_FragColor = color;
 	     }
 
 	 }
@@ -363,6 +365,7 @@
 	<script>
 
 	 var container, renderer, scene, camera, mesh, fov = 45;
+	 var material, outlineMaterial;
 	 var start = Date.now();
 
 	 window.addEventListener( 'load', init );
@@ -382,44 +385,6 @@
 
 	     var diffTexture = new THREE.TextureLoader().load( 'images/lsp_diff.png' );
 	     var displacementTexture = new THREE.TextureLoader().load( 'images/lsp_disp.png' );
-	     
-	     material = new THREE.ShaderMaterial( {
-
-		 uniforms: {
-		     tDiff: { type: "t", value: diffTexture },
-		     tDisp: { type: "t", value: displacementTexture },
-		     time: { type: "f", value: 0 },
-		     weight: { type: "f", value: 0 },
-		     offset: {type: "f", value: 0.0 }
-		 },
-		 vertexShader: document.getElementById( 'vertexShader' ).textContent,
-		 fragmentShader: document.getElementById( 'fragmentShader' ).textContent
-
-	     } );
-
-	     outlineMaterial = new THREE.ShaderMaterial( {
-
-		 uniforms: {
-		     tDiff: { type: "t", value: diffTexture },
-		     tDisp: { type: "t", value: displacementTexture },
-		     time: { type: "f", value: 0 },
-		     weight: { type: "f", value: 0 },
-		     offset: {type: "f", value: 0.25 }
-		 },
-		 vertexShader: document.getElementById( 'vertexShader' ).textContent,
-		 fragmentShader: document.getElementById( 'fragmentShader' ).textContent
-
-	     } );
-
-	     mesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 5 ), material );
-	     mesh.rotation.y = 2* Math.PI / 3;
-	     outlineMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 5 ), outlineMaterial );
-	     outlineMesh.material.depthWrite = false;
-	     outlineMesh.quaternion = mesh.quaternion;
-	     mesh.rotation.y = 2* Math.PI / 3;
-	     outlineMesh.rotation.y = 2* Math.PI / 3;
-	     outScene.add( outlineMesh );
-	     scene.add( mesh );
 
 	     renderer = new THREE.WebGLRenderer( { alpha:true, antialias:true });
 	     renderer.setPixelRatio( window.devicePixelRatio );
@@ -428,6 +393,59 @@
 	     renderer.setClearColor (0x000000, 0);
 
 	     container.appendChild( renderer.domElement );
+
+	     var svg = document.getElementById("svgContainer").querySelector("svg");
+	     var svgData = (new XMLSerializer()).serializeToString(svg);
+
+	     var canvas = document.createElement("canvas");
+	     var svgSize = svg.getBoundingClientRect();
+	     canvas.width = svgSize.width;
+	     canvas.height = svgSize.height;
+	     var ctx = canvas.getContext("2d");
+
+	     var img = document.createElement("img");
+	     img.setAttribute("src", "data:image/svg+xml;base64," + window.btoa(unescape(encodeURIComponent(svgData))) );
+
+	     img.onload = function() {
+		 ctx.drawImage(img, 0, 0);
+
+		 var faceTexture = new THREE.Texture(canvas);
+		 faceTexture.needsUpdate = true;
+
+		 material = new THREE.ShaderMaterial( {
+		     uniforms: {
+			 tDiff: { type: "t", value: diffTexture },
+			 tFace: { type: "t", value: faceTexture },
+			 tDisp: { type: "t", value: displacementTexture },
+			 time: { type: "f", value: 0 },
+			 weight: { type: "f", value: 0 },
+			 offset: {type: "f", value: 0.0 }
+		     },
+		     vertexShader: document.getElementById( 'vertexShader' ).textContent,
+		     fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+		 } );
+
+		 outlineMaterial = new THREE.ShaderMaterial( {
+		     uniforms: {
+			 tDisp: { type: "t", value: displacementTexture },
+			 time: { type: "f", value: 0 },
+			 weight: { type: "f", value: 0 },
+			 offset: {type: "f", value: 0.35 }
+		     },
+		     vertexShader: document.getElementById( 'vertexShader' ).textContent,
+		     fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+		 } );
+		 
+		 mesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 5 ), material );
+		 mesh.rotation.y = 2* Math.PI / 3;
+		 outlineMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 5 ), outlineMaterial );
+		 outlineMesh.material.depthWrite = false;
+		 outlineMesh.quaternion = mesh.quaternion;
+		 mesh.rotation.y = 2* Math.PI / 3;
+		 outlineMesh.rotation.y = 2* Math.PI / 3;
+		 outScene.add( outlineMesh );
+		 scene.add( mesh );
+	     };
 
 	     var controls = new THREE.OrbitControls( camera, renderer.domElement );
 
@@ -451,8 +469,10 @@
 	     var time = .00015 * ( dateNow - start );
 	     var weight =  6.0 * ( .5 + .5 * Math.sin( .00025 * ( dateNow - start ) ) );
 
-	     outlineMaterial.uniforms[ 'time' ].value = material.uniforms[ 'time' ].value = time;
-	     outlineMaterial.uniforms[ 'weight' ].value = material.uniforms[ 'weight' ].value = weight;
+	     if (outlineMaterial) {		 
+		 outlineMaterial.uniforms[ 'time' ].value = material.uniforms[ 'time' ].value = time;
+		 outlineMaterial.uniforms[ 'weight' ].value = material.uniforms[ 'weight' ].value = weight;
+	     }
 	     
 	     renderer.render( outScene, camera );
 	     renderer.render( scene, camera );
