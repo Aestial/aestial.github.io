@@ -18,12 +18,18 @@
 	     background-image: linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
 	     margin: 0px;
 	     overflow: hidden;
+	     width : 100%;
+	     height: 100%;
 	 }
 	 p{ position: absolute; left: 10px; top: 10px; opacity: .5; line-height: 1.4em }
 	 p:hover{ opacity: 1 }
 	 a{ color: black; text-shadow: 0 1px 0 rgba( 0,0,0,.5 ) }
 	 div#container{
 	     position: absolute;
+	 }
+	 svg{
+	     visibility: hidden;
+	     //display: none;
 	 }
 	</style>
     </head>
@@ -32,7 +38,7 @@
 	<p><b>Animated LSP</b> | Click and drag to rotate, mouse wheel to zoom.
 	</p>
 
-	<div id="svgContainer" style="width:2048px; height:2048px;">
+	<div id="svgContainer" style="width:100%; height:100%;">
 	    <svg
 		xmlns:dc="http://purl.org/dc/elements/1.1/"
 		xmlns:cc="http://creativecommons.org/ns#"
@@ -42,8 +48,8 @@
 		id="svg8"
 		version="1.1"
 		viewBox="0 0 270.93333 270.93334"
-		height="2048"
-width="2048">
+		height="1024"
+width="1024">
 		<g
 		    transform="translate(0,-26.06665)"
 		    id="layer1">
@@ -386,7 +392,7 @@ width="2048">
 	     outScene  = new THREE.Scene();
 
 	     camera = new THREE.PerspectiveCamera( fov, window.innerWidth / window.innerHeight, 1, 10000 );
-	     camera.position.z = 100;
+	     camera.position.z = 8.5;
 	     camera.target = new THREE.Vector3( 0, 0, 0 );
 
 	     scene.add( camera );
@@ -438,15 +444,15 @@ width="2048">
 			 tDisp: { type: "t", value: displacementTexture },
 			 time: { type: "f", value: 0 },
 			 weight: { type: "f", value: 0 },
-			 offset: {type: "f", value: 0.35 }
+			 offset: {type: "f", value: 0.035 }
 		     },
 		     vertexShader: document.getElementById( 'vertexShader' ).textContent,
 		     fragmentShader: document.getElementById( 'fragmentShader' ).textContent
 		 } );
 		 
-		 mesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 5 ), material );
+		 mesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 1, 5 ), material );
 		 mesh.rotation.y = 2* Math.PI / 3;
-		 outlineMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 5 ), outlineMaterial );
+		 outlineMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 1, 5 ), outlineMaterial );
 		 outlineMesh.material.depthWrite = false;
 		 outlineMesh.quaternion = mesh.quaternion;
 		 mesh.rotation.y = 2* Math.PI / 3;
@@ -456,6 +462,14 @@ width="2048">
 	     };
 
 	     var controls = new THREE.OrbitControls( camera, renderer.domElement );
+	     controls.minPolarAngle = 4*Math.PI/10; // radians
+	     controls.maxPolarAngle = 6*Math.PI/10; // radians
+	     // If set, must be a sub-interval of the interval [ - Math.PI, Math.PI ].
+	     controls.minAzimuthAngle = -Math.PI/4; // radians
+	     controls.maxAzimuthAngle = Math.PI/4; // radians
+	     controls.rotateSpeed = 0.05;
+	     controls.enableKeys = false;
+	     controls.enableZoom = false;
 
 	     window.addEventListener( 'resize', onWindowResize, false );
 
@@ -475,7 +489,7 @@ width="2048">
 
 	     var dateNow = Date.now();
 	     var time = .00035 * ( dateNow - start );
-	     var weight =  9.0 * ( .5 + .5 * Math.sin( .00025 * ( dateNow - start ) ) );
+	     var weight =  0.5 * ( .5 + .5 * Math.sin( .00025 * ( dateNow - start ) ) );
 
 	     if (outlineMaterial) {		 
 		 outlineMaterial.uniforms[ 'time' ].value = material.uniforms[ 'time' ].value = time;

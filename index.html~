@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html> 
+	<head> 
+	    <title>Aestial's Web Proyects</title>
+	    <meta charset="UTF-8">
+	    <link rel="stylesheet" href="css/style.css">
+		
+	</head> 
+	<body>
+	    <div class="container">
+		<header>
+		    <H1>Aestial's Web Proyects Main Page.</H1>
+		</header>
+		<nav>
+		    <ul>
+			<li><a href="Portfolio/">Portfolio</a></li>
+			<li><a href="BoneNoise/">Bone Noise</a></li>
+			<li><a href="Countdown/">LSP Countdown</a></li>
+			<li><a href="DragonBall/">Dragon Ball Catalog</a></li>
+		    </ul>
+		</nav>
+		<article>
+		    <h1>Hello visitor!</h1>
+		    <p>This is the root page of my web projects hosted by Github.</p>
+		    <p>Please select any option on the left side for further information.</p>
+		</article>
+		<footer>Jaime Hernández - 2016</footer>
+	    </div>
+	    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+		
+		<!-- App script -->
+
+	</body> 
+</html>
