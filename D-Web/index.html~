@@ -354,27 +354,6 @@ width="1024">
 
 	</script>
 
-	<script type="x-shader/x-vertex" id="Outline_vertexShader" >
-
-	 uniform float offset;
-	 
-	 void main() {
-	     vec3 newPosition = position + offset * normal;
-	     gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
-	 }
-	 
-	</script>
-
-	<script type="x-shader/x-fragment" id="Outline_fragmentShader">
-
-	 float PI = 3.14159265358979323846264;
-
-	 void main() {
-	    gl_FragColor = vec4(0.0,0.0,0.0,1.0);
-	 }
-
-	</script>
-
 	<script>
 
 	 // Date(year, month, day, hours, minutes, seconds, milliseconds)
@@ -414,10 +393,6 @@ width="1024">
 	     scene = new THREE.Scene();
 	     outScene  = new THREE.Scene();
 
-	     
-	     // instantiate a loader
-	     var loader = new THREE.JSONLoader();
-
 	     camera = new THREE.PerspectiveCamera( fov, window.innerWidth / window.innerHeight, 1, 10000 );
 	     camera.position.z = 8.5;
 	     camera.target = new THREE.Vector3( 0, 0, 0 );
@@ -448,7 +423,6 @@ width="1024">
 	     img.setAttribute("src", "data:image/svg+xml;base64," + window.btoa(unescape(encodeURIComponent(svgData))) );
 
 	     img.onload = function() {
-		 	 
 		 ctx.drawImage(img, 0, 0);
 
 		 var faceTexture = new THREE.Texture(canvas);
@@ -488,60 +462,6 @@ width="1024">
 		 outlineMesh.rotation.y = Math.PI / 2;
 		 outScene.add( outlineMesh );
 		 scene.add( mesh );
-
-		 // load a resource
-		 loader.load(
-
-		     // resource URL
-		     'models/lsp_arm.json',
-
-		     // Function when resource is loaded
-		     function ( geometry, materials ) {
-			 armMaterial = new THREE.MeshBasicMaterial( {
-			     map : diffTexture
-			 } );
-			 
-			 /*
-			 armOutlineMaterial = new THREE.ShaderMaterial( {
-			     uniforms: {
-				 offset: {type: "f", value: 0.035 }
-			     },
-			     vertexShader: document.getElementById( 'Outline_vertexShader' ).textContent,
-			     fragmentShader: document.getElementById( 'Outline_fragmentShader' ).textContent
-			 } );
-			 */
-
-			 armOutlineMaterial = new THREE.MeshBasicMaterial( {
-			     color : new THREE.Color( 0x000000 )
-			 } );
-
-			 var arm = new THREE.Mesh( geometry, armMaterial );
-			 arm.scale.set(1.35,1.35,1.35);
-			 arm.position.set(-1,-0.05,-0.35);
-			 scene.add( arm );
-			 var outlineArm = new THREE.Mesh( geometry, armOutlineMaterial );
-			 outlineArm.material.depthWrite = false;
-			 //outlineArm.scale.set(1.35,1.35,1.35);
-			 outlineArm.scale.set(1.4,1.4,1.4);
-			 outlineArm.position.set(-1,-0.05,-0.35);
-			 outScene.add( outlineArm );
-
-			 var arm2 = new THREE.Mesh( geometry, armMaterial );
-			 arm2.rotation.y = Math.PI;
-			 arm2.scale.set(1.35,1.35,1.35);
-			 arm2.position.set(1.05,-0.05,1.0);
-			 scene.add( arm2 );
-			 var outlineArm2 = new THREE.Mesh( geometry, armOutlineMaterial );
-			 outlineArm2.material.depthWrite = false;
-			 //outlineArm.scale.set(1.35,1.35,1.35);
-			 outlineArm2.rotation.y = Math.PI;
-			 outlineArm2.scale.set(1.4,1.4,1.4);
-			 outlineArm2.position.set(1.05,-0.05,1.0);
-			 outScene.add( outlineArm2 );
-
-		     }
-		 );
-		 
 	     };
 	     
 	     render();
