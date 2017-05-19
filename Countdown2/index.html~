@@ -1,38 +1,18 @@
 <!doctype html>
 <html lang="en">
     <head>
-	<title>LSP - Perlin noise displacement</title>
+	<title>D-web feat. LSP</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<style>
-	 *{ box-sizing: border-box; margin: 0; padding: 0 }
-	 body {
-	     color: #000000f;
-	     font-family: tahoma;
-	     font-size:13px;
-	     background-color: rgb(255,229,237);
-	     background-image: -o-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
-	     background-image: -moz-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
-	     background-image: -webkit-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,255) 100%);
-	     background-image: -ms-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
-	     background-image: linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
-	     margin: 0px;
-	     overflow: hidden;
-	 }
-	 p{ position: absolute; left: 10px; top: 10px; opacity: .5; line-height: 1.4em }
-	 p:hover{ opacity: 1 }
-	 a{ color: black; text-shadow: 0 1px 0 rgba( 0,0,0,.5 ) }
-	 div#container{
-	     position: absolute;
-	 }
-	</style>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
 	<div id="container"></div>
-	<p><b>Animated LSP</b> | Click and drag to rotate, mouse wheel to zoom.
+	<p><a id="counter">???</a></br>
+	    <b>¡Te amo!</b>
 	</p>
 
-	<div id="svgContainer" style="width:2048px; height:2048px;">
+	<div id="svgContainer" style="width:100%; height:100%;">
 	    <svg
 		xmlns:dc="http://purl.org/dc/elements/1.1/"
 		xmlns:cc="http://creativecommons.org/ns#"
@@ -42,8 +22,8 @@
 		id="svg8"
 		version="1.1"
 		viewBox="0 0 270.93333 270.93334"
-		height="2048"
-width="2048">
+		height="1024"
+width="1024">
 		<g
 		    transform="translate(0,-26.06665)"
 		    id="layer1">
@@ -75,407 +55,447 @@ width="2048">
 	    </svg>
 	</div>
 
+	
+	<script src="js/countdown.min.js"></script>
+	<script src="js/RequestAnimationFrame.js"></script>
+
 	<script src="js/three.min.js"></script>
 	<script src="js/OrbitControls.js"></script>
 
-	<script type="x-shader/x-vertex" id="vertexShader">
+	<SCRIPT TYPE="X-SHADER/X-VERTEX" ID="VERTEXSHADER">
 
 	 //
-	 // GLSL textureless classic 3D noise "cnoise",
-	 // with an RSL-style periodic variant "pnoise".
-	 // Author:  Stefan Gustavson (stefan.gustavson@liu.se)
-	 // Version: 2011-10-11
+	 // GLSL TEXTURELESS CLASSIC 3D NOISE "CNOISE",
+	 // WITH AN RSL-STYLE PERIODIC VARIANT "PNOISE".
+	 // AUTHOR:  STEFAN GUSTAVSON (STEFAN.GUSTAVSON@LIU.SE)
+	 // VERSION: 2011-10-11
 	 //
-	 // Many thanks to Ian McEwan of Ashima Arts for the
-	 // ideas for permutation and gradient selection.
+	 // MANY THANKS TO IAN MCEWAN OF ASHIMA ARTS FOR THE
+	 // IDEAS FOR PERMUTATION AND GRADIENT SELECTION.
 	 //
-	 // Copyright (c) 2011 Stefan Gustavson. All rights reserved.
-	 // Distributed under the MIT license. See LICENSE file.
-	 // https://github.com/ashima/webgl-noise
+	 // COPYRIGHT (C) 2011 STEFAN GUSTAVSON. ALL RIGHTS RESERVED.
+	 // DISTRIBUTED UNDER THE MIT LICENSE. SEE LICENSE FILE.
+	 // HTTPS://GITHUB.COM/ASHIMA/WEBGL-NOISE
 	 //
 
-	 vec3 mod289(vec3 x)
+	 VEC3 MOD289(VEC3 X)
 	 {
-	     return x - floor(x * (1.0 / 289.0)) * 289.0;
+	     RETURN X - FLOOR(X * (1.0 / 289.0)) * 289.0;
 	 }
 
-	 vec4 mod289(vec4 x)
+	 VEC4 MOD289(VEC4 X)
 	 {
-	     return x - floor(x * (1.0 / 289.0)) * 289.0;
+	     RETURN X - FLOOR(X * (1.0 / 289.0)) * 289.0;
 	 }
 
-	 vec4 permute(vec4 x)
+	 VEC4 PERMUTE(VEC4 X)
 	 {
-	     return mod289(((x*34.0)+1.0)*x);
+	     RETURN MOD289(((X*34.0)+1.0)*X);
 	 }
 
-	 vec4 taylorInvSqrt(vec4 r)
+	 VEC4 TAYLORINVSQRT(VEC4 R)
 	 {
-	     return 1.79284291400159 - 0.85373472095314 * r;
+	     RETURN 1.79284291400159 - 0.85373472095314 * R;
 	 }
 
-	 vec3 fade(vec3 t) {
-	     return t*t*t*(t*(t*6.0-15.0)+10.0);
+	 VEC3 FADE(VEC3 T) {
+	     RETURN T*T*T*(T*(T*6.0-15.0)+10.0);
 	 }
 
-	 // Classic Perlin noise
-	 float cnoise(vec3 P)
+	 // CLASSIC PERLIN NOISE
+	 FLOAT CNOISE(VEC3 P)
 	 {
-	     vec3 Pi0 = floor(P); // Integer part for indexing
-	     vec3 Pi1 = Pi0 + vec3(1.0); // Integer part + 1
-	     Pi0 = mod289(Pi0);
-	     Pi1 = mod289(Pi1);
-	     vec3 Pf0 = fract(P); // Fractional part for interpolation
-	     vec3 Pf1 = Pf0 - vec3(1.0); // Fractional part - 1.0
-	     vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
-	     vec4 iy = vec4(Pi0.yy, Pi1.yy);
-	     vec4 iz0 = Pi0.zzzz;
-	     vec4 iz1 = Pi1.zzzz;
+	     VEC3 PI0 = FLOOR(P); // INTEGER PART FOR INDEXING
+	     VEC3 PI1 = PI0 + VEC3(1.0); // INTEGER PART + 1
+	     PI0 = MOD289(PI0);
+	     PI1 = MOD289(PI1);
+	     VEC3 PF0 = FRACT(P); // FRACTIONAL PART FOR INTERPOLATION
+	     VEC3 PF1 = PF0 - VEC3(1.0); // FRACTIONAL PART - 1.0
+	     VEC4 IX = VEC4(PI0.X, PI1.X, PI0.X, PI1.X);
+	     VEC4 IY = VEC4(PI0.YY, PI1.YY);
+	     VEC4 IZ0 = PI0.ZZZZ;
+	     VEC4 IZ1 = PI1.ZZZZ;
 
-	     vec4 ixy = permute(permute(ix) + iy);
-	     vec4 ixy0 = permute(ixy + iz0);
-	     vec4 ixy1 = permute(ixy + iz1);
+	     VEC4 IXY = PERMUTE(PERMUTE(IX) + IY);
+	     VEC4 IXY0 = PERMUTE(IXY + IZ0);
+	     VEC4 IXY1 = PERMUTE(IXY + IZ1);
 
-	     vec4 gx0 = ixy0 * (1.0 / 7.0);
-	     vec4 gy0 = fract(floor(gx0) * (1.0 / 7.0)) - 0.5;
-	     gx0 = fract(gx0);
-	     vec4 gz0 = vec4(0.5) - abs(gx0) - abs(gy0);
-	     vec4 sz0 = step(gz0, vec4(0.0));
-	     gx0 -= sz0 * (step(0.0, gx0) - 0.5);
-	     gy0 -= sz0 * (step(0.0, gy0) - 0.5);
+	     VEC4 GX0 = IXY0 * (1.0 / 7.0);
+	     VEC4 GY0 = FRACT(FLOOR(GX0) * (1.0 / 7.0)) - 0.5;
+	     GX0 = FRACT(GX0);
+	     VEC4 GZ0 = VEC4(0.5) - ABS(GX0) - ABS(GY0);
+	     VEC4 SZ0 = STEP(GZ0, VEC4(0.0));
+	     GX0 -= SZ0 * (STEP(0.0, GX0) - 0.5);
+	     GY0 -= SZ0 * (STEP(0.0, GY0) - 0.5);
 
-	     vec4 gx1 = ixy1 * (1.0 / 7.0);
-	     vec4 gy1 = fract(floor(gx1) * (1.0 / 7.0)) - 0.5;
-	     gx1 = fract(gx1);
-	     vec4 gz1 = vec4(0.5) - abs(gx1) - abs(gy1);
-	     vec4 sz1 = step(gz1, vec4(0.0));
-	     gx1 -= sz1 * (step(0.0, gx1) - 0.5);
-	     gy1 -= sz1 * (step(0.0, gy1) - 0.5);
+	     VEC4 GX1 = IXY1 * (1.0 / 7.0);
+	     VEC4 GY1 = FRACT(FLOOR(GX1) * (1.0 / 7.0)) - 0.5;
+	     GX1 = FRACT(GX1);
+	     VEC4 GZ1 = VEC4(0.5) - ABS(GX1) - ABS(GY1);
+	     VEC4 SZ1 = STEP(GZ1, VEC4(0.0));
+	     GX1 -= SZ1 * (STEP(0.0, GX1) - 0.5);
+	     GY1 -= SZ1 * (STEP(0.0, GY1) - 0.5);
 
-	     vec3 g000 = vec3(gx0.x,gy0.x,gz0.x);
-	     vec3 g100 = vec3(gx0.y,gy0.y,gz0.y);
-	     vec3 g010 = vec3(gx0.z,gy0.z,gz0.z);
-	     vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);
-	     vec3 g001 = vec3(gx1.x,gy1.x,gz1.x);
-	     vec3 g101 = vec3(gx1.y,gy1.y,gz1.y);
-	     vec3 g011 = vec3(gx1.z,gy1.z,gz1.z);
-	     vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);
+	     VEC3 G000 = VEC3(GX0.X,GY0.X,GZ0.X);
+	     VEC3 G100 = VEC3(GX0.Y,GY0.Y,GZ0.Y);
+	     VEC3 G010 = VEC3(GX0.Z,GY0.Z,GZ0.Z);
+	     VEC3 G110 = VEC3(GX0.W,GY0.W,GZ0.W);
+	     VEC3 G001 = VEC3(GX1.X,GY1.X,GZ1.X);
+	     VEC3 G101 = VEC3(GX1.Y,GY1.Y,GZ1.Y);
+	     VEC3 G011 = VEC3(GX1.Z,GY1.Z,GZ1.Z);
+	     VEC3 G111 = VEC3(GX1.W,GY1.W,GZ1.W);
 
-	     vec4 norm0 = taylorInvSqrt(vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)));
-	     g000 *= norm0.x;
-	     g010 *= norm0.y;
-	     g100 *= norm0.z;
-	     g110 *= norm0.w;
-	     vec4 norm1 = taylorInvSqrt(vec4(dot(g001, g001), dot(g011, g011), dot(g101, g101), dot(g111, g111)));
-	     g001 *= norm1.x;
-	     g011 *= norm1.y;
-	     g101 *= norm1.z;
-	     g111 *= norm1.w;
+	     VEC4 NORM0 = TAYLORINVSQRT(VEC4(DOT(G000, G000), DOT(G010, G010), DOT(G100, G100), DOT(G110, G110)));
+	     G000 *= NORM0.X;
+	     G010 *= NORM0.Y;
+	     G100 *= NORM0.Z;
+	     G110 *= NORM0.W;
+	     VEC4 NORM1 = TAYLORINVSQRT(VEC4(DOT(G001, G001), DOT(G011, G011), DOT(G101, G101), DOT(G111, G111)));
+	     G001 *= NORM1.X;
+	     G011 *= NORM1.Y;
+	     G101 *= NORM1.Z;
+	     G111 *= NORM1.W;
 
-	     float n000 = dot(g000, Pf0);
-	     float n100 = dot(g100, vec3(Pf1.x, Pf0.yz));
-	     float n010 = dot(g010, vec3(Pf0.x, Pf1.y, Pf0.z));
-	     float n110 = dot(g110, vec3(Pf1.xy, Pf0.z));
-	     float n001 = dot(g001, vec3(Pf0.xy, Pf1.z));
-	     float n101 = dot(g101, vec3(Pf1.x, Pf0.y, Pf1.z));
-	     float n011 = dot(g011, vec3(Pf0.x, Pf1.yz));
-	     float n111 = dot(g111, Pf1);
+	     FLOAT N000 = DOT(G000, PF0);
+	     FLOAT N100 = DOT(G100, VEC3(PF1.X, PF0.YZ));
+	     FLOAT N010 = DOT(G010, VEC3(PF0.X, PF1.Y, PF0.Z));
+	     FLOAT N110 = DOT(G110, VEC3(PF1.XY, PF0.Z));
+	     FLOAT N001 = DOT(G001, VEC3(PF0.XY, PF1.Z));
+	     FLOAT N101 = DOT(G101, VEC3(PF1.X, PF0.Y, PF1.Z));
+	     FLOAT N011 = DOT(G011, VEC3(PF0.X, PF1.YZ));
+	     FLOAT N111 = DOT(G111, PF1);
 
-	     vec3 fade_xyz = fade(Pf0);
-	     vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
-	     vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
-	     float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
-	     return 2.2 * n_xyz;
+	     VEC3 FADE_XYZ = FADE(PF0);
+	     VEC4 N_Z = MIX(VEC4(N000, N100, N010, N110), VEC4(N001, N101, N011, N111), FADE_XYZ.Z);
+	     VEC2 N_YZ = MIX(N_Z.XY, N_Z.ZW, FADE_XYZ.Y);
+	     FLOAT N_XYZ = MIX(N_YZ.X, N_YZ.Y, FADE_XYZ.X);
+	     RETURN 2.2 * N_XYZ;
 	 }
 
-	 // Classic Perlin noise, periodic variant
-	 float pnoise(vec3 P, vec3 rep)
+	 // CLASSIC PERLIN NOISE, PERIODIC VARIANT
+	 FLOAT PNOISE(VEC3 P, VEC3 REP)
 	 {
-	     vec3 Pi0 = mod(floor(P), rep); // Integer part, modulo period
-	     vec3 Pi1 = mod(Pi0 + vec3(1.0), rep); // Integer part + 1, mod period
-	     Pi0 = mod289(Pi0);
-	     Pi1 = mod289(Pi1);
-	     vec3 Pf0 = fract(P); // Fractional part for interpolation
-	     vec3 Pf1 = Pf0 - vec3(1.0); // Fractional part - 1.0
-	     vec4 ix = vec4(Pi0.x, Pi1.x, Pi0.x, Pi1.x);
-	     vec4 iy = vec4(Pi0.yy, Pi1.yy);
-	     vec4 iz0 = Pi0.zzzz;
-	     vec4 iz1 = Pi1.zzzz;
+	     VEC3 PI0 = MOD(FLOOR(P), REP); // INTEGER PART, MODULO PERIOD
+	     VEC3 PI1 = MOD(PI0 + VEC3(1.0), REP); // INTEGER PART + 1, MOD PERIOD
+	     PI0 = MOD289(PI0);
+	     PI1 = MOD289(PI1);
+	     VEC3 PF0 = FRACT(P); // FRACTIONAL PART FOR INTERPOLATION
+	     VEC3 PF1 = PF0 - VEC3(1.0); // FRACTIONAL PART - 1.0
+	     VEC4 IX = VEC4(PI0.X, PI1.X, PI0.X, PI1.X);
+	     VEC4 IY = VEC4(PI0.YY, PI1.YY);
+	     VEC4 IZ0 = PI0.ZZZZ;
+	     VEC4 IZ1 = PI1.ZZZZ;
 
-	     vec4 ixy = permute(permute(ix) + iy);
-	     vec4 ixy0 = permute(ixy + iz0);
-	     vec4 ixy1 = permute(ixy + iz1);
+	     VEC4 IXY = PERMUTE(PERMUTE(IX) + IY);
+	     VEC4 IXY0 = PERMUTE(IXY + IZ0);
+	     VEC4 IXY1 = PERMUTE(IXY + IZ1);
 
-	     vec4 gx0 = ixy0 * (1.0 / 7.0);
-	     vec4 gy0 = fract(floor(gx0) * (1.0 / 7.0)) - 0.5;
-	     gx0 = fract(gx0);
-	     vec4 gz0 = vec4(0.5) - abs(gx0) - abs(gy0);
-	     vec4 sz0 = step(gz0, vec4(0.0));
-	     gx0 -= sz0 * (step(0.0, gx0) - 0.5);
-	     gy0 -= sz0 * (step(0.0, gy0) - 0.5);
+	     VEC4 GX0 = IXY0 * (1.0 / 7.0);
+	     VEC4 GY0 = FRACT(FLOOR(GX0) * (1.0 / 7.0)) - 0.5;
+	     GX0 = FRACT(GX0);
+	     VEC4 GZ0 = VEC4(0.5) - ABS(GX0) - ABS(GY0);
+	     VEC4 SZ0 = STEP(GZ0, VEC4(0.0));
+	     GX0 -= SZ0 * (STEP(0.0, GX0) - 0.5);
+	     GY0 -= SZ0 * (STEP(0.0, GY0) - 0.5);
 
-	     vec4 gx1 = ixy1 * (1.0 / 7.0);
-	     vec4 gy1 = fract(floor(gx1) * (1.0 / 7.0)) - 0.5;
-	     gx1 = fract(gx1);
-	     vec4 gz1 = vec4(0.5) - abs(gx1) - abs(gy1);
-	     vec4 sz1 = step(gz1, vec4(0.0));
-	     gx1 -= sz1 * (step(0.0, gx1) - 0.5);
-	     gy1 -= sz1 * (step(0.0, gy1) - 0.5);
+	     VEC4 GX1 = IXY1 * (1.0 / 7.0);
+	     VEC4 GY1 = FRACT(FLOOR(GX1) * (1.0 / 7.0)) - 0.5;
+	     GX1 = FRACT(GX1);
+	     VEC4 GZ1 = VEC4(0.5) - ABS(GX1) - ABS(GY1);
+	     VEC4 SZ1 = STEP(GZ1, VEC4(0.0));
+	     GX1 -= SZ1 * (STEP(0.0, GX1) - 0.5);
+	     GY1 -= SZ1 * (STEP(0.0, GY1) - 0.5);
 
-	     vec3 g000 = vec3(gx0.x,gy0.x,gz0.x);
-	     vec3 g100 = vec3(gx0.y,gy0.y,gz0.y);
-	     vec3 g010 = vec3(gx0.z,gy0.z,gz0.z);
-	     vec3 g110 = vec3(gx0.w,gy0.w,gz0.w);
-	     vec3 g001 = vec3(gx1.x,gy1.x,gz1.x);
-	     vec3 g101 = vec3(gx1.y,gy1.y,gz1.y);
-	     vec3 g011 = vec3(gx1.z,gy1.z,gz1.z);
-	     vec3 g111 = vec3(gx1.w,gy1.w,gz1.w);
+	     VEC3 G000 = VEC3(GX0.X,GY0.X,GZ0.X);
+	     VEC3 G100 = VEC3(GX0.Y,GY0.Y,GZ0.Y);
+	     VEC3 G010 = VEC3(GX0.Z,GY0.Z,GZ0.Z);
+	     VEC3 G110 = VEC3(GX0.W,GY0.W,GZ0.W);
+	     VEC3 G001 = VEC3(GX1.X,GY1.X,GZ1.X);
+	     VEC3 G101 = VEC3(GX1.Y,GY1.Y,GZ1.Y);
+	     VEC3 G011 = VEC3(GX1.Z,GY1.Z,GZ1.Z);
+	     VEC3 G111 = VEC3(GX1.W,GY1.W,GZ1.W);
 
-	     vec4 norm0 = taylorInvSqrt(vec4(dot(g000, g000), dot(g010, g010), dot(g100, g100), dot(g110, g110)));
-	     g000 *= norm0.x;
-	     g010 *= norm0.y;
-	     g100 *= norm0.z;
-	     g110 *= norm0.w;
-	     vec4 norm1 = taylorInvSqrt(vec4(dot(g001, g001), dot(g011, g011), dot(g101, g101), dot(g111, g111)));
-	     g001 *= norm1.x;
-	     g011 *= norm1.y;
-	     g101 *= norm1.z;
-	     g111 *= norm1.w;
+	     VEC4 NORM0 = TAYLORINVSQRT(VEC4(DOT(G000, G000), DOT(G010, G010), DOT(G100, G100), DOT(G110, G110)));
+	     G000 *= NORM0.X;
+	     G010 *= NORM0.Y;
+	     G100 *= NORM0.Z;
+	     G110 *= NORM0.W;
+	     VEC4 NORM1 = TAYLORINVSQRT(VEC4(DOT(G001, G001), DOT(G011, G011), DOT(G101, G101), DOT(G111, G111)));
+	     G001 *= NORM1.X;
+	     G011 *= NORM1.Y;
+	     G101 *= NORM1.Z;
+	     G111 *= NORM1.W;
 
-	     float n000 = dot(g000, Pf0);
-	     float n100 = dot(g100, vec3(Pf1.x, Pf0.yz));
-	     float n010 = dot(g010, vec3(Pf0.x, Pf1.y, Pf0.z));
-	     float n110 = dot(g110, vec3(Pf1.xy, Pf0.z));
-	     float n001 = dot(g001, vec3(Pf0.xy, Pf1.z));
-	     float n101 = dot(g101, vec3(Pf1.x, Pf0.y, Pf1.z));
-	     float n011 = dot(g011, vec3(Pf0.x, Pf1.yz));
-	     float n111 = dot(g111, Pf1);
+	     FLOAT N000 = DOT(G000, PF0);
+	     FLOAT N100 = DOT(G100, VEC3(PF1.X, PF0.YZ));
+	     FLOAT N010 = DOT(G010, VEC3(PF0.X, PF1.Y, PF0.Z));
+	     FLOAT N110 = DOT(G110, VEC3(PF1.XY, PF0.Z));
+	     FLOAT N001 = DOT(G001, VEC3(PF0.XY, PF1.Z));
+	     FLOAT N101 = DOT(G101, VEC3(PF1.X, PF0.Y, PF1.Z));
+	     FLOAT N011 = DOT(G011, VEC3(PF0.X, PF1.YZ));
+	     FLOAT N111 = DOT(G111, PF1);
 
-	     vec3 fade_xyz = fade(Pf0);
-	     vec4 n_z = mix(vec4(n000, n100, n010, n110), vec4(n001, n101, n011, n111), fade_xyz.z);
-	     vec2 n_yz = mix(n_z.xy, n_z.zw, fade_xyz.y);
-	     float n_xyz = mix(n_yz.x, n_yz.y, fade_xyz.x);
-	     return 2.2 * n_xyz;
+	     VEC3 FADE_XYZ = FADE(PF0);
+	     VEC4 N_Z = MIX(VEC4(N000, N100, N010, N110), VEC4(N001, N101, N011, N111), FADE_XYZ.Z);
+	     VEC2 N_YZ = MIX(N_Z.XY, N_Z.ZW, FADE_XYZ.Y);
+	     FLOAT N_XYZ = MIX(N_YZ.X, N_YZ.Y, FADE_XYZ.X);
+	     RETURN 2.2 * N_XYZ;
 	 }
 
-	 float stripes( float x, float f) {
-	     float PI = 3.14159265358979323846264;
-	     float t = .5 + .5 * sin( f * 2.0 * PI * x);
-	     return t * t - .5;
+	 FLOAT STRIPES( FLOAT X, FLOAT F) {
+	     FLOAT PI = 3.14159265358979323846264;
+	     FLOAT T = .5 + .5 * SIN( F * 2.0 * PI * X);
+	     RETURN T * T - .5;
 	 }
 
-	 float turbulence( vec3 p ) {
-	     float w = 100.0;
-	     float t = -.5;
-	     for (float f = 1.0 ; f <= 10.0 ; f++ ){
-		 float power = pow( 2.0, f );
-		 t += abs( pnoise( vec3( power * p ), vec3( 10.0, 10.0, 10.0 ) ) / power );
+	 FLOAT TURBULENCE( VEC3 P ) {
+	     FLOAT W = 100.0;
+	     FLOAT T = -.5;
+	     FOR (FLOAT F = 1.0 ; F <= 10.0 ; F++ ){
+		 FLOAT POWER = POW( 2.0, F );
+		 T += ABS( PNOISE( VEC3( POWER * P ), VEC3( 10.0, 10.0, 10.0 ) ) / POWER );
 	     }
-	     return t;
+	     RETURN T;
 	 }
 
-	 float f( vec3 p ) {
-	     return pnoise( vec3( p ), vec3( 10.0, 10.0, 10.0 ) );
-	     return pnoise( 8.0 * vec3( p ), vec3( 10.0, 10.0, 10.0 ) );
+	 FLOAT F( VEC3 P ) {
+	     RETURN PNOISE( VEC3( P ), VEC3( 10.0, 10.0, 10.0 ) );
+	     RETURN PNOISE( 8.0 * VEC3( P ), VEC3( 10.0, 10.0, 10.0 ) );
 	 }
 
 	 
-	 varying vec3 vNormal;
-	 varying vec3 vReflect;
-	 varying float ao;
-	 varying vec2 vUv; // the texture coordinates
+	 VARYING VEC3 VNORMAL;
+	 VARYING VEC3 VREFLECT;
+	 VARYING FLOAT AO;
+	 VARYING VEC2 VUV; // THE TEXTURE COORDINATES
 	 
-	 uniform float time;
-	 uniform float weight;
-	 uniform float offset;
-	 uniform sampler2D tDisp;
+	 UNIFORM FLOAT TIME;
+	 UNIFORM FLOAT WEIGHT;
+	 UNIFORM FLOAT OFFSET;
+	 UNIFORM SAMPLER2D TDISP;
 
-	 float fround( float value ) {
-	     return floor( value + 0.5 );
+	 FLOAT FROUND( FLOAT VALUE ) {
+	     RETURN FLOOR( VALUE + 0.5 );
 	 }
 
-	 vec3 v3round( vec3 value ) {
-	     return vec3( fround( value.x ), fround( value.y ), fround( value.z ) );
+	 VEC3 V3ROUND( VEC3 VALUE ) {
+	     RETURN VEC3( FROUND( VALUE.X ), FROUND( VALUE.Y ), FROUND( VALUE.Z ) );
 	 }
 
-	 void main() {
+	 VOID MAIN() {
 
-	     vec3 dispTex = texture2D(tDisp, uv).rgb;
-	     float dispWeight = dispTex.r;
-	     vec3 evNormal = normal;
-	     vec3 aniNormal = 2.0 * evNormal + time;
-	     float f0 = dispWeight * weight * f( aniNormal );
-	     float fx = dispWeight * weight * f( aniNormal + vec3( .0001, 0.0, 0.0 ) );
-	     float fy = dispWeight * weight * f( aniNormal + vec3( 0.0, .0001, 0.0 ) );
-	     float fz = dispWeight * weight * f( aniNormal + vec3( 0.0, 0.0, .0001 ) );
-	     vec3 modifiedNormal = normalize( evNormal - vec3( (fx - f0) / .0001, (fy - f0) / .0001, (fz - f0) / .0001 ) );
+	     VEC3 DISPTEX = TEXTURE2D(TDISP, UV).RGB;
+	     FLOAT DISPWEIGHT = DISPTEX.R;
+	     VEC3 EVNORMAL = NORMAL;
+	     VEC3 ANINORMAL = 2.0 * EVNORMAL + TIME;
+	     FLOAT F0 = DISPWEIGHT * WEIGHT * F( ANINORMAL );
+	     FLOAT FX = DISPWEIGHT * WEIGHT * F( ANINORMAL + VEC3( .0001, 0.0, 0.0 ) );
+	     FLOAT FY = DISPWEIGHT * WEIGHT * F( ANINORMAL + VEC3( 0.0, .0001, 0.0 ) );
+	     FLOAT FZ = DISPWEIGHT * WEIGHT * F( ANINORMAL + VEC3( 0.0, 0.0, .0001 ) );
+	     VEC3 MODIFIEDNORMAL = NORMALIZE( EVNORMAL - VEC3( (FX - F0) / .0001, (FY - F0) / .0001, (FZ - F0) / .0001 ) );
 
-	     if( weight > 0.0 ) {
-		 ao = f0 / weight;
-	     } else {
-		 ao = 0.0;
+	     IF( WEIGHT > 0.0 ) {
+		 AO = F0 / WEIGHT;
+	     } ELSE {
+		 AO = 0.0;
 	     }
-	     vNormal = modifiedNormal; 
-	     vec3 newPosition = position + (f0 + offset) * evNormal;
-	     vec3 nWorld = normalize( mat3( modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz ) * modifiedNormal );
-	     vReflect = normalize( reflect( normalize( newPosition.xyz - cameraPosition ), nWorld ) );
-	     vUv = uv;
-	     gl_Position = projectionMatrix * modelViewMatrix * vec4( newPosition, 1.0 );
+	     VNORMAL = MODIFIEDNORMAL; 
+	     VEC3 NEWPOSITION = POSITION + (F0 + OFFSET) * EVNORMAL;
+	     VEC3 NWORLD = NORMALIZE( MAT3( MODELMATRIX[0].XYZ, MODELMATRIX[1].XYZ, MODELMATRIX[2].XYZ ) * MODIFIEDNORMAL );
+	     VREFLECT = NORMALIZE( REFLECT( NORMALIZE( NEWPOSITION.XYZ - CAMERAPOSITION ), NWORLD ) );
+	     VUV = UV;
+	     GL_POSITION = PROJECTIONMATRIX * MODELVIEWMATRIX * VEC4( NEWPOSITION, 1.0 );
 
 	 }
 
 
-	</script>
+	</SCRIPT>
 
-	<script type="x-shader/x-fragment" id="fragmentShader">
+	<SCRIPT TYPE="X-SHADER/X-FRAGMENT" ID="FRAGMENTSHADER">
 
-	 varying vec2 vUv;
-	 varying vec3 vNormal;
-	 varying vec3 vReflect;
-	 varying float ao;
-	 uniform sampler2D tDiff;
-	 uniform sampler2D tFace;
-	 uniform float time;
-	 uniform float offset;
+	 VARYING VEC2 VUV;
+	 VARYING VEC3 VNORMAL;
+	 VARYING VEC3 VREFLECT;
+	 VARYING FLOAT AO;
+	 UNIFORM SAMPLER2D TDIFF;
+	 UNIFORM SAMPLER2D TFACE;
+	 UNIFORM FLOAT TIME;
+	 UNIFORM FLOAT OFFSET;
 
-	 float PI = 3.14159265358979323846264;
+	 FLOAT PI = 3.14159265358979323846264;
 
-	 void main() {
+	 VOID MAIN() {
 	     /*
-		float yaw = .5 - atan( vReflect.z, - vReflect.x ) / ( 2.0 * PI );
-		float pitch = .5 - asin( vReflect.y ) / PI;
-		vec2 pos = vec2( yaw, pitch );
+		FLOAT YAW = .5 - ATAN( VREFLECT.Z, - VREFLECT.X ) / ( 2.0 * PI );
+		FLOAT PITCH = .5 - ASIN( VREFLECT.Y ) / PI;
+		VEC2 POS = VEC2( YAW, PITCH );
 	      */
-	     vec4 diffColor = texture2D( tDiff, vUv );
-	     vec4 faceColor = texture2D( tFace, vUv );
-	     vec3 color = mix( diffColor.rgb, faceColor.rgb, faceColor.a );
-	     //vec4 color = vec4(diffColor + (1.0-faceColor), 1.0); 
-	     vec4 finalColor = vec4(color,1.0);
+	     VEC4 DIFFCOLOR = TEXTURE2D( TDIFF, VUV );
+	     VEC4 FACECOLOR = TEXTURE2D( TFACE, VUV );
+	     VEC3 COLOR = MIX( DIFFCOLOR.RGB, FACECOLOR.RGB, FACECOLOR.A );
+	     //VEC4 COLOR = VEC4(DIFFCOLOR + (1.0-FACECOLOR), 1.0); 
+	     VEC4 FINALCOLOR = VEC4(COLOR,1.0);
 
-	     float diffuse_value1 = .0015 * max(dot(vNormal, vec3( -490.0, 29.8, -85.8 ) ), 0.0);
-	     float diffuse_value2 = .0005 * max(dot(vNormal, vec3( -460.0, 40.27, 187.4 ) ), 0.0);
-	     float diffuse_value3 = .0010 * max(dot(vNormal, vec3( 175.5, 30.04, 466.4 ) ), 0.0);
-	     float diffuse_value4 = .0005 * max(dot(vNormal, vec3( 466.0, 45.3, 172.9 ) ), 0.0);
+	     FLOAT DIFFUSE_VALUE1 = .0015 * MAX(DOT(VNORMAL, VEC3( -490.0, 29.8, -85.8 ) ), 0.0);
+	     FLOAT DIFFUSE_VALUE2 = .0005 * MAX(DOT(VNORMAL, VEC3( -460.0, 40.27, 187.4 ) ), 0.0);
+	     FLOAT DIFFUSE_VALUE3 = .0010 * MAX(DOT(VNORMAL, VEC3( 175.5, 30.04, 466.4 ) ), 0.0);
+	     FLOAT DIFFUSE_VALUE4 = .0005 * MAX(DOT(VNORMAL, VEC3( 466.0, 45.3, 172.9 ) ), 0.0);
 
-	     //gl_FragColor = vec4( color - .15 * ao + .5 * vec3( diffuse_value1 + diffuse_value2 + diffuse_value3 + diffuse_value4 ), 1.0 );
-	     //color *= face;
+	     //GL_FRAGCOLOR = VEC4( COLOR - .15 * AO + .5 * VEC3( DIFFUSE_VALUE1 + DIFFUSE_VALUE2 + DIFFUSE_VALUE3 + DIFFUSE_VALUE4 ), 1.0 );
+	     //COLOR *= FACE;
 
-	     if (offset > 0.0){
-		 gl_FragColor = vec4(0.0,0.0,0.0,1.0);
-	     }else {
-		 gl_FragColor = finalColor;
+	     IF (OFFSET > 0.0){
+		 GL_FRAGCOLOR = VEC4(0.0,0.0,0.0,1.0);
+	     }ELSE {
+		 GL_FRAGCOLOR = FINALCOLOR;
 	     }
 
 	 }
 
-	</script>
+	</SCRIPT>
 
-	<script>
+	<SCRIPT>
 
-	 var container, renderer, scene, camera, mesh, fov = 45;
-	 var material, outlineMaterial;
-	 var start = Date.now();
+	 // DATE(YEAR, MONTH, DAY, HOURS, MINUTES, SECONDS, MILLISECONDS)
+	 VAR DDATE = NEW DATE(2017, 05, 27, 16, 30, 0, 0);
+	 VAR COUNTER = DOCUMENT.GETELEMENTBYID('COUNTER');
+	 COUNTDOWN.SETLABELS(
+	     ' MILISEGUNDO| SEGUNDO| MINUTO| HORA| DÍA| SEMANA| MES| AÑO| DÉCADA| SIGLO| MILENIO',
+	     ' MILISEGUNDOS| SEGUNDOS| MINUTOS| HORAS| DÍAS| SEMANAS| MESES| AÑOS| DÉCADAS| SIGLOS| MILENIOS',
+	     ' Y ',
+	     ', ',
+	     '¡AHORITA!');
+	 VAR TIMESPAN;
 
-	 window.addEventListener( 'load', init );
+	 VAR CONTAINER, RENDERER, SCENE, CAMERA, MESH, FOV = 45;
+	 VAR MOUSEX = 0;
+	 VAR MOUSEY = 0;
+	 VAR MOUSEUSE = 0;
+	 //INVERT X
+	 VAR CAMDISTX = -2.0, CAMDISTY = 0.7;
+	 VAR NOISESCALE = 0.3;
+	 VAR MOUSEUSEMAX = 5000;
+	 VAR WINDOWHALFX = WINDOW.INNERWIDTH / 2;
+	 VAR WINDOWHALFY = WINDOW.INNERHEIGHT / 2;
+	 VAR MATERIAL, OUTLINEMATERIAL;
+	 VAR START = DATE.NOW();
 
-	 function init() {
+	 WINDOW.ADDEVENTLISTENER( 'LOAD', INIT );
+	 WINDOW.ADDEVENTLISTENER( 'RESIZE', ONWINDOWRESIZE, FALSE );
+	 DOCUMENT.ADDEVENTLISTENER( 'MOUSEMOVE', ONMOUSEMOVE, FALSE );
 
-	     container = document.getElementById( 'container' );
 
-	     scene = new THREE.Scene();
-	     outScene  = new THREE.Scene();
+	 FUNCTION INIT() {
 
-	     camera = new THREE.PerspectiveCamera( fov, window.innerWidth / window.innerHeight, 1, 10000 );
-	     camera.position.z = 100;
-	     camera.target = new THREE.Vector3( 0, 0, 0 );
+	     CONTAINER = DOCUMENT.GETELEMENTBYID( 'CONTAINER' );
 
-	     scene.add( camera );
+	     SCENE = NEW THREE.SCENE();
+	     OUTSCENE  = NEW THREE.SCENE();
 
-	     var diffTexture = new THREE.TextureLoader().load( 'images/lsp_diff.png' );
-	     var displacementTexture = new THREE.TextureLoader().load( 'images/lsp_disp.png' );
+	     CAMERA = NEW THREE.PERSPECTIVECAMERA( FOV, WINDOW.INNERWIDTH / WINDOW.INNERHEIGHT, 1, 10000 );
+	     CAMERA.POSITION.Z = 8.5;
+	     CAMERA.TARGET = NEW THREE.VECTOR3( 0, 0, 0 );
 
-	     renderer = new THREE.WebGLRenderer( { alpha:true, antialias:true });
-	     renderer.setPixelRatio( window.devicePixelRatio );
-	     renderer.setSize( window.innerWidth, window.innerHeight );
-	     renderer.autoClear = false;
-	     renderer.setClearColor (0x000000, 0);
+	     SCENE.ADD( CAMERA );
 
-	     container.appendChild( renderer.domElement );
+	     VAR DIFFTEXTURE = NEW THREE.TEXTURELOADER().LOAD( 'IMAGES/LSP_DIFF.PNG' );
+	     VAR DISPLACEMENTTEXTURE = NEW THREE.TEXTURELOADER().LOAD( 'IMAGES/LSP_DISP.PNG' );
 
-	     var svg = document.getElementById("svgContainer").querySelector("svg");
-	     var svgData = (new XMLSerializer()).serializeToString(svg);
+	     RENDERER = NEW THREE.WEBGLRENDERER( { ALPHA:TRUE, ANTIALIAS:TRUE });
+	     RENDERER.SETPIXELRATIO( WINDOW.DEVICEPIXELRATIO );
+	     RENDERER.SETSIZE( WINDOW.INNERWIDTH, WINDOW.INNERHEIGHT );
+	     RENDERER.AUTOCLEAR = FALSE;
+	     RENDERER.SETCLEARCOLOR (0X000000, 0);
 
-	     var canvas = document.createElement("canvas");
-	     var svgSize = svg.getBoundingClientRect();
-	     canvas.width = svgSize.width;
-	     canvas.height = svgSize.height;
-	     var ctx = canvas.getContext("2d");
+	     CONTAINER.APPENDCHILD( RENDERER.DOMELEMENT );
 
-	     var img = document.createElement("img");
-	     img.setAttribute("src", "data:image/svg+xml;base64," + window.btoa(unescape(encodeURIComponent(svgData))) );
+	     VAR SVG = DOCUMENT.GETELEMENTBYID("SVGCONTAINER").QUERYSELECTOR("SVG");
+	     VAR SVGDATA = (NEW XMLSERIALIZER()).SERIALIZETOSTRING(SVG);
 
-	     img.onload = function() {
-		 ctx.drawImage(img, 0, 0);
+	     VAR CANVAS = DOCUMENT.CREATEELEMENT("CANVAS");
+	     VAR SVGSIZE = SVG.GETBOUNDINGCLIENTRECT();
+	     CANVAS.WIDTH = SVGSIZE.WIDTH;
+	     CANVAS.HEIGHT = SVGSIZE.HEIGHT;
+	     VAR CTX = CANVAS.GETCONTEXT("2D");
 
-		 var faceTexture = new THREE.Texture(canvas);
-		 faceTexture.needsUpdate = true;
+	     VAR IMG = DOCUMENT.CREATEELEMENT("IMG");
+	     IMG.SETATTRIBUTE("SRC", "DATA:IMAGE/SVG+XML;BASE64," + WINDOW.BTOA(UNESCAPE(ENCODEURICOMPONENT(SVGDATA))) );
 
-		 material = new THREE.ShaderMaterial( {
-		     uniforms: {
-			 tDiff: { type: "t", value: diffTexture },
-			 tFace: { type: "t", value: faceTexture },
-			 tDisp: { type: "t", value: displacementTexture },
-			 time: { type: "f", value: 0 },
-			 weight: { type: "f", value: 0 },
-			 offset: {type: "f", value: 0.0 }
+	     IMG.ONLOAD = FUNCTION() {
+		 CTX.DRAWIMAGE(IMG, 0, 0);
+
+		 VAR FACETEXTURE = NEW THREE.TEXTURE(CANVAS);
+		 FACETEXTURE.NEEDSUPDATE = TRUE;
+
+		 MATERIAL = NEW THREE.SHADERMATERIAL( {
+		     UNIFORMS: {
+			 TDIFF: { TYPE: "T", VALUE: DIFFTEXTURE },
+			 TFACE: { TYPE: "T", VALUE: FACETEXTURE },
+			 TDISP: { TYPE: "T", VALUE: DISPLACEMENTTEXTURE },
+			 TIME: { TYPE: "F", VALUE: 0 },
+			 WEIGHT: { TYPE: "F", VALUE: 0 },
+			 OFFSET: {TYPE: "F", VALUE: 0.0 }
 		     },
-		     vertexShader: document.getElementById( 'vertexShader' ).textContent,
-		     fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+		     VERTEXSHADER: DOCUMENT.GETELEMENTBYID( 'VERTEXSHADER' ).TEXTCONTENT,
+		     FRAGMENTSHADER: DOCUMENT.GETELEMENTBYID( 'FRAGMENTSHADER' ).TEXTCONTENT
 		 } );
 
-		 outlineMaterial = new THREE.ShaderMaterial( {
-		     uniforms: {
-			 tDisp: { type: "t", value: displacementTexture },
-			 time: { type: "f", value: 0 },
-			 weight: { type: "f", value: 0 },
-			 offset: {type: "f", value: 0.35 }
+		 OUTLINEMATERIAL = NEW THREE.SHADERMATERIAL( {
+		     UNIFORMS: {
+			 TDISP: { TYPE: "T", VALUE: DISPLACEMENTTEXTURE },
+			 TIME: { TYPE: "F", VALUE: 0 },
+			 WEIGHT: { TYPE: "F", VALUE: 0 },
+			 OFFSET: {TYPE: "F", VALUE: 0.035 }
 		     },
-		     vertexShader: document.getElementById( 'vertexShader' ).textContent,
-		     fragmentShader: document.getElementById( 'fragmentShader' ).textContent
+		     VERTEXSHADER: DOCUMENT.GETELEMENTBYID( 'VERTEXSHADER' ).TEXTCONTENT,
+		     FRAGMENTSHADER: DOCUMENT.GETELEMENTBYID( 'FRAGMENTSHADER' ).TEXTCONTENT
 		 } );
 		 
-		 mesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 5 ), material );
-		 mesh.rotation.y = 2* Math.PI / 3;
-		 outlineMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 20, 5 ), outlineMaterial );
-		 outlineMesh.material.depthWrite = false;
-		 outlineMesh.quaternion = mesh.quaternion;
-		 mesh.rotation.y = 2* Math.PI / 3;
-		 outlineMesh.rotation.y = 2* Math.PI / 3;
-		 outScene.add( outlineMesh );
-		 scene.add( mesh );
-	     };
+		 MESH = NEW THREE.MESH( NEW THREE.ICOSAHEDRONGEOMETRY( 1, 5 ), MATERIAL );
+		 OUTLINEMESH = NEW THREE.MESH( NEW THREE.ICOSAHEDRONGEOMETRY( 1, 5 ), OUTLINEMATERIAL );
+		 OUTLINEMESH.MATERIAL.DEPTHWRITE = FALSE;
+		 OUTLINEMESH.QUATERNION = MESH.QUATERNION;
+		 //MESH.ROTATION.Y = 2* MATH.PI / 3;
+		 //OUTLINEMESH.ROTATION.Y = 2* MATH.PI / 3;
+		 MESH.ROTATION.Y = MATH.PI / 2;
+		 OUTLINEMESH.ROTATION.Y = MATH.PI / 2;
+		 OUTSCENE.ADD( OUTLINEMESH );
+		 SCENE.ADD( MESH );
 
-	     var controls = new THREE.OrbitControls( camera, renderer.domElement );
-
-	     window.addEventListener( 'resize', onWindowResize, false );
 
 	     render();
 
 	 }
 
 	 function onWindowResize() {
+	     windowHalfX = window.innerWidth / 2;
+	     windowHalfY = window.innerHeight / 2;
 	     renderer.setSize( window.innerWidth, window.innerHeight );
 	     camera.aspect = window.innerWidth / window.innerHeight;
 	     camera.updateProjectionMatrix();
 	 }
 
+	 function onMouseMove(event) {
+	     event.preventDefault();
+	     mouseX = (event.clientX - windowHalfX)/windowHalfX;
+	     mouseY = (event.clientY - windowHalfY)/windowHalfY;
+	     camera.position.x = mouseX * camDistX;
+	     camera.position.y = mouseY * camDistY;
+	     camera.lookAt( scene.position );
+	     mouseUse++;
+	 }
+
 	 var start = Date.now();
 
 	 function render() {
+	     
+	     timespan = countdown(dDate, null, countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS );
+	     counter.innerHTML = timespan.toString();
 
 	     var dateNow = Date.now();
 	     var time = .00035 * ( dateNow - start );
-	     var weight =  9.0 * ( .5 + .5 * Math.sin( .00025 * ( dateNow - start ) ) );
+	     //var weight =  0.5 * ( .5 + .5 * Math.sin( .00025 * ( dateNow - start ) ) );
+	     var weight = Math.min(mouseUse,mouseUseMax)/mouseUseMax*noiseScale;
 
 	     if (outlineMaterial) {		 
 		 outlineMaterial.uniforms[ 'time' ].value = material.uniforms[ 'time' ].value = time;

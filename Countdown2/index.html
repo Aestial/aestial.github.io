@@ -1,41 +1,15 @@
 <!doctype html>
 <html lang="en">
     <head>
-	<title>LSP - Perlin noise displacement</title>
+	<title>D-web feat. LSP</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-	<style>
-	 *{ box-sizing: border-box; margin: 0; padding: 0 }
-	 body {
-	     color: #000000f;
-	     font-family: tahoma;
-	     font-size:13px;
-	     background-color: rgb(255,229,237);
-	     background-image: -o-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
-	     background-image: -moz-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
-	     background-image: -webkit-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,255) 100%);
-	     background-image: -ms-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
-	     background-image: linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
-	     margin: 0px;
-	     overflow: hidden;
-	     width : 100%;
-	     height: 100%;
-	 }
-	 p{ position: absolute; left: 10px; top: 10px; opacity: .5; line-height: 1.4em }
-	 p:hover{ opacity: 1 }
-	 a{ color: black; text-shadow: 0 1px 0 rgba( 0,0,0,.5 ) }
-	 div#container{
-	     position: absolute;
-	 }
-	 svg{
-	     visibility: hidden;
-	     //display: none;
-	 }
-	</style>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
     </head>
     <body>
 	<div id="container"></div>
-	<p><b>Animated LSP</b> | Click and drag to rotate, mouse wheel to zoom.
+	<p><a id="counter">???</a></br>
+	    <b>¡Te amo!</b>
 	</p>
 
 	<div id="svgContainer" style="width:100%; height:100%;">
@@ -81,10 +55,14 @@ width="1024">
 	    </svg>
 	</div>
 
+	
+	<script src="js/countdown.min.js"></script>
+	<script src="js/RequestAnimationFrame.js"></script>
+
 	<script src="js/three.min.js"></script>
 	<script src="js/OrbitControls.js"></script>
 
-	<script type="x-shader/x-vertex" id="vertexShader">
+	<script type="x-shader/x-vertex" id="vertexShader" >
 
 	 //
 	 // GLSL textureless classic 3D noise "cnoise",
@@ -378,11 +356,35 @@ width="1024">
 
 	<script>
 
+	 // Date(year, month, day, hours, minutes, seconds, milliseconds)
+	 var dDate = new Date(2017, 05, 27, 16, 30, 0, 0);
+	 var counter = document.getElementById('counter');
+	 countdown.setLabels(
+	     ' milisegundo| segundo| minuto| hora| día| semana| mes| año| década| siglo| milenio',
+	     ' milisegundos| segundos| minutos| horas| días| semanas| meses| años| décadas| siglos| milenios',
+	     ' y ',
+	     ', ',
+	     'ahora');
+	 var timespan;
+
+	 
 	 var container, renderer, scene, camera, mesh, fov = 45;
+	 var mouseX = 0;
+	 var mouseY = 0;
+	 var mouseUse = 0;
+	 //Invert X
+	 var camDistX = -2.0, camDistY = 0.7;
+	 var noiseScale = 0.3;
+	 var mouseUseMax = 5000;
+	 var windowHalfX = window.innerWidth / 2;
+	 var windowHalfY = window.innerHeight / 2;
 	 var material, outlineMaterial;
 	 var start = Date.now();
-
+	 
 	 window.addEventListener( 'load', init );
+	 window.addEventListener( 'resize', onWindowResize, false );
+	 document.addEventListener( 'mousemove', onMouseMove, false );
+
 
 	 function init() {
 
@@ -451,64 +453,61 @@ width="1024">
 		 } );
 		 
 		 mesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 1, 5 ), material );
-		 mesh.rotation.y = 2* Math.PI / 3;
 		 outlineMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 1, 5 ), outlineMaterial );
 		 outlineMesh.material.depthWrite = false;
 		 outlineMesh.quaternion = mesh.quaternion;
-		 mesh.rotation.y = 2* Math.PI / 3;
-		 outlineMesh.rotation.y = 2* Math.PI / 3;
+		 //mesh.rotation.y = 2* Math.PI / 3;
+		 //outlineMesh.rotation.y = 2* Math.PI / 3;
+		 mesh.rotation.y = Math.PI / 2;
+		 outlineMesh.rotation.y = Math.PI / 2;
 		 outScene.add( outlineMesh );
 		 scene.add( mesh );
 	     };
-
-	     var controls = new THREE.OrbitControls( camera, renderer.domElement );
-	     controls.minPolarAngle = 4*Math.PI/10; // radians
-	     controls.maxPolarAngle = 6*Math.PI/10; // radians
-	     // If set, must be a sub-interval of the interval [ - Math.PI, Math.PI ].
-	     controls.minAzimuthAngle = -Math.PI/4; // radians
-	     controls.maxAzimuthAngle = Math.PI/4; // radians
-	     controls.rotateSpeed = 0.05;
-	     controls.enableKeys = false;
-	     controls.enableZoom = false;
-
-	     window.addEventListener( 'resize', onWindowResize, false );
-
+	     
 	     render();
 
 	 }
 
 	 function onWindowResize() {
+	     windowHalfX = window.innerWidth / 2;
+	     windowHalfY = window.innerHeight / 2;
 	     renderer.setSize( window.innerWidth, window.innerHeight );
 	     camera.aspect = window.innerWidth / window.innerHeight;
 	     camera.updateProjectionMatrix();
+	 }
+
+	 function onMouseMove(event) {
+	     event.preventDefault();
+	     mouseX = (event.clientX - windowHalfX)/windowHalfX;
+	     mouseY = (event.clientY - windowHalfY)/windowHalfY;
+	     camera.position.x = mouseX * camDistX;
+	     camera.position.y = mouseY * camDistY;
+	     camera.lookAt( scene.position );
+	     mouseUse++;
 	 }
 
 	 var start = Date.now();
 
 	 function render() {
 
+	     timespan = countdown(dDate, null, countdown.DAYS|countdown.HOURS|countdown.MINUTES|countdown.SECONDS );
+	     counter.innerHTML = timespan.toString();
+
 	     var dateNow = Date.now();
 	     var time = .00035 * ( dateNow - start );
-	     var weight =  0.5 * ( .5 + .5 * Math.sin( .00025 * ( dateNow - start ) ) );
+	     //var weight =  0.5 * ( .5 + .5 * Math.sin( .00025 * ( dateNow - start ) ) );
+	     var weight = Math.min(mouseUse,mouseUseMax)/mouseUseMax*noiseScale;
 
 	     if (outlineMaterial) {		 
 		 outlineMaterial.uniforms[ 'time' ].value = material.uniforms[ 'time' ].value = time;
 		 outlineMaterial.uniforms[ 'weight' ].value = material.uniforms[ 'weight' ].value = weight;
 	     }
-	     
+
 	     renderer.render( outScene, camera );
 	     renderer.render( scene, camera );
 	     requestAnimationFrame( render );
 
 	 }
-
-	</script>
-
-    </body>
-</html>
-
-
-}
 
 	</script>
 
