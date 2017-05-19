@@ -33,22 +33,22 @@ width="1024">
 			rx="1.2813781"
 			cy="153.26266"
 			cx="122.20228"
-			id="path3695" />
+			id="lefteye" />
 		    <ellipse
 			style="stroke-width:0.0799168"
 			ry="2.2670977"
 			rx="1.4703662"
 			cy="153.13368"
 			cx="147.89325"
-			id="path3695-6" />
+			id="righteye" />
 		    <path
-			id="path3714"
+			id="mouth"
 			d="m 130.54375,162.45293 c -0.005,0 4.88798,6.20249 9.3412,-0.48412"
 			style="fill:none;stroke:#000000;stroke-width:0.60481453;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
 		    <path
 			transform="matrix(0.46801728,0,0,0.78624578,74.495436,27.60319)"
 			d="m 140.08743,130.42826 c 0.18182,0.68274 -4.94763,4.00882 -5.19858,4.66655 -0.25095,0.65773 1.42777,6.64088 0.84213,7.02652 -0.58564,0.38564 -5.3437,-3.37708 -6.04407,-3.40883 -0.70037,-0.0318 -5.80871,3.36192 -6.35705,2.91974 -0.54835,-0.44218 1.55595,-6.16958 1.36311,-6.84718 -0.19283,-0.67761 -5.05196,-4.54281 -4.81707,-5.20262 0.2349,-0.65981 6.41385,-0.35391 6.99551,-0.74327 0.58167,-0.38935 2.65303,-6.03507 3.35741,-6.00913 0.70439,0.0259 2.43179,6.00778 2.98558,6.4398 0.55378,0.43203 6.6912,0.47567 6.87303,1.15842 z"
-			id="path4551"
+			id="star"
 			style="fill:#ffe84e;fill-opacity:1;stroke:#bf6500;stroke-width:1.40097344;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.67336683;paint-order:stroke fill markers" />
 		</g>
 
@@ -60,6 +60,7 @@ width="1024">
 	<script src="js/RequestAnimationFrame.js"></script>
 
 	<script src="js/three.min.js"></script>
+	<script src="js/snap.svg-min.js"></script>
 	<script src="js/OrbitControls.js"></script>
 
 	<script type="x-shader/x-vertex" id="vertexShader" >
@@ -393,14 +394,22 @@ width="1024">
 	 var mouseX = 0;
 	 var mouseY = 0;
 	 var mouseUse = 0;
+	 var exceded = false;
 	 //Invert X
 	 var camDistX = -2.0, camDistY = 0.7;
 	 var noiseScale = 0.3;
-	 var mouseUseMax = 5000;
+	 var mouseUseMax = 800;
 	 var windowHalfX = window.innerWidth / 2;
 	 var windowHalfY = window.innerHeight / 2;
 	 var material, outlineMaterial;
 	 var start = Date.now();
+	 
+	 var svg, svgData, canvas, svgSize, ctx, img;
+	 var face = true;
+	 var leftEye = Snap.select('#lefteye');
+	 var rightEye = Snap.select('#righteye');
+	 var faceTexture;
+	 var eyesAnim_D = 800;
 	 
 	 window.addEventListener( 'load', init );
 	 window.addEventListener( 'resize', onWindowResize, false );
@@ -414,7 +423,6 @@ width="1024">
 	     scene = new THREE.Scene();
 	     outScene  = new THREE.Scene();
 
-	     
 	     // instantiate a loader
 	     var loader = new THREE.JSONLoader();
 
@@ -423,7 +431,6 @@ width="1024">
 	     camera.target = new THREE.Vector3( 0, 0, 0 );
 
 	     scene.add( camera );
-
 	     var diffTexture = new THREE.TextureLoader().load( 'images/lsp_diff.png' );
 	     var displacementTexture = new THREE.TextureLoader().load( 'images/lsp_disp.png' );
 
@@ -435,23 +442,24 @@ width="1024">
 
 	     container.appendChild( renderer.domElement );
 
-	     var svg = document.getElementById("svgContainer").querySelector("svg");
-	     var svgData = (new XMLSerializer()).serializeToString(svg);
-
-	     var canvas = document.createElement("canvas");
-	     var svgSize = svg.getBoundingClientRect();
+	     svg = document.getElementById("svgContainer").querySelector("svg");
+	     svgData = (new XMLSerializer()).serializeToString(svg);
+	     canvas = document.createElement("canvas");
+	     svgSize = svg.getBoundingClientRect();
 	     canvas.width = svgSize.width;
 	     canvas.height = svgSize.height;
-	     var ctx = canvas.getContext("2d");
-
-	     var img = document.createElement("img");
+	     ctx = canvas.getContext("2d");
+	     img = document.createElement("img");
 	     img.setAttribute("src", "data:image/svg+xml;base64," + window.btoa(unescape(encodeURIComponent(svgData))) );
 
 	     img.onload = function() {
+		 
 		 	 
 		 ctx.drawImage(img, 0, 0);
+		 //document.body.appendChild(img);
+		 document.body.insertBefore(img, document.body.firstChild);
 
-		 var faceTexture = new THREE.Texture(canvas);
+		 faceTexture = new THREE.Texture(canvas);
 		 faceTexture.needsUpdate = true;
 
 		 material = new THREE.ShaderMaterial( {
@@ -564,9 +572,22 @@ width="1024">
 	     camera.position.y = mouseY * camDistY;
 	     camera.lookAt( scene.position );
 	     mouseUse++;
+	     exceded = mouseUse > mouseUseMax;
+	     console.log(exceded);
 	 }
 
 	 var start = Date.now();
+
+	 function updateImage() {
+	     console.log("Left eye anim. Finished");
+	     svgData = (new XMLSerializer()).serializeToString(svg);
+	     img.setAttribute("src", "data:image/svg+xml;base64," + window.btoa(unescape(encodeURIComponent(svgData))) );
+	     img.onload = function() {		 
+		 ctx.drawImage(img, 0, 0);
+		 //document.body.appendChild(img);
+		 //document.body.insertBefore(img, document.body.firstChild);
+	     }
+	 }
 
 	 function render() {
 
@@ -582,7 +603,32 @@ width="1024">
 		 outlineMaterial.uniforms[ 'time' ].value = material.uniforms[ 'time' ].value = time;
 		 outlineMaterial.uniforms[ 'weight' ].value = material.uniforms[ 'weight' ].value = weight;
 	     }
-
+	     
+	     if ( face && exceded ) {
+		 console.log("Left eye anim. Triggered");
+		 leftEye.animate({
+		     rx: "3.5",
+		     ry: "6.25",		     
+		     cy: "150.26266",
+		     cx: "123.5"
+		 }, eyesAnim_D);
+		 rightEye.animate({
+		     rx: "3.5",
+		     ry: "6.25",		     
+		     cy: "150.26266",
+		     cx: "146.5"
+		 }, eyesAnim_D);
+		 face = false;
+	     }
+	     if (!face){
+		 svgData = (new XMLSerializer()).serializeToString(svg);
+		 img.setAttribute("src", "data:image/svg+xml;base64," + window.btoa(unescape(encodeURIComponent(svgData))) );
+		 img.onload = function() {		 
+		     ctx.drawImage(img, 0, 0);
+		 }
+		 faceTexture.needsUpdate = true;
+	     }
+	     
 	     renderer.render( outScene, camera );
 	     renderer.render( scene, camera );
 	     requestAnimationFrame( render );
