@@ -22,8 +22,7 @@
 body {
     color: #000000f;
     font-family: tahoma;
-    font-size:15px;
-    background-color: rgb(255,229,237);
+    background-color: rgb(224,255,233);
     background-image: -o-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
     background-image: -moz-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
     background-image: -webkit-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,255) 100%);
@@ -36,12 +35,43 @@ body {
 }
 
 p {
-    font-family: Thunderman, Helvetica, Arial, sans-serif;
-    position: absolute; left: 10px; top: 10px; line-height: 1.6em;
-    opacity: 0.04;
+    //font-family: Thunderman, Helvetica, Arial, sans-serif;
 }
 
-p:hover{ opacity: 0.55 }
+.countMessage {
+    font-family: Bubblegum, Helvetica, Arial, sans-serif;
+    font-size:2vmin;
+    position: absolute;
+    left: 15px; top: 15px; line-height: 1.6em;
+    opacity: 0.035;
+}
+
+.bdMessage {
+    font-family: Thunderman, Helvetica, Arial, sans-serif;
+    position: absolute;
+    margin: 0;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, 0%);
+    transform: translate(-50%, 0%);
+}
+
+#hbd {
+    //right: 50%;
+    top: 17%; line-height: 1.6em;
+    font-size:6.2vmin;
+    opacity: 0.0;
+}
+
+#wte {
+    //right: 50%;
+    top: 75%; line-height: 1.6em;
+    font-size:4.3vmin;
+    opacity: 0.0;
+}
+
+.countMessage:hover{ opacity: 0.55 }
 
 a{ color: black; text-shadow: 0 1px 0 rgba( 0,0,0,.5 ) }
 

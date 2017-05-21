@@ -48,3 +48,14 @@ a{ color: black; text-shadow: 0 1px 0 rgba( 0,0,0,.5 ) }
 div#container{
     position: absolute;
 }
+
+svg {
+    visibility: hidden;
+    //width:55%;
+}
+
+img {
+    visibility: hidden;
+    width: 50%;
+    position: absolute;
+}

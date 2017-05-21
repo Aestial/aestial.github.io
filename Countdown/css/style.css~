@@ -28,7 +28,7 @@ body {
 }
 
 h1 {
-    font-size: 10vmin;
+    font-size: 10vmin;;
     /*
     color: black;
     -webkit-text-fill-color: black; /* Will override color (regardless of order) */

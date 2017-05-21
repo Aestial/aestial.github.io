@@ -8,9 +8,11 @@
     </head>
     <body>
 	<div id="container"></div>
-	<p><a id="counter">???</a></br>
-	    <b>¡Te amo!</b>
-	</p>
+	<div class="countMessage"><a id="counter">???</a></br><b>Te amo!</b>
+	</div>
+	
+	<div class="bdMessage" id="hbd">Oh my Glob!</div>
+	<div class="bdMessage" id="wte">Happy Birthday,</br> or whatever...</div>	
 
 	<div id="svgContainer" style="width:100%; height:100%;">
 	    <svg
@@ -22,8 +24,8 @@
 		id="svg8"
 		version="1.1"
 		viewBox="0 0 270.93333 270.93334"
-		height="1024"
-width="1024">
+		height="2048"
+width="2048">
 		<g
 		    transform="translate(0,-26.06665)"
 		    id="layer1">
@@ -49,7 +51,21 @@ width="1024">
 			transform="matrix(0.46801728,0,0,0.78624578,74.495436,27.60319)"
 			d="m 140.08743,130.42826 c 0.18182,0.68274 -4.94763,4.00882 -5.19858,4.66655 -0.25095,0.65773 1.42777,6.64088 0.84213,7.02652 -0.58564,0.38564 -5.3437,-3.37708 -6.04407,-3.40883 -0.70037,-0.0318 -5.80871,3.36192 -6.35705,2.91974 -0.54835,-0.44218 1.55595,-6.16958 1.36311,-6.84718 -0.19283,-0.67761 -5.05196,-4.54281 -4.81707,-5.20262 0.2349,-0.65981 6.41385,-0.35391 6.99551,-0.74327 0.58167,-0.38935 2.65303,-6.03507 3.35741,-6.00913 0.70439,0.0259 2.43179,6.00778 2.98558,6.4398 0.55378,0.43203 6.6912,0.47567 6.87303,1.15842 z"
 			id="star"
-			style="fill:#ffe84e;fill-opacity:1;stroke:#bf6500;stroke-width:1.40097344;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.67336683;paint-order:stroke fill markers" />
+style="fill:#ffe84e;fill-opacity:1;stroke:#bf6500;stroke-width:1.40097344;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.67336683;paint-order:stroke fill markers" />
+		    <ellipse
+			ry="0.8031975"
+			rx="0.54334074"
+			cx="125.15327"
+			cy="149"
+			id="lefteyeshine"
+			style="fill:#ffffff;fill-opacity:0;stroke:none;stroke-width:1.13038826;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+		    <ellipse
+			style="fill:#ffffff;fill-opacity:0;stroke:none;stroke-width:1.13038826;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+			id="righteyeshine"
+			cx="148"
+			cy="149"
+			rx="0.54334074"
+			ry="0.8031975" />
 		</g>
 
 	    </svg>
@@ -382,8 +398,8 @@ width="1024">
 	 var dDate = new Date(2017, 05, 27, 16, 30, 0, 0);
 	 var counter = document.getElementById('counter');
 	 countdown.setLabels(
-	     ' milisegundo| segundo| minuto| hora| día| semana| mes| año| década| siglo| milenio',
-	     ' milisegundos| segundos| minutos| horas| días| semanas| meses| años| décadas| siglos| milenios',
+	     ' milisegundo| segundo| minuto| hora| dia| semana| mes| ano| decada| siglo| milenio',
+	     ' milisegundos| segundos| minutos| horas| dias| semanas| meses| anos| decadas| siglos| milenios',
 	     ' y ',
 	     ', ',
 	     'ahora');
@@ -408,8 +424,13 @@ width="1024">
 	 var face = true;
 	 var leftEye = Snap.select('#lefteye');
 	 var rightEye = Snap.select('#righteye');
+	 var leftEyeS = Snap.select('#lefteyeshine');
+	 var rightEyeS = Snap.select('#righteyeshine');
 	 var faceTexture;
-	 var eyesAnim_D = 800;
+	 var eyesAnim_D = 750;
+
+	 var hbd = document.getElementById( 'hbd' );
+ 	 var wte = document.getElementById( 'wte' );
 	 
 	 window.addEventListener( 'load', init );
 	 window.addEventListener( 'resize', onWindowResize, false );
@@ -497,6 +518,7 @@ width="1024">
 		 outScene.add( outlineMesh );
 		 scene.add( mesh );
 
+		 /*
 		 // load a resource
 		 loader.load(
 
@@ -517,7 +539,7 @@ width="1024">
 			     vertexShader: document.getElementById( 'Outline_vertexShader' ).textContent,
 			     fragmentShader: document.getElementById( 'Outline_fragmentShader' ).textContent
 			 } );
-			 */
+			 * /
 
 			 armOutlineMaterial = new THREE.MeshBasicMaterial( {
 			     color : new THREE.Color( 0x000000 )
@@ -548,10 +570,11 @@ width="1024">
 			 outScene.add( outlineArm2 );
 
 		     }
-		 );
-		 
+		     */
+		     
 	     };
-	     
+		     
+
 	     render();
 
 	 }
@@ -619,6 +642,22 @@ width="1024">
 		     cx: "146.5"
 		 }, eyesAnim_D);
 		 face = false;
+		 hbd.style.opacity = 0.68;
+		 setTimeout(function() {
+		     leftEyeS.animate({
+			 "fill-opacity": 1.0,
+			 rx: "1.5",
+			 ry: "2.68"
+		     }, eyesAnim_D*0.2);
+		 }, 350);
+		 setTimeout(function() {
+		     rightEyeS.animate({
+			 "fill-opacity": 1.0,
+			 rx: "1.5",
+			 ry: "2.68",
+		     }, eyesAnim_D*0.2);
+		 }, 350);
+		 setTimeout(function(){ wte.style.opacity = 0.68;}, 2200);
 	     }
 	     if (!face){
 		 svgData = (new XMLSerializer()).serializeToString(svg);
