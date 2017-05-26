@@ -176,40 +176,20 @@ Aqui comienza para el menu
 	display:block;
 }
 */
-
-.twitter-share-button{
-	position: fixed;
-	z-index: 99;
-	right: 149px;
-	top: 9px;
+#outer{
+	position: absolute;
+	bottom: 10px;
 }
-#download{
-	margin: 10px 0 0 0;
-	padding: 15px 10px;
-	color: #fff;
-	text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
-	background-color: #49afcd;
-	background-image: -moz-linear-gradient(top, #5bc0de, #2f96b4);
-	background-image: -ms-linear-gradient(top, #5bc0de, #2f96b4);
-	background-image: -webkit-gradient(linear,0 0,0 100%,from( #5bc0de),to( #2f96b4));
-	background-image: -webkit-linear-gradient(top, #5bc0de, #2f96b4);
-	background-image: -o-linear-gradient(top, #5bc0de, #2f96b4);
-	background-image: linear-gradient(top, #5bc0de, #2f96b4);
-	background-repeat: repeat-x;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#5bc0de', endColorstr='#2f96b4', GradientType=0);
-	border-color: #2f96b4 #2f96b4 #1f6377;
-	border-color: rgba(0,0,0,.1) rgba(0,0,0,.1) rgba(0,0,0,.25);
-	filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
-
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	border-radius: 6px;
-	vertical-align: middle;
-	cursor: pointer;
-	display: inline-block;
-	-webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
-	-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
-	box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
+.scrollImg{
+	display: table;
+    margin: auto;
+	background-image: url("images/ScrollDown.png");
+	z-index: 99;
+	bottom: 10px;
+	width: 80px;
+	height: 80px;
+	background-repeat: no-repeat;
+	background-size: contain;
 }
 #contactMenu{
 	height: 20px;
@@ -220,22 +200,21 @@ Aqui comienza para el menu
 	width:100%;
 	text-align:right;
 	font-size: 1.1em;
-	padding: 0px 0px 15px 20px;
+	padding: 0px 0px 15px 0px;
 	letter-spacing: 2px;
-
 }
 #contactMenu ul{
-	padding: 0 40px;
-}
-#contactMenu li a{
-	display: block;
-	margin: 0 22px 0 0;
-	color: #ccc;
-}
-#contactMenu li a:hover{
-	text-decoration:underline;
+	padding: 0 35px;
 }
 #contactMenu li{
 	display:inline-block;
 	position:relative;
+}
+#contactMenu li a{
+	display: block;
+	margin: 0 20px 0 0;
+	color: #888;
+}
+#contactMenu li a:hover{
+	color: #fff;
 }
