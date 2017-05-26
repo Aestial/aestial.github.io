@@ -1,17 +1,17 @@
 @CHARSET "ISO-8859-1";
 @font-face {
     font-family: Renogare;
-    src: url(fonts/Renogare.ttf);
+    src: url(../fonts/Renogare.ttf);
     font-weight: bold;
 }
 @font-face {
     font-family: Roboto-Light;
-    src: url(fonts/Roboto-Light.ttf);
+    src: url(../fonts/Roboto-Light.ttf);
     font-weight: bold;
 }
 @font-face {
     font-family: Roboto-Thin;
-    src: url(fonts/Roboto-Thin.ttf);
+    src: url(../fonts/Roboto-Thin.ttf);
     font-weight: bold;
 }
 
@@ -68,6 +68,7 @@ body{
 	font-family: Roboto-Thin,helvetica;
 	color: #fff;
 	//color: rgba(1.0,1.0,1.0,0.75);
+	background-color: #000;
 }
 .wrap{
 	margin-left: auto;
@@ -176,22 +177,8 @@ Aqui comienza para el menu
 	display:block;
 }
 */
-#outer{
-	position: absolute;
-	bottom: 10px;
-}
-.scrollImg{
-	display: table;
-    margin: auto;
-	background-image: url("images/ScrollDown.png");
-	z-index: 99;
-	bottom: 10px;
-	width: 80px;
-	height: 80px;
-	background-repeat: no-repeat;
-	background-size: contain;
-}
 #contactMenu{
+	font-family: Roboto-Light,helvetica;
 	height: 20px;
 	color: #f2f2f2;
 	position:fixed;
@@ -217,4 +204,38 @@ Aqui comienza para el menu
 }
 #contactMenu li a:hover{
 	color: #fff;
+}
+#openDesc{
+	position: fixed;
+	height: 10%;
+	width: 10%;
+	right: 5%;
+}
+#bigImage{
+	position: absolute;
+	//Default Image
+	//background-image: url("../images/Pug.jpg");
+	left: 16%;
+	height: 100%;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	visibility: hidden;
+	-webkit-filter: grayscale(100%) brightness(60%);
+	filter: grayscale(100%) brightness(60%);
+}
+#outer{
+	position: absolute;
+	bottom: 10px;
+}
+#scrollImg{
+	display: table;
+    margin: auto;
+	background-image: url("../images/ScrollDown.png");
+	z-index: 99;
+	bottom: 10px;
+	width: 80px;
+	height: 80px;
+	background-repeat: no-repeat;
+	background-size: contain;
 }

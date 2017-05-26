@@ -4,28 +4,28 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>RADIAN</title>
 	<meta name="author" content="Jaime Hernandez" />
-	<meta name="description" content="radian vfx e-design videogames" />
-	<meta name="keywords"  content="radian vfx e-design videogames" />
+	<meta name="description" content="Radian: E-Design VFX Videogames" />
+	<meta name="keywords"  content="e-design vfx videogames" />
 	<meta name="Resource-type" content="Document" />
-
-	<link rel="stylesheet" type="text/css" href="jquery.fullPage.css" />
-	<link rel="stylesheet" type="text/css" href="style.css" />
-
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<!--[if IE]>
 		<script type="text/javascript">
 			 var console = { log: function() {} };
 		</script>
 	<![endif]-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-	<script type="text/javascript" src="jquery.fullPage.js"></script>
-	<script type="text/javascript" src="examples.js"></script>
+	<script type="text/javascript" src="js/jquery.fullPage.js"></script>
+	<!--script type="text/javascript" src="examples.js"></script-->
 	<script type="text/javascript">
 		var deleteLog = false;
+		var imageActive = false;
+		var imageNames = ["Pug.jpg","Dog.jpg","Chilaquil.jpg"];
 
 		$(document).ready(function() {
 			$('#fullpage').fullpage({
-				sectionsColor: ['black', 'black', 'black', 'black', 'black'],
+				//sectionsColor: ['rgba(0,0,0,0)'],
 				anchors: ['about', 'edesign', 'vfx', 'videogames', 'contact'],
 				menu: '#menu',
 				onLeave: function(index, nextIndex, direction){
@@ -34,7 +34,11 @@
 					}
 					$('#callbacksDiv').append('<p>onLeave - index:' + index + ' nextIndex:' + nextIndex + ' direction:' + direction + '</p>')
 					console.log("onLeave--" + "index: " + index + " nextIndex: " + nextIndex + " direction: " +  direction);
+					hideBigImage();
+
 				},
+				/*
+				// NO SLydZ 4 noW
 				onSlideLeave: function(anchorLink, index, slideIndex, direction, nextSlideIndex){
 					if(deleteLog){
 						$('#callbacksDiv').html('');
@@ -42,6 +46,7 @@
 					$('#callbacksDiv').append('<p>onSlideLeave - anchorLink:' + anchorLink + " index:" + index + " slideIndex:" + slideIndex +" direction:" + direction + " nextSlideIndex:" + nextSlideIndex + '</p>');
 					console.log("onSlideLeave--" + "anchorLink: " + anchorLink + " index: " + index + " slideIndex: " + slideIndex + " direction: " + direction);
 				},
+				*/
 				afterRender: function(){
 					$('#callbacksDiv').append('<p>afterRender</p>');
 					console.log("afterRender");
@@ -50,12 +55,15 @@
 					$('#callbacksDiv').append('<p>afterResize</p>');
 					console.log("afterResize");
 				},
+				/*
+				// NO SLydZ 4 noW
 				afterSlideLoad: function(anchorLink, index, slideAnchor, slideIndex){
 					$('#callbacksDiv').append('<p>afterSlideLoad - anchorLink:' + anchorLink + " index:" + index + " slideAnchor:" + slideAnchor +" slideIndex:" + slideIndex + '</p>');
 					deleteLog = true;
 					console.log("afterSlideLoad--" + "anchorLink: " + anchorLink + " index: " + index + " slideAnchor: " + slideAnchor + " slideIndex: " + slideIndex);
 					console.log("----------------");
 				},
+				*/
 				afterLoad: function(anchorLink, index){
                     console.log("after Load  " + index);
 					$('#callbacksDiv').append('<p>afterLoad - anchorLink:' + anchorLink + " index:" + index + '</p>');
@@ -66,6 +74,40 @@
 			});
 
 		});
+
+		$.fn.extend({
+		    animateOnce: function (animationName, visible) {
+		    	var visibility = visible ? "visible":"hidden";
+		    	console.log("Animated!! :" + visibility)
+		        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+		        this.addClass('animated ' + animationName).one(animationEnd, function() {
+		            $(this).removeClass('animated ' + animationName)
+		            .css({
+		            	"visibility":visibility
+		            });
+		        });
+		    }
+		});
+
+		function toggleBigImage(index) {
+			if (!imageActive) showBigImage(index);
+			else hideBigImage();
+		}
+
+		function showBigImage(index) {
+			var imageName = imageNames[index];
+			$('#bigImage').css({
+            	"background-image": "url('images/"+imageName+"')"
+            }).animateOnce('slideInRight', true);
+			$( '.bigImage_toggle' ).text( "Close project" );
+			imageActive = true;
+		}
+
+		function hideBigImage() {
+			$('#bigImage').animateOnce('slideOutRight',false);
+			$( '.bigImage_toggle' ).text( "View project" );
+			imageActive = false;
+		}
 	</script>
 
 </head>
@@ -73,7 +115,6 @@
 <!--
 <div style="position:fixed;top:50px;left:50px;color:white;z-index:999;" id="callbacksDiv"></div>
 -->
-
 <ul id="menu">
 	<li id="title">RADIAN</li> 
 	<li data-menuanchor="about"><a href="#about">ABOUT</a></li>
@@ -81,15 +122,10 @@
 	<li data-menuanchor="vfx"><a href="#vfx">VFX</a></li>
 	<li data-menuanchor="videogames"><a href="#videogames">VIDEOGAMES</a></li>
 	<li data-menuanchor="contact"><a href="#contact">CONTACT</a></li>
-
 </ul>
 
-<div id="contactMenu">
-    <ul>
-        <li><a href="https://www.facebook.com/3ETGames" target="_blank">Facebook</a></li>
-        <li><a href="https://twitter.com/Aestial" target="_blank">Twitter</a></li>
-        <li><a href="https://www.instagram.com/aestial" target="_blank">Instagram</a></li>
-    </ul>
+<div id="bigImage">
+	<!--img src="img"></img-->
 </div>
 
 <div id="fullpage">
@@ -102,7 +138,7 @@
 			<img class="infoImg">
 			<h1>ELECTRONIC DESIGN</h1>
 			<p>Proyecto Dog Chow E-Design.</p>
-			<p><a>View project</a></p>
+			<p><a class="bigImage_toggle" onclick = "toggleBigImage(0);">View project</a></p>
 		</div>
 	<!--
 		<div class="slide">
@@ -124,14 +160,15 @@
 		<div class="info">
 			<h1>VFX</h1>
 			<p>Proyecto Nigga Arcade VFX.</p>
-			<p><a>View project</a></p>
+			<p><a class="bigImage_toggle" onclick = "toggleBigImage(1);">View project</a></p>
+			<!--div class="openProj" onclick = "fadeInBigImage();"></div-->
 		</div>
 	</div>
 	<div class="section" id="section3">
 		<div class="info">
 			<h1>VIDEOGAMES</h1>
 			<p>Proyecto Runners VR Videogames.</p>
-			<p><a>View project</a></p>
+			<p><a class="bigImage_toggle" onclick = "toggleBigImage(2);">View project</a></p>
 		</div>
 	</div>
 	<div class="section" id="section3">
@@ -143,9 +180,15 @@
 		</div>
 	</div>
 </div>
-
+<div id="contactMenu">
+    <ul>
+        <li><a href="https://www.facebook.com/3ETGames" target="_blank">Facebook</a></li>
+        <li><a href="https://twitter.com/Aestial" target="_blank">Twitter</a></li>
+        <li><a href="https://www.instagram.com/aestial" target="_blank">Instagram</a></li>
+    </ul>
+</div>
 <div id="outer" style="width:100%">
-	<div class="scrollImg"></div>
+	<div id="scrollImg"></div>
 </div>
 
 </body>
