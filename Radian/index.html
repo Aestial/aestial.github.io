@@ -22,6 +22,7 @@
 		var deleteLog = false;
 		var imageActive = false;
 		var imageNames = ["French.jpg","Dog.jpg","Chilaquil.jpg","Pug.jpg"];
+		var isPlaying = false;
 
 		$(document).ready(function() {
 			$('#fullpage').fullpage({
@@ -78,9 +79,13 @@
 		$.fn.extend({
 		    animateOnce: function (animationName, visible) {
 		    	var visibility = visible ? "visible":"hidden";
-		    	console.log("Animated!! :" + visibility)
 		        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+		        console.log("Animated!! :" + visibility);
+				isPlaying = true;
+				console.log(isPlaying);
 		        this.addClass('animated ' + animationName).one(animationEnd, function() {
+		        	isPlaying = false;
+					console.log(isPlaying);
 		            $(this).removeClass('animated ' + animationName)
 		            .css({
 		            	"visibility":visibility
@@ -90,23 +95,29 @@
 		});
 
 		function toggleBigImage(index) {
-			if (!imageActive) showBigImage(index);
-			else hideBigImage();
+			if (!isPlaying) {
+				if (imageActive) hideBigImage();
+				else showBigImage(index);	
+			}
 		}
 
 		function showBigImage(index) {
-			var imageName = imageNames[index];
-			$('#bigImage').css({
-            	"background-image": "url('images/"+imageName+"')"
-            }).animateOnce('slideInRight', true);
-			$( '.bigImage_toggle' ).text( "Close project" );
-			imageActive = true;
+			if (!imageActive) {
+				var imageName = imageNames[index];
+				$('#bigImage').css({
+	            	"background-image": "url('images/"+imageName+"')"
+	            }).animateOnce('slideInRight', true);
+				$( '.bigImage_toggle' ).text( "Close project" );
+				imageActive = true;	
+			}
 		}
 
 		function hideBigImage() {
-			$('#bigImage').animateOnce('slideOutRight',false);
-			$( '.bigImage_toggle' ).text( "View project" );
-			imageActive = false;
+			if (imageActive) {
+				$('#bigImage').animateOnce('slideOutRight',false);
+				$( '.bigImage_toggle' ).text( "View project" );
+				imageActive = false;	
+			}
 		}
 	</script>
 
