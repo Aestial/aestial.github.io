@@ -76,17 +76,18 @@ body{
 	position: relative;
 }
 h1{
-	margin-left: 25%;
+	margin-left: 30%;
 	font-size: 4em;
 	letter-spacing: 15px;
+	padding: 20px 0px;
 }
 p{
-	margin-left: 25%;
+	margin-left: 30%;
 	width: 300px;
 	font-size: 1.5em;
 	letter-spacing: 8px;
 }
-.intro p{
+.info p{
 	width: 50%;
 	margin: 0 auto;
 	font-size: 1.5em;
@@ -101,16 +102,24 @@ Aqui comienza para el menu
 #menu{
 	font-family: Roboto-Light,helvetica;
 	position: absolute;
-	top: 11%;
-	left: 15px;
+	top: 30px;
+	left: 30px;
 	z-index: 70;	
 }
 #menu li {
-	//display:inline-block;
 	letter-spacing: 3px;
-	//margin: 10px;
 	color: #fff;
 }
+
+#title{
+	font-family: Renogare,helvetica;
+	font-size: 1.3em;	
+	display: block;
+    width: 120px;
+	color: #fff;
+	padding: 20px 10px;
+}
+
 #menu li.active{
 	color: #ddd;
 }
@@ -118,25 +127,28 @@ Aqui comienza para el menu
 	display: block;
     width: 120px;
 	text-decoration:none;
-	color: #777	;
+	color: #777	;	
+	padding: 5px 10px;
 }
 #menu li a:hover{
 	color: #aaa	;
 }
+
+#menu li.active a{
+	color: #fff;
+}
+
 #menu li.active a:hover{
 	color: #fff;
 }
-#menu li:hover{
-	//background: rgba(255,255,255, 0.8);
-}
+
+/*
 #menu li a,
 #menu li.active a{
 	padding: 9px 18px;
 	display:block;
 }
-#menu li.active a{
-	color: #fff;
-}
+*/
 
 .twitter-share-button{
 	position: fixed;
