@@ -76,22 +76,51 @@ body{
 	position: relative;
 }
 h1{
-	margin-left: 30%;
-	font-size: 4em;
+	margin-left: 28%;
+	font-size: 3.8em;
 	letter-spacing: 15px;
 	padding: 20px 0px;
 }
 p{
-	margin-left: 30%;
+	margin-left: 28%;
 	width: 300px;
-	font-size: 1.5em;
+	font-size: 1.45em;
 	letter-spacing: 8px;
 }
-.info p{
-	width: 50%;
-	margin: 0 auto;
-	font-size: 1.5em;
+.info {
+	padding-left: 55%;
 }
+.info h1{
+	width: 350px;
+	font-size: 1.4em;
+	letter-spacing: 10px;
+	padding: 10px 0px;
+	padding-top: 150px;
+}
+.info p{
+	width: 350px;
+	font-size: 1.3em;
+	padding: 10px 0px;
+}
+
+.contact {
+	margin-left: -15%;
+}
+
+.contact h1{
+	font-family: Renogare,helvetica;
+	width: 350px;
+	font-size: 1.7em;
+	letter-spacing: 5px;
+	padding: 30px 0px;
+}
+.contact p{
+	width: 350px;
+	font-size: 1.3em;
+	padding: 20px 0px;
+	letter-spacing: 5px;
+}
+
 .section{
 	//text-align:center;
 }
@@ -99,18 +128,6 @@ p{
 /*
 Aqui comienza para el menu 
 */
-#menu{
-	font-family: Roboto-Light,helvetica;
-	position: absolute;
-	top: 30px;
-	left: 30px;
-	z-index: 70;	
-}
-#menu li {
-	letter-spacing: 3px;
-	color: #fff;
-}
-
 #title{
 	font-family: Renogare,helvetica;
 	font-size: 1.3em;	
@@ -118,8 +135,19 @@ Aqui comienza para el menu
     width: 120px;
 	color: #fff;
 	padding: 20px 10px;
-}
 
+}
+#menu{
+	font-family: Roboto-Light,helvetica;
+	position: absolute;
+	top: 25px;
+	left: 40px;
+	z-index: 70;	
+}
+#menu li {
+	letter-spacing: 3px;
+	color: #fff;
+}
 #menu li.active{
 	color: #ddd;
 }
@@ -128,7 +156,7 @@ Aqui comienza para el menu
     width: 120px;
 	text-decoration:none;
 	color: #777	;	
-	padding: 5px 10px;
+	padding: 6px 10px;
 }
 #menu li a:hover{
 	color: #aaa	;
@@ -141,7 +169,6 @@ Aqui comienza para el menu
 #menu li.active a:hover{
 	color: #fff;
 }
-
 /*
 #menu li a,
 #menu li.active a{
@@ -184,21 +211,7 @@ Aqui comienza para el menu
 	-moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
 	box-shadow: inset 0 1px 0 rgba(255,255,255,0.2),0 1px 2px rgba(0,0,0,0.05);
 }
-#download a{
-	text-decoration:none;
-	color:#fff;
-}
-#download:hover{
-	text-shadow: 0 -1px 0 rgba(0,0,0,.25);
-	background-color: #2F96B4;
-	background-position: 0 -15px;
-	-webkit-transition: background-position .1s linear;
-	-moz-transition: background-position .1s linear;
-	-ms-transition: background-position .1s linear;
-	-o-transition: background-position .1s linear;
-	transition: background-position .1s linear;
-}
-#infoMenu{
+#contactMenu{
 	height: 20px;
 	color: #f2f2f2;
 	position:fixed;
@@ -206,75 +219,23 @@ Aqui comienza para el menu
 	bottom:0;
 	width:100%;
 	text-align:right;
-	font-size:0.9em;
-	padding:8px 0 8px 0;
+	font-size: 1.1em;
+	padding: 0px 0px 15px 20px;
+	letter-spacing: 2px;
+
 }
-#infoMenu ul{
+#contactMenu ul{
 	padding: 0 40px;
 }
-#infoMenu li a{
+#contactMenu li a{
 	display: block;
 	margin: 0 22px 0 0;
-	color: #333;
+	color: #ccc;
 }
-#infoMenu li a:hover{
+#contactMenu li a:hover{
 	text-decoration:underline;
 }
-#infoMenu li{
+#contactMenu li{
 	display:inline-block;
 	position:relative;
 }
-#examplesList{
-	display:none;
-	background: #282828;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	border-radius: 6px;
-	padding: 20px;
-	float: left;
-	position: absolute;
-	bottom: 29px;
-	right: 0;
-	width:638px;
-	text-align:left;
-}
-#examplesList ul{
-	padding:0;
-}
-#examplesList ul li{
-	display:block;
-	margin: 5px 0;
-}
-#examplesList ul li a{
-	color: #BDBDBD;
-	margin:0;
-}
-#examplesList ul li a:hover{
-	color: #f2f2f2;
-}
-#examplesList .column{
-	float: left;
-	margin: 0 20px 0 0;
-}
-#examplesList h3{
-	color: #f2f2f2;
-	font-size: 1.2em;
-	margin: 0 0 15px 0;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-	-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
-	-moz-box-shadow: 0 1px 0 rgba(255,255,255,0.1);
-	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
-	padding: 0 0 5px 0;
-}
-
-
-
-/* Demos Menu
- * --------------------------------------- */
- #demosMenu{
-	position:fixed;
-	bottom: 10px;
-	right:10px;
-	z-index: 999;
- }
-
