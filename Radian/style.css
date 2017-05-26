@@ -1,4 +1,20 @@
 @CHARSET "ISO-8859-1";
+@font-face {
+    font-family: Renogare;
+    src: url(fonts/Renogare.ttf);
+    font-weight: bold;
+}
+@font-face {
+    font-family: Roboto-Light;
+    src: url(fonts/Roboto-Light.ttf);
+    font-weight: bold;
+}
+@font-face {
+    font-family: Roboto-Thin;
+    src: url(fonts/Roboto-Thin.ttf);
+    font-weight: bold;
+}
+
 /* Reset CSS
  * --------------------------------------- */
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,
@@ -49,7 +65,7 @@ abbr,acronym { border: 0;
 /* Custom CSS
  * --------------------------------------- */
 body{
-	font-family: arial,helvetica;
+	font-family: Roboto-Thin,helvetica;
 	color: #fff;
 	//color: rgba(1.0,1.0,1.0,0.75);
 }
@@ -60,10 +76,15 @@ body{
 	position: relative;
 }
 h1{
-	font-size: 4.5em;
+	margin-left: 25%;
+	font-size: 4em;
+	letter-spacing: 15px;
 }
 p{
-	font-size: 1.6em;
+	margin-left: 25%;
+	width: 300px;
+	font-size: 1.5em;
+	letter-spacing: 8px;
 }
 .intro p{
 	width: 50%;
@@ -71,16 +92,23 @@ p{
 	font-size: 1.5em;
 }
 .section{
-	text-align:center;
+	//text-align:center;
 }
 
 /*
 Aqui comienza para el menu 
 */
-
+#menu{
+	font-family: Roboto-Light,helvetica;
+	position: absolute;
+	top: 11%;
+	left: 15px;
+	z-index: 70;	
+}
 #menu li {
 	//display:inline-block;
-	margin: 10px;
+	letter-spacing: 3px;
+	//margin: 10px;
 	color: #fff;
 }
 #menu li.active{
@@ -88,7 +116,7 @@ Aqui comienza para el menu
 }
 #menu li a{
 	display: block;
-    width: 60px;
+    width: 120px;
 	text-decoration:none;
 	color: #777	;
 }
@@ -109,12 +137,7 @@ Aqui comienza para el menu
 #menu li.active a{
 	color: #fff;
 }
-#menu{
-	position: absolute;
-	top: 15%;
-	left: 10px;
-	z-index: 70;	
-}
+
 .twitter-share-button{
 	position: fixed;
 	z-index: 99;
