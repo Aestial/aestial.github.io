@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Radian</title>
+	<meta name="author" content="Jaime Hernandez" />
+	<meta name="description" content="radian vfx e-design videogames" />
+	<meta name="keywords"  content="radian vfx e-design videogames" />
+	<meta name="Resource-type" content="Document" />
+
+	<link rel="stylesheet" type="text/css" href="jquery.fullPage.css" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+
+	<!--[if IE]>
+		<script type="text/javascript">
+			 var console = { log: function() {} };
+		</script>
+	<![endif]-->
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+	<script type="text/javascript" src="jquery.fullPage.js"></script>
+	<script type="text/javascript" src="examples.js"></script>
+	<script type="text/javascript">
+		var deleteLog = false;
+
+		$(document).ready(function() {
+			$('#fullpage').fullpage({
+				sectionsColor: ['black', 'black', 'black', 'black', 'black'],
+				anchors: ['about', 'edesign', 'vfx', 'videogames', 'contact'],
+				menu: '#menu',
+				onLeave: function(index, nextIndex, direction){
+					if(deleteLog){
+						$('#callbacksDiv').html('');
+					}
+					$('#callbacksDiv').append('<p>onLeave - index:' + index + ' nextIndex:' + nextIndex + ' direction:' + direction + '</p>')
+					console.log("onLeave--" + "index: " + index + " nextIndex: " + nextIndex + " direction: " +  direction);
+				},
+				onSlideLeave: function(anchorLink, index, slideIndex, direction, nextSlideIndex){
+					if(deleteLog){
+						$('#callbacksDiv').html('');
+					}
+					$('#callbacksDiv').append('<p>onSlideLeave - anchorLink:' + anchorLink + " index:" + index + " slideIndex:" + slideIndex +" direction:" + direction + " nextSlideIndex:" + nextSlideIndex + '</p>');
+					console.log("onSlideLeave--" + "anchorLink: " + anchorLink + " index: " + index + " slideIndex: " + slideIndex + " direction: " + direction);
+				},
+				afterRender: function(){
+					$('#callbacksDiv').append('<p>afterRender</p>');
+					console.log("afterRender");
+				},
+				afterResize: function(){
+					$('#callbacksDiv').append('<p>afterResize</p>');
+					console.log("afterResize");
+				},
+				afterSlideLoad: function(anchorLink, index, slideAnchor, slideIndex){
+					$('#callbacksDiv').append('<p>afterSlideLoad - anchorLink:' + anchorLink + " index:" + index + " slideAnchor:" + slideAnchor +" slideIndex:" + slideIndex + '</p>');
+					deleteLog = true;
+					console.log("afterSlideLoad--" + "anchorLink: " + anchorLink + " index: " + index + " slideAnchor: " + slideAnchor + " slideIndex: " + slideIndex);
+					console.log("----------------");
+				},
+				afterLoad: function(anchorLink, index){
+                    console.log("after Load  " + index);
+					$('#callbacksDiv').append('<p>afterLoad - anchorLink:' + anchorLink + " index:" + index + '</p>');
+					deleteLog = true;
+					console.log('===============');
+					console.log("afterLoad--" + "anchorLink: " + anchorLink + " index: " + index );
+				}
+			});
+
+		});
+	</script>
+
+</head>
+<body>
+<!--
+<div style="position:fixed;top:50px;left:50px;color:white;z-index:999;" id="callbacksDiv"></div>
+-->
+
+<ul id="menu">
+	<li data-menuanchor="about"><a href="#about">ABOUT</a></li>
+	<li data-menuanchor="edesign"><a href="#edesign">ELECTRONIC DESIGN</a></li>
+	<li data-menuanchor="vfx"><a href="#vfx">VFX</a></li>
+	<li data-menuanchor="videogames"><a href="#videogames">VIDEOGAMES</a></li>
+	<li data-menuanchor="contact"><a href="#contact">CONTACT</a></li>
+
+</ul>
+
+<div id="fullpage">
+	<div class="section" id="section0">
+		<h1>About</h1>
+		<p>We are Radian bla bla lorem ipsum!</p>
+	</div>
+	<div class="section" id="section1">
+		<div class="intro">
+			<h1>Electronic Design</h1>
+			<p>Proyecto Dog Chow E-Design</p>
+			<p>View project</p>
+		</div>
+	<!--
+		<div class="slide">
+			<div class="intro">
+				<h1>Dog Chow</h1>
+				<p>Proyecto E-Design</p>
+				<p>View project</p>
+			</div>
+		</div>
+		<div class="slide">
+			<h1>Proyecto 2</h1>
+		</div>
+		<div class="slide">
+			<h1>Proyecto 3</h1>
+		</div>
+	-->
+	</div>	
+	<div class="section" id="section2">
+		<div class="intro">
+			<h1>VFX</h1>
+			<p>Proyecto Dog Chow E-Design</p>
+			<p>View project</p>
+		</div>
+	</div>
+	<div class="section" id="section3">
+		<div class="intro">
+			<h1>Videogames</h1>
+			<p>Proyecto Runners VR Videogames</p>
+			<p>View project</p>
+		</div>
+	</div>
+	<div class="section" id="section3">
+		<div class="intro">
+			<h1>Contact</h1>
+			<p>Name</p>
+			<p>Mail</p>
+			<p>Message</p>
+		</div>
+	</div>
+</div>
+
+
+</body>
+</html>
