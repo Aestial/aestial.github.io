@@ -16,17 +16,21 @@
 		</script>
 	<![endif]-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/85/three.min.js"></script>
 	<script type="text/javascript" src="js/jquery.fullPage.js"></script>
-	<!--script type="text/javascript" src="examples.js"></script-->
+	<script type="text/javascript" src="js/Detector.js"></script>
+	<script type="text/javascript" src="js/stats.min.js"></script>
+	<script type="text/javascript" src="js/app3d.js"></script>
 	<script type="text/javascript">
 		var deleteLog = false;
 		var imageActive = false;
 		var imageNames = ["French.jpg","Dog.jpg","Chilaquil.jpg","Pug.jpg"];
 		var isPlaying = false;
 
+		window.addEventListener( 'load', onLoaded, false );
 		$(document).ready(function() {
 			$('#fullpage').fullpage({
-				//sectionsColor: ['rgba(0,0,0,0)'],
+				sectionsColor: ['rgba(0,0,0,0)'],
 				anchors: ['about', 'edesign', 'vfx', 'videogames', 'contact'],
 				menu: '#menu',
 				onLeave: function(index, nextIndex, direction){
@@ -36,7 +40,6 @@
 					$('#callbacksDiv').append('<p>onLeave - index:' + index + ' nextIndex:' + nextIndex + ' direction:' + direction + '</p>')
 					console.log("onLeave--" + "index: " + index + " nextIndex: " + nextIndex + " direction: " +  direction);
 					hideBigImage();
-
 				},
 				/*
 				// NO SLydZ 4 noW
@@ -66,6 +69,7 @@
 				},
 				*/
 				afterLoad: function(anchorLink, index){
+					ChangeLightColor(index);
                     console.log("after Load  " + index);
 					$('#callbacksDiv').append('<p>afterLoad - anchorLink:' + anchorLink + " index:" + index + '</p>');
 					deleteLog = true;
