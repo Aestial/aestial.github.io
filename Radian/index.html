@@ -61,12 +61,13 @@
 		    //This is how "packed" the smoke is in our area. Try changing 8.0 to 1.0, or something else
 		    vec2 p = gl_FragCoord.xy * 8.0 / resolution.xx;
 		    //The fbm function takes p as its seed (so each pixel looks different) and time (so it shifts over time)
-		    float q = fbm(p - time * 0.1);
+		    float q = fbm(p - time * 0.11);
 		    vec2 r = vec2(fbm(p + q + time * speed.x - p.x - p.y), fbm(p + q - time * speed.y));
 		    vec3 c = mix(c1, c2, fbm(p + r)) + mix(c3, c4, r.x) - mix(c5, c6, r.y);
 		    float grad = gl_FragCoord.y / resolution.y;
 		    gl_FragColor = vec4(c * cos(shift * gl_FragCoord.y / resolution.y), 0.0);
-		    gl_FragColor.xyz *= 1.0-grad;
+		    //gl_FragColor.xyz *= 1.0-grad;
+		    gl_FragColor.xyz *= grad;
 		}
 	</script>
 		  
@@ -214,9 +215,11 @@
 	<div id="smoke_cont"></div>
 		<div class="contact">
 			<h1>CONTACT</h1>
-			<p>NAME</p>
-			<p>MAIL</p>
-			<p>MESSAGE</p>
+			<form>
+				<p>NAME<input type="text" name="name"></p>
+				<p>MAIL<input type="email" name="email"></p>
+				<p>MESSAGE<input type="text" name="message"></p>
+			</form>
 		</div>
 	</div>
 </div>

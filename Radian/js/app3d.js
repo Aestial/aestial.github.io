@@ -2,7 +2,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var statsEnabled = true;
 var container, stats, loader;
 var camera, scene, renderer;
-var mesh;
+var mesh, material;
 var spotLight;
 var mouseX = 0;
 var mouseY = 0;
@@ -42,7 +42,7 @@ function init() {
 	mapHeight.wrapS = mapHeight.wrapT = THREE.RepeatWrapping;
 	mapHeight.format = THREE.RGBFormat;
 
-	var material = new THREE.MeshStandardMaterial( {
+	material = new THREE.MeshStandardMaterial( {
 		color: 0x989898,
 		roughness: 0,
 		metalness: 0.3,
@@ -75,6 +75,11 @@ function init() {
 function ChangeLightColor(index) {
 	console.log("Color index: "+index);
 	spotLight.color.setHex ( lightColors[index-1] );
+	if ( index == 5){
+		material.color.setHex(0x202020);
+	} else {
+		material.color.setHex(0x989898);
+	}
 }
 
 /*function OnLoaded() {
