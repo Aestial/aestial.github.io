@@ -70,7 +70,6 @@ function init() {
 	// EVENTS
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	window.addEventListener( 'resize', onWindowResize, false );
-
 }
 
 function ChangeLightColor(index) {
@@ -78,9 +77,10 @@ function ChangeLightColor(index) {
 	spotLight.color.setHex ( lightColors[index-1] );
 }
 
-function onLoaded() {
+function OnLoaded() {
 	init();
 	animate();
+	loaded = true;
 }
 
 function createScene( geometry, scale, material ) {

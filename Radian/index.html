@@ -26,8 +26,9 @@
 		var imageActive = false;
 		var imageNames = ["French.jpg","Dog.jpg","Chilaquil.jpg","Pug.jpg"];
 		var isPlaying = false;
+		var loaded = false;
 
-		window.addEventListener( 'load', onLoaded, false );
+		window.addEventListener( 'load', OnLoaded, false );
 		$(document).ready(function() {
 			$('#fullpage').fullpage({
 				sectionsColor: ['rgba(0,0,0,0)'],
@@ -69,8 +70,10 @@
 				},
 				*/
 				afterLoad: function(anchorLink, index){
-					ChangeLightColor(index);
-                    console.log("after Load  " + index);
+					if (loaded) {
+						ChangeLightColor(index);	
+					}
+					console.log("after Load  " + index);
 					$('#callbacksDiv').append('<p>afterLoad - anchorLink:' + anchorLink + " index:" + index + '</p>');
 					deleteLog = true;
 					console.log('===============');
