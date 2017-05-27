@@ -11,9 +11,9 @@
 	<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<!--[if IE]>
-	<script type="text/javascript">
-		 var console = { log: function() {} };
-	</script>
+		<script type="text/javascript">
+			 var console = { log: function() {} };
+		</script>
 	<![endif]-->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/85/three.min.js"></script>
@@ -52,10 +52,10 @@
 		}
 		void main() {
 		    //This is where our shader comes together
-		    const vec3 c1 = vec3(90.0/255.0, 90.0/255.0, 90.0/255.0);
-		    const vec3 c2 = vec3(150.0/255.0, 150.0/255.0, 150.0/255.0);
-		    const vec3 c3 = vec3(0.1, 0.1, 0.1);
-		    const vec3 c4 = vec3(120.0/255.0, 120.0/255.0, 120.0/255.0);
+		    const vec3 c1 = vec3(126.0/255.0, 0.0/255.0, 97.0/255.0);
+		    const vec3 c2 = vec3(173.0/255.0, 0.0/255.0, 161.4/255.0);
+		    const vec3 c3 = vec3(0.2, 0.0, 0.0);
+		    const vec3 c4 = vec3(164.0/255.0, 1.0/255.0, 214.4/255.0);
 		    const vec3 c5 = vec3(0.1);
 		    const vec3 c6 = vec3(0.9);
 		    //This is how "packed" the smoke is in our area. Try changing 8.0 to 1.0, or something else
@@ -65,7 +65,7 @@
 		    vec2 r = vec2(fbm(p + q + time * speed.x - p.x - p.y), fbm(p + q - time * speed.y));
 		    vec3 c = mix(c1, c2, fbm(p + r)) + mix(c3, c4, r.x) - mix(c5, c6, r.y);
 		    float grad = gl_FragCoord.y / resolution.y;
-		    gl_FragColor = vec4(c * cos(shift * gl_FragCoord.y / resolution.y), 0.0);
+		    gl_FragColor = vec4(c * cos(shift * gl_FragCoord.y / resolution.y), 1.0);
 		    gl_FragColor.xyz *= 1.0-grad;
 		}
 	</script>
@@ -101,6 +101,16 @@
 					console.log("onLeave--" + "index: " + index + " nextIndex: " + nextIndex + " direction: " +  direction);
 					hideBigImage();
 				},
+				/*
+				// NO SLydZ 4 noW
+				onSlideLeave: function(anchorLink, index, slideIndex, direction, nextSlideIndex){
+					if(deleteLog){
+						$('#callbacksDiv').html('');
+					}
+					$('#callbacksDiv').append('<p>onSlideLeave - anchorLink:' + anchorLink + " index:" + index + " slideIndex:" + slideIndex +" direction:" + direction + " nextSlideIndex:" + nextSlideIndex + '</p>');
+					console.log("onSlideLeave--" + "anchorLink: " + anchorLink + " index: " + index + " slideIndex: " + slideIndex + " direction: " + direction);
+				},
+				*/
 				afterRender: function(){
 					$('#callbacksDiv').append('<p>afterRender</p>');
 					console.log("afterRender");
@@ -109,6 +119,15 @@
 					$('#callbacksDiv').append('<p>afterResize</p>');
 					console.log("afterResize");
 				},
+				/*
+				// NO SLydZ 4 noW
+				afterSlideLoad: function(anchorLink, index, slideAnchor, slideIndex){
+					$('#callbacksDiv').append('<p>afterSlideLoad - anchorLink:' + anchorLink + " index:" + index + " slideAnchor:" + slideAnchor +" slideIndex:" + slideIndex + '</p>');
+					deleteLog = true;
+					console.log("afterSlideLoad--" + "anchorLink: " + anchorLink + " index: " + index + " slideAnchor: " + slideAnchor + " slideIndex: " + slideIndex);
+					console.log("----------------");
+				},
+				*/
 				afterLoad: function(anchorLink, index){
 					if (loaded) {
 						ChangeLightColor(index);	
@@ -167,8 +186,12 @@
 			}
 		}
 	</script>
+
 </head>
 <body>
+<!--
+<div style="position:fixed;top:50px;left:50px;color:white;z-index:999;" id="callbacksDiv"></div>
+-->
 <ul id="menu">
 	<li id="title">RADIAN</li> 
 	<li data-menuanchor="about"><a href="#about">ABOUT</a></li>
@@ -194,6 +217,21 @@
 			<p>Proyecto Dog Chow E-Design.</p>
 			<p><a class="bigImage_toggle" onclick = "toggleBigImage(0);">View project</a></p>
 		</div>
+	<!--
+		<div class="slide">
+			<div class="intro">
+				<h1>Dog Chow</h1>
+				<p>Proyecto E-Design</p>
+				<p>View project</p>
+			</div>
+		</div>
+		<div class="slide">
+			<h1>Proyecto 2</h1>
+		</div>
+		<div class="slide">
+			<h1>Proyecto 3</h1>
+		</div>
+	-->
 	</div>	
 	<div class="section" id="section2">
 		<div class="info">
@@ -211,7 +249,6 @@
 		</div>
 	</div>
 	<div class="section" id="section3">
-	<div id="smoke_cont"></div>
 		<div class="contact">
 			<h1>CONTACT</h1>
 			<p>NAME</p>

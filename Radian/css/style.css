@@ -87,7 +87,7 @@ p{
 	font-size: 1.45em;
 	letter-spacing: 8px;
 }
-.threecontainer {
+.pixi,.threecontainer {
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -113,7 +113,7 @@ p{
 }
 
 .contact h1{
-	//font-family: Renogare,helvetica;
+	font-family: Renogare,helvetica;
 	width: 350px;
 	font-size: 1.7em;
 	letter-spacing: 5px;
@@ -134,7 +134,7 @@ p{
 Aqui comienza para el menu 
 */
 #title{
-	//font-family: Renogare,helvetica;
+	font-family: Renogare,helvetica;
 	font-size: 1.3em;	
 	display: block;
     width: 120px;

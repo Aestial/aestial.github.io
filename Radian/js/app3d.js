@@ -10,7 +10,7 @@ var targetX = 0;
 var targetY = 0;
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
-var lightColors = [0xff1830,0x22ccaa,0xa815bb,0xdb6912,0x333333]
+var lightColors = [0xff1830,0x22ccaa,0xa815bb,0xdb6912,0x010101]
 
 function init() {
 	container = document.createElement( 'div' );
@@ -77,11 +77,10 @@ function ChangeLightColor(index) {
 	spotLight.color.setHex ( lightColors[index-1] );
 }
 
-function OnLoaded() {
+/*function OnLoaded() {
 	init();
 	animate();
-	loaded = true;
-}
+}*/
 
 function createScene( geometry, scale, material ) {
 	mesh = new THREE.Mesh( geometry, material );
