@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>RADIAN</title>
+	<meta name="author" content="Jaime Hernandez" />
+	<meta name="description" content="Radian: E-Design VFX Videogames" />
+	<meta name="keywords"  content="e-design vfx videogames" />
+	<meta name="Resource-type" content="Document" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<!--[if IE]>
+	<script type="text/javascript">
+		 var console = { log: function() {} };
+	</script>
+	<![endif]-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/85/three.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/3.0.7/pixi.min.js"></script>
+	<script type="text/javascript" src="js/jquery.fullPage.js"></script>
+	<script type="text/javascript" src="js/Detector.js"></script>
+	<script type="text/javascript" src="js/stats.min.js"></script>
+	<script type="text/javascript" src="js/app3d.js"></script>
+	<script type="text/javascript" src="js/smokePixi.js"></script>
+	<script id="fragShader" type="shader-code">
+		precision mediump float;
+		uniform vec2      resolution;
+		uniform float     time;
+		uniform float     alpha;
+		uniform vec2      speed;
+		uniform float     shift;
+		float rand(vec2 n) {
+		  //This is just a compounded expression to simulate a random number based on a seed given as n
+		  	return fract(cos(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+		}
+		float noise(vec2 n) {
+		  //Uses the rand function to generate noise
+			  const vec2 d = vec2(0.0, 1.0);
+			  vec2 b = floor(n), f = smoothstep(vec2(0.0), vec2(1.0), fract(n));
+			  return mix(mix(rand(b), rand(b + d.yx), f.x), mix(rand(b + d.xy), rand(b + d.yy), f.x), f.y);
+		}
+		float fbm(vec2 n) {
+		  //fbm stands for "Fractal Brownian Motion" https://en.wikipedia.org/wiki/Fractional_Brownian_motion
+			  float total = 0.0, amplitude = 1.0;
+			  for (int i = 0; i < 4; i++) {
+		 	   total += noise(n) * amplitude;
+			    n += n;
+			    amplitude *= 0.5;
+			  }
+			  return total;
+		}
+		void main() {
+		    //This is where our shader comes together
+		    const vec3 c1 = vec3(90.0/255.0, 90.0/255.0, 90.0/255.0);
+		    const vec3 c2 = vec3(150.0/255.0, 150.0/255.0, 150.0/255.0);
+		    const vec3 c3 = vec3(0.1, 0.1, 0.1);
+		    const vec3 c4 = vec3(120.0/255.0, 120.0/255.0, 120.0/255.0);
+		    const vec3 c5 = vec3(0.1);
+		    const vec3 c6 = vec3(0.9);
+		    //This is how "packed" the smoke is in our area. Try changing 8.0 to 1.0, or something else
+		    vec2 p = gl_FragCoord.xy * 8.0 / resolution.xx;
+		    //The fbm function takes p as its seed (so each pixel looks different) and time (so it shifts over time)
+		    float q = fbm(p - time * 0.11);
+		    vec2 r = vec2(fbm(p + q + time * speed.x - p.x - p.y), fbm(p + q - time * speed.y));
+		    vec3 c = mix(c1, c2, fbm(p + r)) + mix(c3, c4, r.x) - mix(c5, c6, r.y);
+		    float grad = gl_FragCoord.y / resolution.y;
+		    gl_FragColor = vec4(c * cos(shift * gl_FragCoord.y / resolution.y), 0.0);
+		    //gl_FragColor.xyz *= 1.0-grad;
+		    gl_FragColor.xyz *= grad;
+		}
+	</script>
+		  
+	<script type="text/javascript">
+		var deleteLog = false;
+		var imageActive = false;
+		var imageNames = ["French.jpg","Dog.jpg","Chilaquil.jpg","Pug.jpg"];
+		var isPlaying = false;
+		var loaded = false;
+
+		// MAIN ON LOADED
+		window.addEventListener( 'load', OnLoaded, false );
+
+		function OnLoaded() {
+			init();
+			pixi_init();
+			loaded = true;
+			animate();
+			pixi_animate();
+		}
+
+		$(document).ready(function() {
+			$('#fullpage').fullpage({
+				sectionsColor: ['rgba(0,0,0,0)'],
+				anchors: ['about', 'edesign', 'vfx', 'videogames', 'contact'],
+				menu: '#menu',
+				onLeave: function(index, nextIndex, direction){
+					if(deleteLog){
+						$('#callbacksDiv').html('');
+					}
+					$('#callbacksDiv').append('<p>onLeave - index:' + index + ' nextIndex:' + nextIndex + ' direction:' + direction + '</p>')
+					console.log("onLeave--" + "index: " + index + " nextIndex: " + nextIndex + " direction: " +  direction);
+					hideBigImage();
+				},
+				afterRender: function(){
+					$('#callbacksDiv').append('<p>afterRender</p>');
+					console.log("afterRender");
+				},
+				afterResize: function(){
+					$('#callbacksDiv').append('<p>afterResize</p>');
+					console.log("afterResize");
+				},
+				afterLoad: function(anchorLink, index){
+					if (loaded) {
+						ChangeLightColor(index);	
+					}
+					console.log("after Load  " + index);
+					$('#callbacksDiv').append('<p>afterLoad - anchorLink:' + anchorLink + " index:" + index + '</p>');
+					deleteLog = true;
+					console.log('===============');
+					console.log("afterLoad--" + "anchorLink: " + anchorLink + " index: " + index );
+				}
+			});
+
+		});
+
+		$.fn.extend({
+		    animateOnce: function (animationName, visible) {
+		    	var visibility = visible ? "visible":"hidden";
+		        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+		        console.log("Animated!! :" + visibility);
+				isPlaying = true;
+				console.log(isPlaying);
+		        this.addClass('animated ' + animationName).one(animationEnd, function() {
+		        	isPlaying = false;
+					console.log(isPlaying);
+		            $(this).removeClass('animated ' + animationName)
+		            .css({
+		            	"visibility":visibility
+		            });
+		        });
+		    }
+		});
+
+		function toggleBigImage(index) {
+			if (!isPlaying) {
+				if (imageActive) hideBigImage();
+				else showBigImage(index);	
+			}
+		}
+
+		function showBigImage(index) {
+			if (!imageActive) {
+				var imageName = imageNames[index];
+				$('#bigImage').css({
+	            	"background-image": "url('images/"+imageName+"')"
+	            }).animateOnce('slideInRight', true);
+				$( '.bigImage_toggle' ).text( "Close project" );
+				imageActive = true;	
+			}
+		}
+
+		function hideBigImage() {
+			if (imageActive) {
+				$('#bigImage').animateOnce('slideOutRight',false);
+				$( '.bigImage_toggle' ).text( "View project" );
+				imageActive = false;	
+			}
+		}
+	</script>
+</head>
+<body>
+<ul id="menu">
+	<li id="title">RADIAN</li> 
+	<li data-menuanchor="about"><a href="#about">ABOUT</a></li>
+	<li data-menuanchor="edesign"><a href="#edesign">ELECTRONIC DESIGN</a></li>
+	<li data-menuanchor="vfx"><a href="#vfx">VFX</a></li>
+	<li data-menuanchor="videogames"><a href="#videogames">VIDEOGAMES</a></li>
+	<li data-menuanchor="contact"><a href="#contact">CONTACT</a></li>
+</ul>
+
+<div id="bigImage">
+	<!--img src="img"></img-->
+</div>
+
+<div id="fullpage">
+	<div class="section" id="section0">
+		<h1>ABOUT</h1>
+		<p>We are RADIAN we can make you do anything for us!</p>
+	</div>
+	<div class="section" id="section1">
+		<div class="info">
+			<img class="infoImg">
+			<h1>ELECTRONIC DESIGN</h1>
+			<p>Proyecto Dog Chow E-Design.</p>
+			<p><a class="bigImage_toggle" onclick = "toggleBigImage(0);">View project</a></p>
+		</div>
+	</div>	
+	<div class="section" id="section2">
+		<div class="info">
+			<h1>VFX</h1>
+			<p>Proyecto Nigga Arcade VFX.</p>
+			<p><a class="bigImage_toggle" onclick = "toggleBigImage(1);">View project</a></p>
+			<!--div class="openProj" onclick = "fadeInBigImage();"></div-->
+		</div>
+	</div>
+	<div class="section" id="section3">
+		<div class="info">
+			<h1>VIDEOGAMES</h1>
+			<p>Proyecto Runners VR Videogames.</p>
+			<p><a class="bigImage_toggle" onclick = "toggleBigImage(2);">View project</a></p>
+		</div>
+	</div>
+	<div class="section" id="section3">
+	<div id="smoke_cont"></div>
+		<div class="contact">
+			<h1>CONTACT</h1>
+			<form>
+				<p>NAME<input type="text" name="name"></p>
+				<p>MAIL<input type="email" name="email"></p>
+				<p>MESSAGE<input type="text" name="message"></p>
+			</form>
+		</div>
+	</div>
+</div>
+<div id="contactMenu">
+    <ul>
+        <li><a href="https://www.facebook.com/3ETGames" target="_blank">Facebook</a></li>
+        <li><a href="https://twitter.com/Aestial" target="_blank">Twitter</a></li>
+        <li><a href="https://www.instagram.com/aestial" target="_blank">Instagram</a></li>
+    </ul>
+</div>
+<div id="outer" style="width:100%">
+	<div id="scrollImg"></div>
+</div>
+
+</body>
+</html>

@@ -45,12 +45,13 @@ function init() {
 	material = new THREE.MeshStandardMaterial( {
 		color: 0x989898,
 		roughness: 0,
-		metalness: 0.3,
-		bumpMap: mapHeight,
-		bumpScale: 2
+		metalness: 0.3
+		//bumpMap: mapHeight,
+		//bumpScale: 2
 	} );
 	loader = new THREE.JSONLoader();
-	loader.load( "obj/leeperrysmith/LeePerrySmith.js", function( geometry ) { createScene( geometry, 100, material ) } );
+	//loader.load( "obj/leeperrysmith/LeePerrySmith.js", function( geometry ) { createScene( geometry, 100, material ) } );
+	loader.load( "obj/bot.json", function( geometry ) { createScene( geometry, 100, material ) } );
 	renderer = new THREE.WebGLRenderer( { antialias: false } );
 	renderer.setClearColor( 0x060708 );
 	renderer.setPixelRatio( window.devicePixelRatio );
