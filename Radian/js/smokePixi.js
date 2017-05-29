@@ -27,7 +27,7 @@ function pixi_init() {
 	//Add the render view object into the page
 	shaderContainer.appendChild(pixi_renderer.view);
 	smokeShader = new PIXI.AbstractFilter('',shaderCode, uniforms);
-	var bg = PIXI.Sprite.fromImage("http://www.goodboydigital.com/pixijs/pixi_v3_github-pad.png");
+	var bg = PIXI.Sprite.fromImage("images/pixi.png");
 	bg.width = width;
 	bg.height = height;
 	bg.filters = [smokeShader]
