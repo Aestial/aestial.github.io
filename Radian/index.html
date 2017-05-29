@@ -15,9 +15,12 @@
 		 var console = { log: function() {} };
 	</script>
 	<![endif]-->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!--script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/85/three.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/3.0.7/pixi.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/3.0.7/pixi.min.js"></script-->
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/three.min.js"></script>
+	<script type="text/javascript" src="js/pixi.min.js"></script>
 	<script type="text/javascript" src="js/jquery.fullPage.js"></script>
 	<script type="text/javascript" src="js/Detector.js"></script>
 	<script type="text/javascript" src="js/stats.min.js"></script>
@@ -72,6 +75,9 @@
 	</script>
 		  
 	<script type="text/javascript">
+		// ENUMS
+		var CSSAnimType = Object.freeze({Entrance:1, Exit:2, Fixed:3});
+
 		var deleteLog = false;
 		var imageActive = false;
 		var imageNames = ["French.jpg","Dog.jpg","Chilaquil.jpg","Pug.jpg"];
@@ -112,7 +118,7 @@
 				},
 				afterLoad: function(anchorLink, index){
 					if (loaded) {
-						ChangeLightColor(index);	
+						//ChangeLightColor(index);	
 					}
 					console.log("after Load  " + index);
 					$('#callbacksDiv').append('<p>afterLoad - anchorLink:' + anchorLink + " index:" + index + '</p>');
@@ -124,21 +130,52 @@
 
 		});
 
+		function checkAnimType(animationName) {
+			if (animationName.includes("In")){
+				return CSSAnimType.Entrance;
+			} else if (animationName.includes("Out")){
+				return CSSAnimType.Exit;
+			} else {
+				return CSSAnimType.Fixed;
+			}
+			return 0;
+		}
+
 		$.fn.extend({
-		    animateOnce: function (animationName, visible) {
-		    	var visibility = visible ? "visible":"hidden";
-		        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-		        console.log("Animated!! :" + visibility);
+		    animateOnce: function (animationName) {
+		    	var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+		    	var type = checkAnimType(animationName);
 				isPlaying = true;
-				console.log(isPlaying);
-		        this.addClass('animated ' + animationName).one(animationEnd, function() {
-		        	isPlaying = false;
-					console.log(isPlaying);
-		            $(this).removeClass('animated ' + animationName)
-		            .css({
-		            	"visibility":visibility
-		            });
-		        });
+		    	switch (type) {
+		    		case CSSAnimType.Entrance:
+						this.addClass('animated ' + animationName).one(animationEnd, function() {
+				        	isPlaying = false;
+							console.log(isPlaying);
+				            $(this).removeClass('animated ' + animationName);
+				        }).css({
+				            	"visibility":"visible"
+				        });
+		    			break;
+		    		case CSSAnimType.Exit:
+			    		this.addClass('animated ' + animationName).one(animationEnd, function() {
+				        	isPlaying = false;
+							console.log(isPlaying);
+				            $(this).removeClass('animated ' + animationName)
+				            .css({
+				            	"visibility":"hidden"
+				            });
+				        });
+		    			break;
+		    		case CSSAnimType.Fixed:
+			    		this.addClass('animated ' + animationName).one(animationEnd, function() {
+				        	isPlaying = false;
+							console.log(isPlaying);
+				            $(this).removeClass('animated ' + animationName)
+				        });
+		    			break;
+		    		default:
+		    			break;
+		    	}
 		    }
 		});
 
@@ -154,7 +191,7 @@
 				var imageName = imageNames[index];
 				$('#bigImage').css({
 	            	"background-image": "url('images/"+imageName+"')"
-	            }).animateOnce('slideInRight', true);
+	            }).animateOnce('fadeInRight');
 				$( '.bigImage_toggle' ).text( "Close project" );
 				imageActive = true;	
 			}
@@ -162,7 +199,7 @@
 
 		function hideBigImage() {
 			if (imageActive) {
-				$('#bigImage').animateOnce('slideOutRight',false);
+				$('#bigImage').animateOnce('fadeOutRight');
 				$( '.bigImage_toggle' ).text( "View project" );
 				imageActive = false;	
 			}

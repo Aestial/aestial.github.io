@@ -2,7 +2,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var statsEnabled = true;
 var container, stats, loader;
 var camera, scene, renderer;
-var mesh, material;
+var mesh, materials = [];
 var spotLight;
 var mouseX = 0;
 var mouseY = 0;
@@ -42,13 +42,23 @@ function init() {
 	mapHeight.wrapS = mapHeight.wrapT = THREE.RepeatWrapping;
 	mapHeight.format = THREE.RGBFormat;
 
-	material = new THREE.MeshStandardMaterial( {
+	var material = new THREE.MeshStandardMaterial( {
 		color: 0x989898,
 		roughness: 0,
-		metalness: 0.3
+		metalness: 0,
 		//bumpMap: mapHeight,
 		//bumpScale: 2
 	} );
+	materials.push(material);
+	var material2 = new THREE.MeshStandardMaterial( {
+		color: 0x989898,
+		roughness: 0,
+		metalness: 0,
+		//bumpMap: mapHeight,
+		//bumpScale: 2
+	} );
+	//materials.push(material2);
+	
 	loader = new THREE.JSONLoader();
 	//loader.load( "obj/leeperrysmith/LeePerrySmith.js", function( geometry ) { createScene( geometry, 100, material ) } );
 	loader.load( "obj/bot.json", function( geometry ) { createScene( geometry, 100, material ) } );
@@ -77,9 +87,9 @@ function ChangeLightColor(index) {
 	console.log("Color index: "+index);
 	spotLight.color.setHex ( lightColors[index-1] );
 	if ( index == 5){
-		material.color.setHex(0x202020);
+		materials[0].color.setHex(0x202020);
 	} else {
-		material.color.setHex(0x989898);
+		materials[0].color.setHex(0x989898);
 	}
 }
 
