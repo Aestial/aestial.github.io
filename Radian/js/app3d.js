@@ -27,6 +27,17 @@ function init() {
 	scene.fog = fog;
 	// LIGHTS
 	scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
+	var lights = [];
+	lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+	lights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+	lights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+	lights[ 0 ].position.set( 0, 200, 0 );
+	lights[ 1 ].position.set( 100, 200, 100 );
+	lights[ 2 ].position.set( - 100, - 200, - 100 );
+	scene.add( lights[ 0 ] );
+	scene.add( lights[ 1 ] );
+	scene.add( lights[ 2 ] );
+	/*
 	spotLight = new THREE.SpotLight( 0xbbbbbb, 1 );
 	spotLight.position.set( -1, 0, 1.5 );
 	spotLight.position.multiplyScalar( 20 );
@@ -45,7 +56,7 @@ function init() {
 	mapHeight.offset.set( 0.001, 0.001 );
 	mapHeight.wrapS = mapHeight.wrapT = THREE.RepeatWrapping;
 	mapHeight.format = THREE.RGBFormat;
-*/
+	*/
 	var path = "textures/cube/SwedishCastle/";
 	var format = '.jpg';
 	var urls = [
@@ -94,8 +105,10 @@ function init() {
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	container.appendChild( renderer.domElement );
+	/*
 	renderer.shadowMap.enabled = true;
 	renderer.shadowMap.renderReverseSided = false;
+	*/
 	//
 	renderer.gammaInput = true;
 	renderer.gammaOutput = true;
