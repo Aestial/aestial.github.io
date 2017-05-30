@@ -20,32 +20,50 @@ function init() {
 	//
 	camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 15;
+
+	var fog = new THREE.FogExp2( 0xcdebfc, 0.0175 );
+
 	scene = new THREE.Scene();
+	scene.fog = fog;
 	// LIGHTS
 	scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
-	spotLight = new THREE.SpotLight( 0xff1830, 1.1 );
-	spotLight.position.set( 0.5, 0, 1 );
+	spotLight = new THREE.SpotLight( 0xbbbbbb, 1 );
+	spotLight.position.set( -1, 0, 1.5 );
 	spotLight.position.multiplyScalar( 20 );
 	scene.add( spotLight );
 	spotLight.castShadow = true;
 	spotLight.shadow.mapSize.width = 2048;
 	spotLight.shadow.mapSize.height = 2048;
-	spotLight.shadow.camera.near = 200;
+	spotLight.shadow.camera.near = 1;
 	spotLight.shadow.camera.far = 1500;
 	spotLight.shadow.camera.fov = 40;
 	spotLight.shadow.bias = -0.005;
 	//
-	var mapHeight = new THREE.TextureLoader().load( "obj/leeperrysmith/Infinite-Level_02_Disp_NoSmoothUV-4096.jpg" );
+	/*var mapHeight = new THREE.TextureLoader().load( "obj/leeperrysmith/Infinite-Level_02_Disp_NoSmoothUV-4096.jpg" );
 	mapHeight.anisotropy = 4;
 	mapHeight.repeat.set( 0.998, 0.998 );
 	mapHeight.offset.set( 0.001, 0.001 );
 	mapHeight.wrapS = mapHeight.wrapT = THREE.RepeatWrapping;
 	mapHeight.format = THREE.RGBFormat;
+*/
+	var path = "textures/cube/SwedishCastle/";
+	var format = '.jpg';
+	var urls = [
+		path + 'px' + format, path + 'nx' + format,
+		path + 'py' + format, path + 'ny' + format,
+		path + 'pz' + format, path + 'nz' + format
+	];
+
+	var reflectionCube = new THREE.CubeTextureLoader().load( urls );
+	reflectionCube.format = THREE.RGBFormat;
 
 	var phong1 = new THREE.MeshStandardMaterial( {
 		color: 0x260818,
-		roughness: 0.5,
-		metalness: 0,
+		roughness: 0.1,
+		metalness: 1,
+		envMap: reflectionCube,
+		transparent: true,
+		opacity: 0.95
 		//bumpMap: mapHeight,
 		//bumpScale: 2
 	} );
@@ -53,10 +71,10 @@ function init() {
 
 	var blinn1 = new THREE.MeshStandardMaterial( {
 		color: 0xffffff,
-		roughness: .15,
-		metalness: 0,
-		//bumpMap: mapHeight,
-		//bumpScale: 2
+		roughness: 0.5,
+		metalness: 0.5,
+		envMap: reflectionCube,
+		fog: true
 	} );
 	materials.push(blinn1);
 
@@ -64,15 +82,15 @@ function init() {
 		color: 0xff0000,
 		roughness: 0,
 		metalness: 0,
-		//bumpMap: mapHeight,
-		//bumpScale: 2
+		emissive: 0xff0000,
+		emissiveIntensity: 3
 	} );
 	materials.push(blinn2);
 	
 	loader = new THREE.JSONLoader();
 	loader.load( "obj/bot.json", function( geometry ) { createScene( geometry, 1, materials ) } );
-	renderer = new THREE.WebGLRenderer( { antialias: false } );
-	renderer.setClearColor( 0x060708 );
+	renderer = new THREE.WebGLRenderer( { antialias: true } );
+	renderer.setClearColor( 0x000000 );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	container.appendChild( renderer.domElement );
@@ -93,7 +111,7 @@ function init() {
 }
 
 function ChangeLightColor(index) {
-	console.log("Color index: "+index);
+	//console.log("Color index: "+index);
 	spotLight.color.setHex ( lightColors[index-1] );
 }
 
@@ -103,19 +121,17 @@ function ChangeLightColor(index) {
 }*/
 
 function createScene( geometry, scale, material ) {
-	console.log(materials);
+	//console.log(materials);
 	mesh = new THREE.Mesh( geometry, material );
-	mesh.position.x = 3;
-	mesh.position.y = 2;
+	mesh.position.set(5,0,0.5);
 	mesh.scale.set( scale, scale, scale );
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
-	console.log(mesh);
+	//console.log(mesh);
 	scene.add( mesh );
 }
 
 //
-
 function onWindowResize( event ) {
 	SCREEN_WIDTH = window.innerWidth;
 	SCREEN_HEIGHT = window.innerHeight;
@@ -130,7 +146,6 @@ function onDocumentMouseMove( event ) {
 }
 
 //
-
 function animate() {
 	requestAnimationFrame( animate );
 	render();
