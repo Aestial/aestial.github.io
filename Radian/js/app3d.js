@@ -1,8 +1,9 @@
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+var clock = new THREE.Clock();
 var statsEnabled = true;
 var container, stats, loader;
 var camera, scene, renderer;
-var object, children, parent;
+var object, children, parent, mixer, animClips = [];
 var objMaterials = [];
 var spotLight;
 var mouseX = 0;
@@ -88,9 +89,9 @@ function init() {
 		transparent: true,
 		opacity: 0.2
 	} );
-	objMaterials.push(emissive);
+	//objMaterials.push(emissive);
 	objMaterials.push(obj2Mats);
-	console.log(objMaterials);
+	//console.log(objMaterials);
 	/*
 	loader = new THREE.JSONLoader();
 	loader.load( "obj/bot.json", function( geometry ) { createScene( geometry, 1, materials ) } );
@@ -99,8 +100,15 @@ function init() {
 	loader.load( "obj/bot.json", function( obj ) {
 		//createScene( geometry, 1, materials );
 		//newCreateScene( obj, objMaterials );
+		//console.log(obj.children.length);
 		for (var i=0; i<obj.children.length; i++){
-			console.log(obj.children[i]);
+			console.log(obj.children[i].name);
+			switch (obj.children[i].name){
+				case "":
+				break;
+				default:
+				break;
+			}
 			if (objMaterials[i] != null){
 				//obj.children[i].rotation.set(0,0,0);
 				obj.children[i].material = objMaterials[i];	
@@ -112,6 +120,26 @@ function init() {
 		object.rotation.set(-Math.PI/2,0,0);
 		parent.add(object);
 		scene.add(parent);
+		mixer = new THREE.AnimationMixer( object );
+		console.log("Total animations: "+object.animations.length);
+		for (var i=0; i<object.animations.length; i++){
+			console.log(object.animations[i]);
+			var clipAction = mixer.clipAction(object.animations[i]);
+			//clipAction.setLoop(THREE.LoopOnce);
+			animClips.push(clipAction);
+		}
+		// TEMP
+		TriggerAnim(0);
+		//console.log(animClips);
+		//console.log(mixer);
+		/*
+		var clipAction = mixer.clipAction( object.animations[ 0 ] );
+		clipAction.loop = THREE.LoopOnce;
+		clipAction.play();
+		mixer.clipAction( object.animations[ 0 ] ).play();
+		*/
+		// MAIN ANIMATE
+		animate();
 	} );
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setClearColor( 0x000000 );
@@ -130,9 +158,9 @@ function init() {
 	window.addEventListener( 'resize', onWindowResize, false );
 }
 
-function ChangeLightColor(index) {
-	//console.log("Color index: "+index);
-	spotLight.color.setHex ( lightColors[index-1] );
+function TriggerAnim (index) {
+	console.log("Animation index: "+index);
+	animClips[index].play();
 }
 
 /*function OnLoaded() {
@@ -183,6 +211,7 @@ function onDocumentMouseMove( event ) {
 //
 function animate() {
 	requestAnimationFrame( animate );
+	mixer.update( clock.getDelta() );
 	render();
 	if ( statsEnabled ) stats.update();
 }

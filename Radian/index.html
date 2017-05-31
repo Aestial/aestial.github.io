@@ -92,7 +92,7 @@
 			init();
 			pixi_init();
 			loaded = true;
-			animate();
+			//animate();
 			pixi_animate();
 		}
 
@@ -119,9 +119,9 @@
 				},
 				afterLoad: function(anchorLink, index){
 					if (loaded) {
-						//ChangeLightColor(index);	
+						TriggerAnim(0);	
 					}
-					//console.log("after Load  " + index);
+					console.log("after Load  " + index);
 					$('#callbacksDiv').append('<p>afterLoad - anchorLink:' + anchorLink + " index:" + index + '</p>');
 					deleteLog = true;
 					//console.log('===============');
