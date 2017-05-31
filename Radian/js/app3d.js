@@ -1,6 +1,5 @@
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var clock = new THREE.Clock();
-var statsEnabled = true;
 var container, stats, loader;
 
 var camera, scene, renderer;
@@ -20,7 +19,7 @@ function initGUI() {
 	gui = new dat.GUI({
 	    height : 40 - 1
 	});
-	gui.add(objMaterials[0], 'opacity').min(0.0).max(1.0).step(0.01).name("Black Opacity");
+	gui.add(objMaterials[0], 'opacity').min(0.0).max(1.0).step(0.0001).name("Black Opacity");
 }
 
 function init() {
@@ -68,7 +67,7 @@ function init() {
 		metalness: 1,
 		envMap: reflectionCube,
 		transparent: true,
-		opacity: 0.9
+		opacity: 0.94
 	} );
 	objMaterials.push(phong1);
 
@@ -156,7 +155,7 @@ function init() {
 	renderer.gammaInput = true;
 	renderer.gammaOutput = true;
 	// STATS
-	if ( statsEnabled ) {
+	if ( debug ) {
 		stats = new Stats();
 		container.appendChild( stats.dom );
 	}
@@ -220,7 +219,7 @@ function animate() {
 	requestAnimationFrame( animate );
 	if (typeof mixer != "undefined") mixer.update( clock.getDelta() );
 	render();
-	if ( statsEnabled ) stats.update();
+	if ( debug ) stats.update();
 }
 
 function render() {

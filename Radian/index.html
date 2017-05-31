@@ -77,6 +77,8 @@
 	</script>
 		  
 	<script type="text/javascript">
+		// GLOBAL CONTROL
+		var debug = true;
 		// ENUMS
 		var CSSAnimType = Object.freeze({Entrance:1, Exit:2, Fixed:3});
 
@@ -91,8 +93,9 @@
 
 		function OnLoaded() {
 			init();
-			initGUI();
 			pixi_init();
+			if (debug) initGUI();
+			
 			loaded = true;
 			animate();
 			pixi_animate();
