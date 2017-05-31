@@ -108,7 +108,8 @@ function init() {
 		}
 		object = obj;
 		parent.position.set(5,0,0.5);
-		object.rotation.set(0,Math.PI,0);
+		object.rotation.set(0,-Math.PI/2,0);
+		object.rotation.set(-Math.PI/2,0,0);
 		parent.add(object);
 		scene.add(parent);
 	} );
