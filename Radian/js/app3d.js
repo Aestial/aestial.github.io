@@ -2,17 +2,26 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var clock = new THREE.Clock();
 var statsEnabled = true;
 var container, stats, loader;
+
 var camera, scene, renderer;
 var object, children, parent, mixer, animClips = [];
 var objMaterials = [];
-var spotLight;
+var opacity;
+
 var mouseX = 0;
 var mouseY = 0;
 var targetX = 0;
 var targetY = 0;
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
-var lightColors = [0xbbbbbb,0xbbccaa,0xb899cc,0xddaa99,0x666666]
+
+var gui;
+function initGUI() {
+	gui = new dat.GUI({
+	    height : 40 - 1
+	});
+	gui.add(objMaterials[0], 'opacity').min(0.0).max(1.0).step(0.01).name("Black Opacity");
+}
 
 function init() {
 	container = document.createElement( 'div' );
@@ -59,7 +68,7 @@ function init() {
 		metalness: 1,
 		envMap: reflectionCube,
 		transparent: true,
-		opacity: 0.8
+		opacity: 0.9
 	} );
 	objMaterials.push(phong1);
 
@@ -138,8 +147,6 @@ function init() {
 		clipAction.play();
 		mixer.clipAction( object.animations[ 0 ] ).play();
 		*/
-		// MAIN ANIMATE
-		animate();
 	} );
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setClearColor( 0x000000 );
@@ -211,7 +218,7 @@ function onDocumentMouseMove( event ) {
 //
 function animate() {
 	requestAnimationFrame( animate );
-	mixer.update( clock.getDelta() );
+	if (typeof mixer != "undefined") mixer.update( clock.getDelta() );
 	render();
 	if ( statsEnabled ) stats.update();
 }

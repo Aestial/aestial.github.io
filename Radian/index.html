@@ -25,6 +25,7 @@
 	<script type="text/javascript" src="js/jquery.fullPage.js"></script>
 	<script type="text/javascript" src="js/Detector.js"></script>
 	<script type="text/javascript" src="js/stats.min.js"></script>
+	<script type="text/javascript" src="js/dat.gui.min.js"></script>
 	<script type="text/javascript" src="js/app3d.js"></script>
 	<script type="text/javascript" src="js/smokePixi.js"></script>
 	<script id="fragShader" type="shader-code">
@@ -90,9 +91,10 @@
 
 		function OnLoaded() {
 			init();
+			initGUI();
 			pixi_init();
 			loaded = true;
-			//animate();
+			animate();
 			pixi_animate();
 		}
 
