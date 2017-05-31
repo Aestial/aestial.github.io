@@ -19,7 +19,7 @@ function pixi_init() {
 	stage = new PIXI.Container();
 	shaderCode = document.getElementById( 'fragShader' ).innerHTML;
 	shaderContainer = document.getElementById( 'smoke_cont' );
-	console.log(shaderContainer);
+	//console.log(shaderContainer);
 	//Chooses either WebGL if supported or falls back to Canvas rendering
 	pixi_renderer = new PIXI.autoDetectRenderer(width, height, {antialias: true, transparent: true, resolution: 1});
 	//pixi_renderer = new PIXI.autoDetectRenderer(width, height, shaderContainer, true);
@@ -37,11 +37,9 @@ function pixi_init() {
 function pixi_animate() {
     // start the timer for the next animation loop
     requestAnimationFrame(pixi_animate);
-
     count+=0.01
     smokeShader.uniforms.time.value = count;
     //console.log(smokeShader.uniforms.time);
-    //console.log(smokeShader);
     // this is the main render call that makes pixi draw your container and its children.
     pixi_renderer.render(stage);
 }

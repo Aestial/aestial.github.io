@@ -2,7 +2,8 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var statsEnabled = true;
 var container, stats, loader;
 var camera, scene, renderer;
-var mesh, materials = [];
+var object, children, parent;
+var objMaterials = [];
 var spotLight;
 var mouseX = 0;
 var mouseY = 0;
@@ -17,14 +18,14 @@ function init() {
 	container.className = "threecontainer";
 	// At beginning of the body:
 	$('body').prepend(container);
-	//
+	// SCENE AND CAMERA
 	camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 15;
 
 	var fog = new THREE.FogExp2( 0xcdebfc, 0.0175 );
-
 	scene = new THREE.Scene();
 	scene.fog = fog;
+	parent = new THREE.Object3D();
 	// LIGHTS
 	scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
 	var lights = [];
@@ -37,26 +38,7 @@ function init() {
 	scene.add( lights[ 0 ] );
 	scene.add( lights[ 1 ] );
 	scene.add( lights[ 2 ] );
-	/*
-	spotLight = new THREE.SpotLight( 0xbbbbbb, 1 );
-	spotLight.position.set( -1, 0, 1.5 );
-	spotLight.position.multiplyScalar( 20 );
-	scene.add( spotLight );
-	spotLight.castShadow = true;
-	spotLight.shadow.mapSize.width = 2048;
-	spotLight.shadow.mapSize.height = 2048;
-	spotLight.shadow.camera.near = 1;
-	spotLight.shadow.camera.far = 1500;
-	spotLight.shadow.camera.fov = 40;
-	spotLight.shadow.bias = -0.005;
-	//
-	/*var mapHeight = new THREE.TextureLoader().load( "obj/leeperrysmith/Infinite-Level_02_Disp_NoSmoothUV-4096.jpg" );
-	mapHeight.anisotropy = 4;
-	mapHeight.repeat.set( 0.998, 0.998 );
-	mapHeight.offset.set( 0.001, 0.001 );
-	mapHeight.wrapS = mapHeight.wrapT = THREE.RepeatWrapping;
-	mapHeight.format = THREE.RGBFormat;
-	*/
+	// REFLECTION
 	var path = "textures/cube/SwedishCastle/";
 	var format = '.jpg';
 	var urls = [
@@ -68,17 +50,17 @@ function init() {
 	var reflectionCube = new THREE.CubeTextureLoader().load( urls );
 	reflectionCube.format = THREE.RGBFormat;
 
+	var obj2Mats = [];
+
 	var phong1 = new THREE.MeshStandardMaterial( {
-		color: 0x260818,
+		color: 0x000000,
 		roughness: 0.1,
 		metalness: 1,
 		envMap: reflectionCube,
 		transparent: true,
-		opacity: 0.95
-		//bumpMap: mapHeight,
-		//bumpScale: 2
+		opacity: 0.8
 	} );
-	materials.push(phong1);
+	objMaterials.push(phong1);
 
 	var blinn1 = new THREE.MeshStandardMaterial( {
 		color: 0xffffff,
@@ -87,7 +69,7 @@ function init() {
 		envMap: reflectionCube,
 		fog: true
 	} );
-	materials.push(blinn1);
+	obj2Mats.push(blinn1);
 
 	var blinn2 = new THREE.MeshStandardMaterial( {
 		color: 0xff0000,
@@ -96,24 +78,48 @@ function init() {
 		emissive: 0xff0000,
 		emissiveIntensity: 3
 	} );
-	materials.push(blinn2);
-	
+	obj2Mats.push(blinn2);
+	var emissive = new THREE.MeshStandardMaterial( {
+		color: 0xff0024,
+		roughness: 0,
+		metalness: 0,
+		emissive: 0xff0000,
+		emissiveIntensity: 3,
+		transparent: true,
+		opacity: 0.2
+	} );
+	objMaterials.push(emissive);
+	objMaterials.push(obj2Mats);
+	console.log(objMaterials);
+	/*
 	loader = new THREE.JSONLoader();
 	loader.load( "obj/bot.json", function( geometry ) { createScene( geometry, 1, materials ) } );
+	*/
+	loader = new THREE.ObjectLoader();
+	loader.load( "obj/bot.json", function( obj ) {
+		//createScene( geometry, 1, materials );
+		//newCreateScene( obj, objMaterials );
+		for (var i=0; i<obj.children.length; i++){
+			console.log(obj.children[i]);
+			if (objMaterials[i] != null){
+				//obj.children[i].rotation.set(0,0,0);
+				obj.children[i].material = objMaterials[i];	
+			}
+		}
+		object = obj;
+		parent.position.set(5,0,0.5);
+		object.rotation.set(0,Math.PI,0);
+		parent.add(object);
+		scene.add(parent);
+	} );
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setClearColor( 0x000000 );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	container.appendChild( renderer.domElement );
-	/*
-	renderer.shadowMap.enabled = true;
-	renderer.shadowMap.renderReverseSided = false;
-	*/
-	//
 	renderer.gammaInput = true;
 	renderer.gammaOutput = true;
-	//
-
+	// STATS
 	if ( statsEnabled ) {
 		stats = new Stats();
 		container.appendChild( stats.dom );
@@ -131,19 +137,34 @@ function ChangeLightColor(index) {
 /*function OnLoaded() {
 	init();
 	animate();
-}*/
-
+}
+/*
+function newCreateScene( obj, objMaterials ) {
+	//object = obj;
+	object = new THREE.Object3D();
+	children = obj.children;
+	console.log(children.length);
+	for (var i=0; i<children.length; i++){
+		console.log(children[i]);
+		children[i].material = objMaterials[i];
+		object.children[i] = children[i];
+	}
+	//object.position.set(5,0,0.5);
+	console.log(object);
+	//object.castShadow = true;
+	//object.receiveShadow = true;
+	scene.add(obj);
+}
+/*
 function createScene( geometry, scale, material ) {
-	//console.log(materials);
 	mesh = new THREE.Mesh( geometry, material );
 	mesh.position.set(5,0,0.5);
 	mesh.scale.set( scale, scale, scale );
 	mesh.castShadow = true;
 	mesh.receiveShadow = true;
-	//console.log(mesh);
 	scene.add( mesh );
 }
-
+*/
 //
 function onWindowResize( event ) {
 	SCREEN_WIDTH = window.innerWidth;
@@ -168,9 +189,9 @@ function animate() {
 function render() {
 	targetX = mouseX * .001;
 	targetY = mouseY * .001;
-	if ( mesh ) {
-		mesh.rotation.y += 0.1 * ( targetX - mesh.rotation.y );
-		mesh.rotation.x += 0.1 * ( targetY - mesh.rotation.x );
+	if ( parent ) {
+		parent.rotation.y += 0.1 * ( targetX - parent.rotation.y );
+		parent.rotation.x += 0.1 * ( targetY - parent.rotation.x );
 	}
 	renderer.render( scene, camera );
 }
