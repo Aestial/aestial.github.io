@@ -30,8 +30,18 @@ function pixi_init() {
 	var bg = PIXI.Sprite.fromImage("images/pixi.png");
 	bg.width = width;
 	bg.height = height;
-	bg.filters = [smokeShader]
+	bg.filters = [smokeShader];
 	stage.addChild(bg);
+
+	var team = PIXI.Sprite.fromImage("images/team_silhouette.png");
+	team.anchor.set(0.5,0.65);
+	team.x = width / 2;
+	team.y = height;
+	//logo.blendMode = PIXI.BLEND_MODES.ADD;
+	blur = new PIXI.filters.BlurFilter(16, 2, 4, 11);
+	//blur.blurY = 20;
+	team.filters = [blur];
+	stage.addChild(team);
 }
 
 function pixi_animate() {

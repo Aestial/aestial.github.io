@@ -130,7 +130,7 @@ input:hover{
 }
 
 .contact {
-	margin-left: -15%;
+	margin-left: -50px;
 }
 
 .contact h1{
@@ -143,7 +143,7 @@ input:hover{
 .contact p{
 	width: 350px;
 	font-size: 1.3em;
-	padding: 13px 0px;
+	padding: 20px 0px;
 	letter-spacing: 5px;
 }
 

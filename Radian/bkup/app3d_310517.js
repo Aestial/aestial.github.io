@@ -104,8 +104,14 @@ function init() {
 	//objMaterials.push(emissive);
 	objMaterials.push(obj2Mats);
 	//console.log(objMaterials);
+	/*
+	loader = new THREE.JSONLoader();
+	loader.load( "obj/bot.json", function( geometry ) { createScene( geometry, 1, materials ) } );
+	*/
 	loader = new THREE.ObjectLoader();
 	loader.load( "obj/bot.json", function( obj ) {
+		//createScene( geometry, 1, materials );
+		//newCreateScene( obj, objMaterials );
 		//console.log(obj.children.length);
 		for (var i=0; i<obj.children.length; i++){
 			console.log(obj.children[i].name);
@@ -116,6 +122,7 @@ function init() {
 				break;
 			}
 			if (objMaterials[i] != null){
+				//obj.children[i].rotation.set(0,0,0);
 				obj.children[i].material = objMaterials[i];	
 			}
 		}
@@ -127,11 +134,30 @@ function init() {
 		scene.add(parent);
 		mixer = new THREE.AnimationMixer( object );
 		console.log("Total animations: "+object.animations.length);
+		
 		actions.test = mixer.clipAction(object.animations[0]);
 		actions.test.setLoop(THREE.LoopOnce);
-		//actions.test.clampWhenFinished = true;
-		// TEMP: First time animation trigger (ABOUT Section)
+		actions.test.clampWhenFinished = true;
+		actions.test.play();
+
+		/*
+		for (var i=0; i<object.animations.length; i++){
+			console.log(object.animations[i]);
+			var clipAction = mixer.clipAction(object.animations[i]);
+			//clipAction.setLoop(THREE.LoopOnce);
+			animClips.push(clipAction);
+		}
+		*/
+		// TEMP
 		TriggerAnim(0);
+		//console.log(animClips);
+		//console.log(mixer);
+		/*
+		var clipAction = mixer.clipAction( object.animations[ 0 ] );
+		clipAction.loop = THREE.LoopOnce;
+		clipAction.play();
+		mixer.clipAction( object.animations[ 0 ] ).play();
+		*/
 	} );
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setClearColor( 0x000000 );
@@ -152,20 +178,39 @@ function init() {
 
 function TriggerAnim (index) {
 	console.log("Animation index: "+index);
+	//animClips[index].play();
 	switch(index){
 		case 0:
-			actions.test.reset();
 			actions.test.play();
 			break;
 		default:
 			break;
 	}
+	//actions[index].play();
 }
+
 /*function OnLoaded() {
 	init();
 	animate();
-}*/
-
+}
+/*
+function newCreateScene( obj, objMaterials ) {
+	//object = obj;
+	object = new THREE.Object3D();
+	children = obj.children;
+	console.log(children.length);
+	for (var i=0; i<children.length; i++){
+		console.log(children[i]);
+		children[i].material = objMaterials[i];
+		object.children[i] = children[i];
+	}
+	//object.position.set(5,0,0.5);
+	console.log(object);
+	//object.castShadow = true;
+	//object.receiveShadow = true;
+	scene.add(obj);
+}
+/*
 function createScene( geometry, scale, material ) {
 	mesh = new THREE.Mesh( geometry, material );
 	mesh.position.set(5,0,0.5);
@@ -174,6 +219,7 @@ function createScene( geometry, scale, material ) {
 	mesh.receiveShadow = true;
 	scene.add( mesh );
 }
+*/
 //
 function onWindowResize( event ) {
 	SCREEN_WIDTH = window.innerWidth;
@@ -182,10 +228,12 @@ function onWindowResize( event ) {
 	camera.aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
 	camera.updateProjectionMatrix();
 }
+
 function onDocumentMouseMove( event ) {
 	mouseX = ( event.clientX - windowHalfX );
 	mouseY = ( event.clientY - windowHalfY );
 }
+
 //
 function animate() {
 	requestAnimationFrame( animate );
@@ -193,6 +241,7 @@ function animate() {
 	render();
 	if ( debug ) stats.update();
 }
+
 function render() {
 	targetX = mouseX * .001;
 	targetY = mouseY * .001;
