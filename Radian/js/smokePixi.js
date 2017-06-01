@@ -17,7 +17,7 @@ var count = 0
 function pixi_init() {
 	//The stage is the root container that will hold everything in our scene
 	stage = new PIXI.Container();
-	shaderCode = document.getElementById( 'fragShader' ).innerHTML;
+	shaderCode = document.getElementById( 'smoke_fragmentShader' ).innerHTML;
 	shaderContainer = document.getElementById( 'smoke_cont' );
 	//console.log(shaderContainer);
 	//Chooses either WebGL if supported or falls back to Canvas rendering

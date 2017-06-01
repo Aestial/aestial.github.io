@@ -131,7 +131,7 @@ function init() {
 		actions.test.setLoop(THREE.LoopOnce);
 		//actions.test.clampWhenFinished = true;
 		// TEMP: First time animation trigger (ABOUT Section)
-		TriggerAnim(0);
+		TriggerAnim(1);
 	} );
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setClearColor( 0x000000 );
@@ -153,7 +153,7 @@ function init() {
 function TriggerAnim (index) {
 	console.log("Animation index: "+index);
 	switch(index){
-		case 0:
+		case 1:
 			actions.test.reset();
 			actions.test.play();
 			break;

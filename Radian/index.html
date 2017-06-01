@@ -28,7 +28,7 @@
 	<script type="text/javascript" src="js/dat.gui.min.js"></script>
 	<script type="text/javascript" src="js/app3d.js"></script>
 	<script type="text/javascript" src="js/smokePixi.js"></script>
-	<script id="fragShader" type="shader-code">
+	<script id="smoke_fragmentShader" type="shader-code">
 		precision mediump float;
 		uniform vec2      resolution;
 		uniform float     time;
@@ -74,6 +74,70 @@
 		    //gl_FragColor.xyz *= 1.0-grad;
 		    gl_FragColor.xyz *= grad;
 		}
+	</script>
+	<script type="x-shader/x-vertex" id="vertexShader">
+		void main() {
+			gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+		}
+	</script>
+	<script type="x-shader/x-vertex" id="ortho_vertexShader">
+		varying vec2 vUv;
+		void main() {
+			vUv = uv;
+			gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+		}
+	</script>
+	<script type="x-shader/x-vertex" id="zoomBlur_fragmentShader">
+		varying vec2 vUv;
+		uniform sampler2D tDiffuse;
+		uniform vec2 resolution;
+		uniform float strength;
+
+		float random(vec3 scale,float seed){return fract(sin(dot(gl_FragCoord.xyz+seed,scale))*43758.5453+seed);}
+
+		void main() {
+
+			vec2 center = .5 * resolution;
+
+			vec4 color=vec4(0.0);
+			float total=0.0;
+			vec2 toCenter=center-vUv*resolution;
+			float offset=random(vec3(12.9898,78.233,151.7182),0.0);
+			for(float t=0.0;t<=40.0;t++){
+				float percent=(t+offset)/40.0;
+				float weight=4.0*(percent-percent*percent);
+				vec4 sample=texture2D(tDiffuse,vUv+toCenter*percent*strength/resolution);
+				sample.rgb*=sample.a;
+				color+=sample*weight;
+				total+=weight;
+			}
+
+			gl_FragColor=color/total;
+			gl_FragColor.rgb/=gl_FragColor.a+0.00001;
+
+		}
+	</script>
+	<script type="x-shader/x-vertex" id="composite_fragmentShader">
+		varying vec2 vUv;
+		uniform sampler2D tBase;
+		uniform sampler2D tGlow;
+
+		void main() {
+			//Screen: X = 1- ((255-U)*(255-L))/255
+			vec4 color = 1.0 - ( ( 1.0 - texture2D( tGlow, vec2( vUv.x, vUv.y ) ) ) * ( 1.0 - texture2D( tBase, vUv ) ) );
+			//vec4 color = mix( texture2D( tBase, vUv ), texture2D( tGlow, vec2( vUv.x, 1.0 - vUv.y ) ), .5 );
+			//vec4 color = texture2D( tBase, vUv ) + texture2D( tGlow, vUv ) * texture2D( tGlow, vUv );
+			//vec4 color = texture2D( tGlow, vUv );
+
+			gl_FragColor = vec4( color.rgb, 0.1 );
+		}
+	</script>
+
+	<script type="x-shader/x-vertex" id="fragmentShader">
+	  void main() {
+	    vec3 color = vec3( 1.0, 0.0, 36.0/255.0 );
+	    gl_FragColor = vec4( color, 1.0);
+	  }
 	</script>
 		  
 	<script type="text/javascript">
@@ -124,7 +188,7 @@
 				},
 				afterLoad: function(anchorLink, index){
 					if (loaded) {
-						TriggerAnim(0);	
+						TriggerAnim(index);	
 					}
 					console.log("after Load  " + index);
 					$('#callbacksDiv').append('<p>afterLoad - anchorLink:' + anchorLink + " index:" + index + '</p>');
