@@ -5,10 +5,13 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var clock = new THREE.Clock();
 var renderer, container, stats, loader;
 // Scene objects
-var camera, scene, object, parent;
+var camera, scene, parent;
+// Helper scenes
+var glowScene, glowParent; // Glow emissive postprocessing scene
+// Materials
 var objMaterials = [];
-var zoomBlurShader;
-var opacity;
+var zoomBlurShader; // Glow emissive
+var opacity; // Black transparent
 // Animation
 var mixer;
 var actions = {};
@@ -26,6 +29,7 @@ function initGUI() {
 	    height : 40 - 1
 	});
 	gui.add(objMaterials[0], 'opacity').min(0.0).max(1.0).step(0.0001).name("Black Opacity");
+	gui.add(zoomBlurShader.uniforms[ 'strength' ], 'value').min(0.0).max(1.75).step(0.005).name("Blur Strength");
 }
 
 function init() {
@@ -39,8 +43,10 @@ function init() {
 
 	var fog = new THREE.FogExp2( 0xcdebfc, 0.0185 );
 	scene = new THREE.Scene();
+	glowScene = new THREE.Scene();
 	scene.fog = fog;
 	parent = new THREE.Object3D();
+	glowParent = new THREE.Object3D();
 	// LIGHTS
 	scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
 	var lights = [];
@@ -100,7 +106,9 @@ function init() {
 	} );
 	var mesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.7, 5 ), emissive );
 	mesh.position.set(0,0,1.65);
-	parent.add(mesh);
+	glowParent.add(mesh);
+	glowParent.position.set(5,0,0.5);
+	glowScene.add(glowParent);
 
 	objMaterials.push(obj2Mats);
 	//console.log(objMaterials);
@@ -120,10 +128,10 @@ function init() {
 			}
 		}
 		object = obj;
-		parent.position.set(5,0,0.5);
 		object.rotation.set(0,-Math.PI/2,0);
 		object.rotation.set(-Math.PI/2,0,0);
 		parent.add(object);
+		parent.position.set(5,0,0.5);
 		scene.add(parent);
 		mixer = new THREE.AnimationMixer( object );
 		console.log("Total animations: "+object.animations.length);
@@ -167,12 +175,19 @@ function init() {
 		format: THREE.RGBFormat
 	} );
 
+	//blurTexture = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, {
+	blurTexture = new THREE.WebGLRenderTarget( windowHalfX/2, windowHalfY/2, {
+		minFilter: THREE.LinearFilter,
+		magFilter: THREE.LinearFilter,
+		format: THREE.RGBFormat
+	} );
+
 	zoomBlurShader = new THREE.ShaderMaterial( {
 
 		uniforms: {
-			tDiffuse: { type: "t", value: 0, texture: glowTexture },
+			tDiffuse: { type: "t", value: 0, texture: blurTexture },
 			resolution: { type: "v2", value: new THREE.Vector2( window.innerWidth, window.innerHeight ) },
-			strength: { type: "f", value: 1.0 }
+			strength: { type: "f", value: 0.75 }
 		},
 		vertexShader: document.getElementById( 'ortho_vertexShader' ).textContent,
 		fragmentShader: document.getElementById( 'zoomBlur_fragmentShader' ).textContent,
@@ -185,7 +200,7 @@ function init() {
 
 		uniforms: {
 			tBase: { type: "t", value: 0, texture: baseTexture },
-			tGlow: { type: "t", value: 1, texture: glowTexture }
+			tGlow: { type: "t", value: 1, texture: blurTexture }
 		},
 		vertexShader: document.getElementById( 'ortho_vertexShader' ).textContent,
 		fragmentShader: document.getElementById( 'composite_fragmentShader' ).textContent,
@@ -245,14 +260,18 @@ function render() {
 		parent.rotation.y += 0.1 * ( targetX - parent.rotation.y );
 		parent.rotation.x += 0.1 * ( targetY - parent.rotation.x );
 	}
-	//renderer.render( scene, camera );
+	if ( glowParent ) {
+		glowParent.rotation.y += 0.1 * ( targetX - glowParent.rotation.y );
+		glowParent.rotation.x += 0.1 * ( targetY - glowParent.rotation.x );
+	}
+	renderer.render( glowScene, camera, glowTexture, true );
 	renderer.render( scene, camera, baseTexture, true );
 	orthoQuad.material = zoomBlurShader;
-	orthoQuad.material.uniforms[ 'tDiffuse' ].value = baseTexture.texture;
-  	renderer.render( orthoScene, orthoCamera, glowTexture, false );
+	orthoQuad.material.uniforms[ 'tDiffuse' ].value = glowTexture.texture;
+  	renderer.render( orthoScene, orthoCamera, blurTexture, false );
 
 	orthoQuad.material = compositeShader;
 	orthoQuad.material.uniforms[ 'tBase' ].value = baseTexture.texture;
-	orthoQuad.material.uniforms[ 'tGlow' ].value = glowTexture.texture;
+	orthoQuad.material.uniforms[ 'tGlow' ].value = blurTexture.texture;
 	renderer.render( orthoScene, orthoCamera );
 }

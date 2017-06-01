@@ -96,9 +96,8 @@
 		float random(vec3 scale,float seed){return fract(sin(dot(gl_FragCoord.xyz+seed,scale))*43758.5453+seed);}
 
 		void main() {
-
-			vec2 center = .5 * resolution;
-
+			//vec2 center = .5 * resolution;
+			vec2 center = vec2(.75 * resolution.x, .5 * resolution.y);
 			vec4 color=vec4(0.0);
 			float total=0.0;
 			vec2 toCenter=center-vUv*resolution;
