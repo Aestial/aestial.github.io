@@ -5,7 +5,7 @@ if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var clock = new THREE.Clock();
 var renderer, container, stats, loader;
 // Scene objects
-var camera, scene, parent;
+var camera, scene, parent, glowSocket;
 // Helper scenes
 var glowScene, glowParent, glowMesh, worldPos; // Glow emissive postprocessing scene
 // Materials
@@ -50,6 +50,7 @@ function init() {
 	scene.fog = fog;
 	parent = new THREE.Object3D();
 	glowParent = new THREE.Object3D();
+	glowSocket = new THREE.Object3D();
 	worldPos = new THREE.Vector3();
 	// LIGHTS
 	scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
@@ -108,35 +109,60 @@ function init() {
 		vertexShader: document.getElementById( 'vertexShader' ).textContent,
 		fragmentShader: document.getElementById( 'fragmentShader' ).textContent
 	} );
+	var material = new THREE.MeshBasicMaterial();
+	var oclMaterial = new THREE.MeshBasicMaterial( {
+		color: 0x000000
+	});
 	glowMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.7, 5 ), emissive );
-	glowMesh.position.set(0,0,1.65);
-	glowParent.add(glowMesh);
-	glowParent.position.set(5,0,0.5);
-	glowScene.add(glowParent);
+	//glowMesh.position.set(0,0,1.65);
+	//glowParent.add(glowMesh);
+	//glowParent.position.set(5,0,0.5);
+	//glowScene.add(glowParent);
+	glowScene.add(glowMesh);
+	glowSocket.position.set(0,-1.65,0);
+	/*
+	var glowMesh_DEBUG = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.7, 5 ), material );
+	glowMesh_DEBUG.position.set(0,-1.65,0);
+	*/
 
 	objMaterials.push(obj2Mats);
 	//console.log(objMaterials);
 	loader = new THREE.ObjectLoader();
 	loader.load( "obj/bot.json", function( obj ) {
-		//console.log(obj.children.length);
+		oclObject = obj.clone( true );
+		console.log(obj);
+		console.log(oclObject);
 		for (var i=0; i<obj.children.length; i++){
 			console.log(obj.children[i].name);
 			switch (obj.children[i].name){
-				case "":
-				break;
+				case "WhiteSphere":
+					console.log("Socket added!");
+					//obj.children[i].add(glowMesh_DEBUG);
+					obj.children[i].add(glowSocket);
+					break;
 				default:
-				break;
+					break;
 			}
+			oclObject.children[i].material = oclMaterial;	
 			if (objMaterials[i] != null){
 				obj.children[i].material = objMaterials[i];	
 			}
 		}
 		object = obj;
-		object.rotation.set(0,-Math.PI/2,0);
-		object.rotation.set(-Math.PI/2,0,0);
+		//object.rotation.set(0,-Math.PI/2,0);
+		//object.rotation.set(-Math.PI/2,0,0);
 		parent.add(object);
 		parent.position.set(5,0,0.5);
+		object.rotation.set(0,-Math.PI/2,0);
+		object.rotation.set(-Math.PI/2,0,0);
 		scene.add(parent);
+
+		glowParent.add(oclObject);
+		glowParent.position.set(5,0,0.5);
+		oclObject.rotation.set(0,-Math.PI/2,0);
+		oclObject.rotation.set(-Math.PI/2,0,0);
+		glowScene.add(glowParent);
+
 		mixer = new THREE.AnimationMixer( object );
 		console.log("Total animations: "+object.animations.length);
 		actions.test = mixer.clipAction(object.animations[0]);
@@ -180,7 +206,7 @@ function init() {
 	} );
 
 	//blurTexture = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, {
-	blurTexture = new THREE.WebGLRenderTarget( windowHalfX/4, windowHalfY/4, {
+	blurTexture = new THREE.WebGLRenderTarget( windowHalfX/2, windowHalfY/2, {
 		minFilter: THREE.LinearFilter,
 		magFilter: THREE.LinearFilter,
 		format: THREE.RGBFormat
@@ -250,14 +276,14 @@ function onWindowResize( event ) {
 	camera.updateProjectionMatrix();
 	zoomBlurShader.uniforms[ 'resolution' ].value = new THREE.Vector2( SCREEN_WIDTH, SCREEN_HEIGHT );
 
-	baseTexture.setSize( w, h );
-	glowTexture.setSize( w, h );
+	baseTexture.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+	glowTexture.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
 
-	orthoQuad.scale.set( w, h, 1 );
-	orthoCamera.left   = - w / 2;
-	orthoCamera.right  =   w / 2;
-	orthoCamera.top    =   h / 2;
-	orthoCamera.bottom = - h / 2;
+	orthoQuad.scale.set( SCREEN_WIDTH, SCREEN_HEIGHT, 1 );
+	orthoCamera.left   = - SCREEN_WIDTH / 2;
+	orthoCamera.right  =   SCREEN_WIDTH / 2;
+	orthoCamera.top    =   SCREEN_HEIGHT / 2;
+	orthoCamera.bottom = - SCREEN_HEIGHT / 2;
 	orthoCamera.updateProjectionMatrix();
 }
 function onDocumentMouseMove( event ) {
@@ -277,6 +303,11 @@ function animate() {
 		glowParent.rotation.y += 0.1 * ( targetX - glowParent.rotation.y );
 		glowParent.rotation.x += 0.1 * ( targetY - glowParent.rotation.x );
 	}
+	glowMesh.position.x = glowSocket.getWorldPosition().x;
+	glowMesh.position.y = glowSocket.getWorldPosition().y;
+	glowMesh.position.z = glowSocket.getWorldPosition().z;
+	//console.log(glowSocket.getWorldPosition());
+	//console.log(glowMesh.position);
 	glowMesh.getWorldPosition ( worldPos );
 	worldPos.project(camera);
 	worldPos.x = (worldPos.x * windowHalfX) + windowHalfX;
