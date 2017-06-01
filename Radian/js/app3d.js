@@ -172,7 +172,7 @@ function init() {
 		uniforms: {
 			tDiffuse: { type: "t", value: 0, texture: glowTexture },
 			resolution: { type: "v2", value: new THREE.Vector2( window.innerWidth, window.innerHeight ) },
-			strength: { type: "f", value: 0.9 }
+			strength: { type: "f", value: 1.0 }
 		},
 		vertexShader: document.getElementById( 'ortho_vertexShader' ).textContent,
 		fragmentShader: document.getElementById( 'zoomBlur_fragmentShader' ).textContent,
@@ -245,5 +245,14 @@ function render() {
 		parent.rotation.y += 0.1 * ( targetX - parent.rotation.y );
 		parent.rotation.x += 0.1 * ( targetY - parent.rotation.x );
 	}
-	renderer.render( scene, camera );
+	//renderer.render( scene, camera );
+	renderer.render( scene, camera, baseTexture, true );
+	orthoQuad.material = zoomBlurShader;
+	orthoQuad.material.uniforms[ 'tDiffuse' ].value = baseTexture.texture;
+  	renderer.render( orthoScene, orthoCamera, glowTexture, false );
+
+	orthoQuad.material = compositeShader;
+	orthoQuad.material.uniforms[ 'tBase' ].value = baseTexture.texture;
+	orthoQuad.material.uniforms[ 'tGlow' ].value = glowTexture.texture;
+	renderer.render( orthoScene, orthoCamera );
 }
