@@ -7,7 +7,7 @@ var renderer, container, stats, loader;
 // Scene objects
 var camera, scene, parent;
 // Helper scenes
-var glowScene, glowParent, glowMesh; // Glow emissive postprocessing scene
+var glowScene, glowParent, glowMesh, worldPos; // Glow emissive postprocessing scene
 // Materials
 var objMaterials = [];
 var zoomBlurShader, zoomCenter; // Glow emissive
@@ -28,8 +28,11 @@ function initGUI() {
 	gui = new dat.GUI({
 	    height : 40 - 1
 	});
-	gui.add(objMaterials[0], 'opacity').min(0.0).max(1.0).step(0.0001).name("Black Opacity");
-	gui.add(zoomBlurShader.uniforms[ 'strength' ], 'value').min(0.0).max(1.75).step(0.005).name("Blur Strength");
+	var black = gui.addFolder('Black Sphere');
+	black.add(objMaterials[0], 'opacity').min(0.0).max(1.0).step(0.0001).name("Material opacity");
+	var glow = gui.addFolder('Glow Effect');
+	glow.add(compositeShader.uniforms[ 'glowStrength' ], 'value').min(0.0).max(0.8).step(0.005).name("Glow strength");
+	glow.add(zoomBlurShader.uniforms[ 'strength' ], 'value').min(0.0).max(1.25).step(0.005).name("Blur strength");
 }
 
 function init() {
@@ -47,6 +50,7 @@ function init() {
 	scene.fog = fog;
 	parent = new THREE.Object3D();
 	glowParent = new THREE.Object3D();
+	worldPos = new THREE.Vector3();
 	// LIGHTS
 	scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
 	var lights = [];
@@ -139,7 +143,7 @@ function init() {
 		actions.test.setLoop(THREE.LoopOnce);
 		//actions.test.clampWhenFinished = true;
 		// TEMP: First time animation trigger (ABOUT Section)
-		TriggerAnim(1);
+		//TriggerAnim(1);
 	} );
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setClearColor( 0x000000 );
@@ -176,18 +180,18 @@ function init() {
 	} );
 
 	//blurTexture = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, {
-	blurTexture = new THREE.WebGLRenderTarget( windowHalfX/2, windowHalfY/2, {
+	blurTexture = new THREE.WebGLRenderTarget( windowHalfX/4, windowHalfY/4, {
 		minFilter: THREE.LinearFilter,
 		magFilter: THREE.LinearFilter,
 		format: THREE.RGBFormat
 	} );
 
-	zoomCenter = new THREE.Vector2( window.innerWidth *0.7, window.innerHeight *0.5 );
+	zoomCenter = new THREE.Vector2( window.innerWidth *0.5, window.innerHeight *0.5 );
 	zoomBlurShader = new THREE.ShaderMaterial( {
 		uniforms: {
 			tDiffuse: { type: "t", value: 0, texture: blurTexture },
 			resolution: { type: "v2", value: new THREE.Vector2( window.innerWidth, window.innerHeight ) },
-			strength: { type: "f", value: 0.75 },
+			strength: { type: "f", value: 1.0 },
 			center: { type: "v2", value: zoomCenter }
 		},
 		vertexShader: document.getElementById( 'ortho_vertexShader' ).textContent,
@@ -199,7 +203,8 @@ function init() {
 
 		uniforms: {
 			tBase: { type: "t", value: 0, texture: baseTexture },
-			tGlow: { type: "t", value: 1, texture: blurTexture }
+			tGlow: { type: "t", value: 1, texture: blurTexture },
+			glowStrength: { type: "f", value: 0.6 }
 		},
 		vertexShader: document.getElementById( 'ortho_vertexShader' ).textContent,
 		fragmentShader: document.getElementById( 'composite_fragmentShader' ).textContent,
@@ -212,7 +217,7 @@ function init() {
 function TriggerAnim (index) {
 	console.log("Animation index: "+index);
 	switch(index){
-		case 1:
+		case 2:
 			actions.test.reset();
 			actions.test.play();
 			break;
@@ -237,9 +242,23 @@ function createScene( geometry, scale, material ) {
 function onWindowResize( event ) {
 	SCREEN_WIDTH = window.innerWidth;
 	SCREEN_HEIGHT = window.innerHeight;
+	windowHalfX = window.innerWidth / 2;
+	windowHalfY = window.innerHeight / 2;
+
 	renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
 	camera.aspect = SCREEN_WIDTH / SCREEN_HEIGHT;
 	camera.updateProjectionMatrix();
+	zoomBlurShader.uniforms[ 'resolution' ].value = new THREE.Vector2( SCREEN_WIDTH, SCREEN_HEIGHT );
+
+	baseTexture.setSize( w, h );
+	glowTexture.setSize( w, h );
+
+	orthoQuad.scale.set( w, h, 1 );
+	orthoCamera.left   = - w / 2;
+	orthoCamera.right  =   w / 2;
+	orthoCamera.top    =   h / 2;
+	orthoCamera.bottom = - h / 2;
+	orthoCamera.updateProjectionMatrix();
 }
 function onDocumentMouseMove( event ) {
 	mouseX = ( event.clientX - windowHalfX );
@@ -248,11 +267,6 @@ function onDocumentMouseMove( event ) {
 //
 function animate() {
 	requestAnimationFrame( animate );
-	if (typeof mixer != "undefined") mixer.update( clock.getDelta() );
-	render();
-	if ( debug ) stats.update();
-}
-function render() {
 	targetX = mouseX * .001;
 	targetY = mouseY * .001;
 	if ( parent ) {
@@ -263,9 +277,19 @@ function render() {
 		glowParent.rotation.y += 0.1 * ( targetX - glowParent.rotation.y );
 		glowParent.rotation.x += 0.1 * ( targetY - glowParent.rotation.x );
 	}
-	var pos = THREE.Extras.Utils.projectOnScreen(glowParent, camera);
-	console.log(pos);
-
+	glowMesh.getWorldPosition ( worldPos );
+	worldPos.project(camera);
+	worldPos.x = (worldPos.x * windowHalfX) + windowHalfX;
+	worldPos.y = - (worldPos.y * windowHalfY) + windowHalfY;
+	worldPos.z = 0;
+	//console.log(worldPos);
+	zoomCenter.set(worldPos.x, worldPos.y);
+	//console.log(zoomCenter);
+	if (typeof mixer != "undefined") mixer.update( clock.getDelta() );
+	render();
+	if ( debug ) stats.update();
+}
+function render() {
 	renderer.render( glowScene, camera, glowTexture, true );
 	renderer.render( scene, camera, baseTexture, true );
 	orthoQuad.material = zoomBlurShader;
