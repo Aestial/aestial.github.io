@@ -7,7 +7,6 @@
 	<meta name="description" content="Radian: E-Design VFX Videogames" />
 	<meta name="keywords"  content="e-design vfx videogames" />
 	<meta name="Resource-type" content="Document" />
-	<!--link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"-->
 	<link rel="stylesheet" type="text/css" href="css/animate.min.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -16,14 +15,12 @@
 		 var console = { log: function() {} };
 	</script>
 	<![endif]-->
-	<!--script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/85/three.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/3.0.7/pixi.min.js"></script-->
 	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="js/three.min.js"></script>
 	<script type="text/javascript" src="js/pixi.min.js"></script>
 	<script type="text/javascript" src="js/jquery.fullPage.js"></script>
 	<script type="text/javascript" src="js/Detector.js"></script>
+	<script type="text/javascript" src="js/Utils.js"></script>
 	<script type="text/javascript" src="js/stats.min.js"></script>
 	<script type="text/javascript" src="js/dat.gui.min.js"></script>
 	<script type="text/javascript" src="js/app3d.js"></script>
@@ -92,12 +89,13 @@
 		uniform sampler2D tDiffuse;
 		uniform vec2 resolution;
 		uniform float strength;
+		uniform vec2 center;
 
 		float random(vec3 scale,float seed){return fract(sin(dot(gl_FragCoord.xyz+seed,scale))*43758.5453+seed);}
 
 		void main() {
 			//vec2 center = .5 * resolution;
-			vec2 center = vec2(.75 * resolution.x, .5 * resolution.y);
+			//vec2 center = vec2(.75 * resolution.x, .5 * resolution.y);
 			vec4 color=vec4(0.0);
 			float total=0.0;
 			vec2 toCenter=center-vUv*resolution;
@@ -110,7 +108,6 @@
 				color+=sample*weight;
 				total+=weight;
 			}
-
 			gl_FragColor=color/total;
 			gl_FragColor.rgb/=gl_FragColor.a+0.00001;
 
@@ -120,15 +117,12 @@
 		varying vec2 vUv;
 		uniform sampler2D tBase;
 		uniform sampler2D tGlow;
-
 		void main() {
 			//Screen: X = 1- ((255-U)*(255-L))/255
-			vec4 color = 1.0 - ( ( 1.0 - texture2D( tGlow, vec2( vUv.x, vUv.y ) ) ) * ( 1.0 - texture2D( tBase, vUv ) ) );
+			vec4 color = 1.0 - ( ( 1.0 - .6*texture2D( tGlow, vec2( vUv.x, vUv.y ) ) ) * ( 1.0 - texture2D( tBase, vUv ) ) );
 			//vec4 color = mix( texture2D( tBase, vUv ), texture2D( tGlow, vec2( vUv.x, 1.0 - vUv.y ) ), .5 );
 			//vec4 color = texture2D( tBase, vUv ) + texture2D( tGlow, vUv ) * texture2D( tGlow, vUv );
-			//vec4 color = texture2D( tGlow, vUv );
-
-			gl_FragColor = vec4( color.rgb, 0.1 );
+			gl_FragColor = vec4( color.rgb, 1.0 );
 		}
 	</script>
 

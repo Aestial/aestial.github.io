@@ -7,10 +7,10 @@ var renderer, container, stats, loader;
 // Scene objects
 var camera, scene, parent;
 // Helper scenes
-var glowScene, glowParent; // Glow emissive postprocessing scene
+var glowScene, glowParent, glowMesh; // Glow emissive postprocessing scene
 // Materials
 var objMaterials = [];
-var zoomBlurShader; // Glow emissive
+var zoomBlurShader, zoomCenter; // Glow emissive
 var opacity; // Black transparent
 // Animation
 var mixer;
@@ -104,9 +104,9 @@ function init() {
 		vertexShader: document.getElementById( 'vertexShader' ).textContent,
 		fragmentShader: document.getElementById( 'fragmentShader' ).textContent
 	} );
-	var mesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.7, 5 ), emissive );
-	mesh.position.set(0,0,1.65);
-	glowParent.add(mesh);
+	glowMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.7, 5 ), emissive );
+	glowMesh.position.set(0,0,1.65);
+	glowParent.add(glowMesh);
 	glowParent.position.set(5,0,0.5);
 	glowScene.add(glowParent);
 
@@ -182,18 +182,17 @@ function init() {
 		format: THREE.RGBFormat
 	} );
 
+	zoomCenter = new THREE.Vector2( window.innerWidth *0.7, window.innerHeight *0.5 );
 	zoomBlurShader = new THREE.ShaderMaterial( {
-
 		uniforms: {
 			tDiffuse: { type: "t", value: 0, texture: blurTexture },
 			resolution: { type: "v2", value: new THREE.Vector2( window.innerWidth, window.innerHeight ) },
-			strength: { type: "f", value: 0.75 }
+			strength: { type: "f", value: 0.75 },
+			center: { type: "v2", value: zoomCenter }
 		},
 		vertexShader: document.getElementById( 'ortho_vertexShader' ).textContent,
 		fragmentShader: document.getElementById( 'zoomBlur_fragmentShader' ).textContent,
-
 		depthWrite: false,
-
 	} );
 
 	compositeShader = new THREE.ShaderMaterial( {
@@ -264,10 +263,14 @@ function render() {
 		glowParent.rotation.y += 0.1 * ( targetX - glowParent.rotation.y );
 		glowParent.rotation.x += 0.1 * ( targetY - glowParent.rotation.x );
 	}
+	var pos = THREE.Extras.Utils.projectOnScreen(glowParent, camera);
+	console.log(pos);
+
 	renderer.render( glowScene, camera, glowTexture, true );
 	renderer.render( scene, camera, baseTexture, true );
 	orthoQuad.material = zoomBlurShader;
 	orthoQuad.material.uniforms[ 'tDiffuse' ].value = glowTexture.texture;
+	orthoQuad.material.uniforms[ 'center' ].value = zoomCenter;
   	renderer.render( orthoScene, orthoCamera, blurTexture, false );
 
 	orthoQuad.material = compositeShader;
