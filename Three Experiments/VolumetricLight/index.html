@@ -102,7 +102,7 @@
 </script>
 
 <script>
-var container, renderer, scene, camera, mesh, fov = 45;
+var container, renderer, scene, camera, fov = 45;
 var parent;
 var start = Date.now();
 var zoomBlurShader;
@@ -138,10 +138,6 @@ function init() {
 	scene.add( camera );
 
 	material = new THREE.ShaderMaterial( {
-
-		uniforms: {
-			time: { type: "f", value: 0 },
-		},
 		vertexShader: document.getElementById( 'vertexShader' ).textContent,
 		fragmentShader: document.getElementById( 'fragmentShader' ).textContent
 	} );
@@ -149,7 +145,7 @@ function init() {
   material.transparent = true;
   //material.opacity = 0.1;
 
-	mesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 5, 5 ), material );
+	var mesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 5, 5 ), material );
   parent.add(mesh);
 	scene.add( parent );
 

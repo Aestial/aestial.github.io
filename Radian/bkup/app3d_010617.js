@@ -1,25 +1,23 @@
-// Enums
+//ENUMS
 var Clips = Object.freeze({Test:0});
-// Utils
+
 if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 var clock = new THREE.Clock();
-var renderer, container, stats, loader;
-// Scene objects
-var camera, scene, object, parent;
-var objMaterials = [];
-var zoomBlurShader;
-var opacity;
-// Animation
-var mixer;
+var container, stats, loader;
+
+var camera, scene, renderer;
+var object, children, parent, mixer;
 var actions = {};
-// Mouse Input
+var objMaterials = [];
+var opacity;
+
 var mouseX = 0;
 var mouseY = 0;
 var targetX = 0;
 var targetY = 0;
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
-// DEBUG. GUI
+
 var gui;
 function initGUI() {
 	gui = new dat.GUI({
@@ -37,7 +35,7 @@ function init() {
 	camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 15;
 
-	var fog = new THREE.FogExp2( 0xcdebfc, 0.0185 );
+	var fog = new THREE.FogExp2( 0xcdebfc, 0.0175 );
 	scene = new THREE.Scene();
 	scene.fog = fog;
 	parent = new THREE.Object3D();
@@ -150,49 +148,7 @@ function init() {
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	window.addEventListener( 'resize', onWindowResize, false );
 
-	orthoScene = new THREE.Scene();
-	orthoCamera = new THREE.OrthographicCamera( 1 / - 2, 1 / 2, 1 / 2, 1 / - 2, .00001, 1000 );
-	orthoQuad = new THREE.Mesh( new THREE.PlaneGeometry( 1, 1 ), zoomBlurShader );
-	orthoScene.add( orthoQuad );
-
-	baseTexture = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, {
-		minFilter: THREE.LinearFilter,
-		magFilter: THREE.LinearFilter,
-		format: THREE.RGBFormat
-	} );
-
-	glowTexture = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, {
-		minFilter: THREE.LinearFilter,
-		magFilter: THREE.LinearFilter,
-		format: THREE.RGBFormat
-	} );
-
-	zoomBlurShader = new THREE.ShaderMaterial( {
-
-		uniforms: {
-			tDiffuse: { type: "t", value: 0, texture: glowTexture },
-			resolution: { type: "v2", value: new THREE.Vector2( window.innerWidth, window.innerHeight ) },
-			strength: { type: "f", value: 0.9 }
-		},
-		vertexShader: document.getElementById( 'ortho_vertexShader' ).textContent,
-		fragmentShader: document.getElementById( 'zoomBlur_fragmentShader' ).textContent,
-
-		depthWrite: false,
-
-	} );
-
-	compositeShader = new THREE.ShaderMaterial( {
-
-		uniforms: {
-			tBase: { type: "t", value: 0, texture: baseTexture },
-			tGlow: { type: "t", value: 1, texture: glowTexture }
-		},
-		vertexShader: document.getElementById( 'ortho_vertexShader' ).textContent,
-		fragmentShader: document.getElementById( 'composite_fragmentShader' ).textContent,
-
-		depthWrite: false,
-
-	} );	
+	
 }
 
 function TriggerAnim (index) {
