@@ -31,9 +31,9 @@ function initGUI() {
 	});
 	var black = gui.addFolder('Black Sphere');
 	black.add(blackMat, 'opacity').min(0.0).max(1.0).step(0.0001).name("Material opacity");
-	black.add(blackMat, 'envMapIntensity').min(0.0).max(10.0).step(0.001).name("Reflect intensity");
+	black.add(blackMat, 'envMapIntensity').min(0.0).max(20.0).step(0.001).name("Reflect intensity");
 	var white = gui.addFolder('White Sphere');
-	white.add(whiteMat, 'envMapIntensity').min(0.0).max(10.0).step(0.0001).name("Reflect intensity");
+	white.add(whiteMat, 'envMapIntensity').min(0.0).max(15.0).step(0.001).name("Reflect intensity");
 	var glow = gui.addFolder('Glow Effect');
 	glow.add(compositeShader.uniforms[ 'glowStrength' ], 'value').min(0.0).max(0.8).step(0.005).name("Glow strength");
 	glow.add(zoomBlurShader.uniforms[ 'strength' ], 'value').min(0.0).max(1.25).step(0.005).name("Blur strength");
@@ -87,31 +87,20 @@ function init() {
 		roughness: 0.1,
 		metalness: 1,
 		envMap: reflectionCube,
-		envMapIntensity: 8,
+		envMapIntensity: 10,
 		transparent: true,
 		opacity: 0.94
 	} );
 	objMaterials.push(blackMat);
-
 	whiteMat = new THREE.MeshStandardMaterial( {
 		color: 0xffffff,
 		roughness: 0.5,
 		metalness: 0.5,
 		envMap: reflectionCube,
-		envMapIntensity: 3,
+		envMapIntensity: 5,
 		fog: true
 	} );
 	obj2Mats.push(whiteMat);
-	/*
-	var blinn2 = new THREE.MeshStandardMaterial( {
-		color: 0xff0000,
-		roughness: 0,
-		metalness: 0,
-		emissive: 0xff0000,
-		emissiveIntensity: 10
-	} );
-	obj2Mats.push(blinn2);
-	*/
 	var emissive = new THREE.ShaderMaterial( {
 		vertexShader: document.getElementById( 'vertexShader' ).textContent,
 		fragmentShader: document.getElementById( 'fragmentShader' ).textContent
