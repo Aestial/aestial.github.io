@@ -49,11 +49,11 @@ function pixi_init() {
     console.log(videoSprite);
     //Video Mask
     var mask = PIXI.Sprite.fromImage('images/arcade_mask.png');
-    mask.width = pixi_renderer.height*0.6;
-    mask.height = pixi_renderer.height*0.6;
+    mask.width = pixi_renderer.height*0.85;
+    mask.height = pixi_renderer.height*0.85;
 	mask.anchor.set(0.5);
-	mask.x = width/2;
-	mask.y = height/2;
+	mask.x = width*0.52;
+	mask.y = height*0.57;
     stage.addChild(mask);
 	videoSprite._mask = mask;
     stage.addChild(videoSprite);
