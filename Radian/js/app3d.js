@@ -113,10 +113,6 @@ function init() {
 		color: 0x000000
 	});
 	glowMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.7, 5 ), emissive );
-	//glowMesh.position.set(0,0,1.65);
-	//glowParent.add(glowMesh);
-	//glowParent.position.set(5,0,0.5);
-	//glowScene.add(glowParent);
 	glowScene.add(glowMesh);
 	glowSocket.position.set(0,-1.7,0);
 	/*
@@ -125,12 +121,11 @@ function init() {
 	*/
 
 	objMaterials.push(obj2Mats);
-	//console.log(objMaterials);
 	loader = new THREE.ObjectLoader();
 	loader.load( "obj/bot.json", function( obj ) {
 		oclObject = obj.clone( true );
-		console.log(obj);
-		console.log(oclObject);
+		//console.log(obj);
+		//console.log(oclObject);
 		for (var i=0; i<obj.children.length; i++){
 			console.log(obj.children[i].name);
 			switch (obj.children[i].name){
@@ -148,8 +143,6 @@ function init() {
 			}
 		}
 		object = obj;
-		//object.rotation.set(0,-Math.PI/2,0);
-		//object.rotation.set(-Math.PI/2,0,0);
 		parent.add(object);
 		parent.position.set(5,0,0);
 		object.rotation.set(0,-Math.PI/2,0);

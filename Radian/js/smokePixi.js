@@ -33,6 +33,31 @@ function pixi_init() {
 	bg.filters = [smokeShader];
 	stage.addChild(bg);
 
+	 // create a video texture from a path
+    var video = PIXI.Texture.fromVideo('videos/BBB_720.mp4');
+    video.baseTexture.source.autoplay = false;
+    video.baseTexture.source.currentTime = 0;
+    video.baseTexture.source.loop = true;
+    video.baseTexture.source.muted = true;
+    // create a new Sprite using the video texture (yes it's that easy)
+    var videoSprite = new PIXI.Sprite(video);
+    // Stetch the fullscreen
+    videoSprite.width = pixi_renderer.width;
+    videoSprite.height = pixi_renderer.height;
+    videoSprite.alpha = 0.25;
+    //stage.addChild(videoSprite);
+    console.log(videoSprite);
+    //Video Mask
+    var mask = PIXI.Sprite.fromImage('images/arcade_mask.png');
+    mask.width = pixi_renderer.height*0.6;
+    mask.height = pixi_renderer.height*0.6;
+	mask.anchor.set(0.5);
+	mask.x = width/2;
+	mask.y = height/2;
+    stage.addChild(mask);
+	videoSprite._mask = mask;
+    stage.addChild(videoSprite);
+	
 	var team = PIXI.Sprite.fromImage("images/team_silhouette.png");
 	team.anchor.set(0.5,0.65);
 	team.x = width / 2;
