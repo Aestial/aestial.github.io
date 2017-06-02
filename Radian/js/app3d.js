@@ -9,6 +9,7 @@ var camera, scene, parent, glowSocket;
 // Helper scenes
 var glowScene, glowParent, glowMesh, worldPos; // Glow emissive postprocessing scene
 // Materials
+var blackMat, whiteMat; 
 var objMaterials = [];
 var zoomBlurShader, zoomCenter; // Glow emissive
 var opacity; // Black transparent
@@ -29,7 +30,10 @@ function initGUI() {
 	    height : 40 - 1
 	});
 	var black = gui.addFolder('Black Sphere');
-	black.add(objMaterials[0], 'opacity').min(0.0).max(1.0).step(0.0001).name("Material opacity");
+	black.add(blackMat, 'opacity').min(0.0).max(1.0).step(0.0001).name("Material opacity");
+	black.add(blackMat, 'envMapIntensity').min(0.0).max(10.0).step(0.001).name("Reflect intensity");
+	var white = gui.addFolder('White Sphere');
+	white.add(whiteMat, 'envMapIntensity').min(0.0).max(10.0).step(0.0001).name("Reflect intensity");
 	var glow = gui.addFolder('Glow Effect');
 	glow.add(compositeShader.uniforms[ 'glowStrength' ], 'value').min(0.0).max(0.8).step(0.005).name("Glow strength");
 	glow.add(zoomBlurShader.uniforms[ 'strength' ], 'value').min(0.0).max(1.25).step(0.005).name("Blur strength");
@@ -42,7 +46,7 @@ function init() {
 	$('body').prepend(container);
 	// SCENE AND CAMERA
 	camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
-	camera.position.z = 15;
+	camera.position.z = 12;
 
 	var fog = new THREE.FogExp2( 0xcdebfc, 0.0185 );
 	scene = new THREE.Scene();
@@ -55,9 +59,9 @@ function init() {
 	// LIGHTS
 	scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
 	var lights = [];
-	lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-	lights[ 1 ] = new THREE.PointLight( 0xffffff, 1, 0 );
-	lights[ 2 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+	lights[ 0 ] = new THREE.PointLight( 0xbababa, 1, 0 );
+	lights[ 1 ] = new THREE.PointLight( 0xbababa, 1, 0 );
+	lights[ 2 ] = new THREE.PointLight( 0xbababa, 1, 0 );
 	lights[ 0 ].position.set( 0, 200, 0 );
 	lights[ 1 ].position.set( 100, 200, 100 );
 	lights[ 2 ].position.set( - 100, - 200, - 100 );
@@ -78,38 +82,42 @@ function init() {
 
 	var obj2Mats = [];
 
-	var phong1 = new THREE.MeshStandardMaterial( {
+	blackMat = new THREE.MeshStandardMaterial( {
 		color: 0x000000,
 		roughness: 0.1,
 		metalness: 1,
 		envMap: reflectionCube,
+		envMapIntensity: 8,
 		transparent: true,
 		opacity: 0.94
 	} );
-	objMaterials.push(phong1);
+	objMaterials.push(blackMat);
 
-	var blinn1 = new THREE.MeshStandardMaterial( {
+	whiteMat = new THREE.MeshStandardMaterial( {
 		color: 0xffffff,
 		roughness: 0.5,
 		metalness: 0.5,
 		envMap: reflectionCube,
+		envMapIntensity: 3,
 		fog: true
 	} );
-	obj2Mats.push(blinn1);
-
+	obj2Mats.push(whiteMat);
+	/*
 	var blinn2 = new THREE.MeshStandardMaterial( {
 		color: 0xff0000,
 		roughness: 0,
 		metalness: 0,
 		emissive: 0xff0000,
-		emissiveIntensity: 3
+		emissiveIntensity: 10
 	} );
 	obj2Mats.push(blinn2);
+	*/
 	var emissive = new THREE.ShaderMaterial( {
 		vertexShader: document.getElementById( 'vertexShader' ).textContent,
 		fragmentShader: document.getElementById( 'fragmentShader' ).textContent
 	} );
-	var material = new THREE.MeshBasicMaterial();
+	obj2Mats.push(emissive);
+	
 	var oclMaterial = new THREE.MeshBasicMaterial( {
 		color: 0x000000
 	});
@@ -152,13 +160,13 @@ function init() {
 		//object.rotation.set(0,-Math.PI/2,0);
 		//object.rotation.set(-Math.PI/2,0,0);
 		parent.add(object);
-		parent.position.set(5,0,0.5);
+		parent.position.set(5,0,0);
 		object.rotation.set(0,-Math.PI/2,0);
 		object.rotation.set(-Math.PI/2,0,0);
 		scene.add(parent);
 
 		glowParent.add(oclObject);
-		glowParent.position.set(5,0,0.5);
+		glowParent.position.set(5,0,0);
 		oclObject.rotation.set(0,-Math.PI/2,0);
 		oclObject.rotation.set(-Math.PI/2,0,0);
 		glowScene.add(glowParent);
