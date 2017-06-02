@@ -23,6 +23,8 @@ var targetX = 0;
 var targetY = 0;
 var windowHalfX = window.innerWidth / 2;
 var windowHalfY = window.innerHeight / 2;
+var	SCREEN_WIDTH = window.innerWidth;
+var	SCREEN_HEIGHT = window.innerHeight;
 // DEBUG. GUI
 var gui;
 function initGUI() {
@@ -48,7 +50,7 @@ function init() {
 	camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 12;
 
-	var fog = new THREE.FogExp2( 0xcdebfc, 0.0185 );
+	var fog = new THREE.FogExp2( 0xff0024, 0.02 );
 	scene = new THREE.Scene();
 	glowScene = new THREE.Scene();
 	scene.fog = fog;
@@ -87,7 +89,7 @@ function init() {
 		roughness: 0.1,
 		metalness: 1,
 		envMap: reflectionCube,
-		envMapIntensity: 10,
+		envMapIntensity: 9,
 		transparent: true,
 		opacity: 0.94
 	} );
@@ -116,7 +118,7 @@ function init() {
 	//glowParent.position.set(5,0,0.5);
 	//glowScene.add(glowParent);
 	glowScene.add(glowMesh);
-	glowSocket.position.set(0,-1.65,0);
+	glowSocket.position.set(0,-1.7,0);
 	/*
 	var glowMesh_DEBUG = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.7, 5 ), material );
 	glowMesh_DEBUG.position.set(0,-1.65,0);
@@ -164,6 +166,7 @@ function init() {
 		console.log("Total animations: "+object.animations.length);
 		actions.test = mixer.clipAction(object.animations[0]);
 		actions.test.setLoop(THREE.LoopOnce);
+		actions.test.timeScale = 4;
 		//actions.test.clampWhenFinished = true;
 		// TEMP: First time animation trigger (ABOUT Section)
 		//TriggerAnim(1);
@@ -190,26 +193,26 @@ function init() {
 	orthoQuad = new THREE.Mesh( new THREE.PlaneGeometry( 1, 1 ), zoomBlurShader );
 	orthoScene.add( orthoQuad );
 
-	baseTexture = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, {
+	baseTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH, SCREEN_HEIGHT, {
 		minFilter: THREE.LinearFilter,
 		magFilter: THREE.LinearFilter,
 		format: THREE.RGBFormat
 	} );
 
-	glowTexture = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, {
+	glowTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, {
 		minFilter: THREE.LinearFilter,
 		magFilter: THREE.LinearFilter,
 		format: THREE.RGBFormat
 	} );
 
 	//blurTexture = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, {
-	blurTexture = new THREE.WebGLRenderTarget( windowHalfX/2, windowHalfY/2, {
+	blurTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, {
 		minFilter: THREE.LinearFilter,
 		magFilter: THREE.LinearFilter,
 		format: THREE.RGBFormat
 	} );
 
-	zoomCenter = new THREE.Vector2( window.innerWidth *0.5, window.innerHeight *0.5 );
+	zoomCenter = new THREE.Vector2( SCREEN_WIDTH*0.5, SCREEN_HEIGHT*0.5 );
 	zoomBlurShader = new THREE.ShaderMaterial( {
 		uniforms: {
 			tDiffuse: { type: "t", value: 0, texture: blurTexture },
@@ -274,7 +277,9 @@ function onWindowResize( event ) {
 	zoomBlurShader.uniforms[ 'resolution' ].value = new THREE.Vector2( SCREEN_WIDTH, SCREEN_HEIGHT );
 
 	baseTexture.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
-	glowTexture.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
+	glowTexture.setSize( SCREEN_WIDTH/2, SCREEN_HEIGHT/2 );
+	blurTexture.setSize( SCREEN_WIDTH/2, SCREEN_HEIGHT/2 );
+
 
 	orthoQuad.scale.set( SCREEN_WIDTH, SCREEN_HEIGHT, 1 );
 	orthoCamera.left   = - SCREEN_WIDTH / 2;
