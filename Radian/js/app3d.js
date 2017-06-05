@@ -50,10 +50,10 @@ function init() {
 	camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 12;
 
-	var fog = new THREE.FogExp2( 0xff0024, 0.02 );
+	//var fog = new THREE.FogExp2( 0xff0024, 0.02 );
 	scene = new THREE.Scene();
 	glowScene = new THREE.Scene();
-	scene.fog = fog;
+	//scene.fog = fog;
 	parent = new THREE.Object3D();
 	glowParent = new THREE.Object3D();
 	glowSocket = new THREE.Object3D();
@@ -62,14 +62,14 @@ function init() {
 	scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
 	var lights = [];
 	lights[ 0 ] = new THREE.PointLight( 0xbababa, 1, 0 );
-	lights[ 1 ] = new THREE.PointLight( 0xbababa, 1, 0 );
-	lights[ 2 ] = new THREE.PointLight( 0xbababa, 1, 0 );
+	//lights[ 1 ] = new THREE.PointLight( 0xbababa, 1, 0 );
+	//lights[ 2 ] = new THREE.PointLight( 0xbababa, 1, 0 );
 	lights[ 0 ].position.set( 0, 200, 0 );
-	lights[ 1 ].position.set( 100, 200, 100 );
-	lights[ 2 ].position.set( - 100, - 200, - 100 );
+	//lights[ 1 ].position.set( 100, 200, 100 );
+	//lights[ 2 ].position.set( - 100, - 200, - 100 );
 	scene.add( lights[ 0 ] );
-	scene.add( lights[ 1 ] );
-	scene.add( lights[ 2 ] );
+	//scene.add( lights[ 1 ] );
+	//scene.add( lights[ 2 ] );
 	// REFLECTION
 	var path = "textures/cube/SwedishCastle/";
 	var format = '.jpg';
@@ -159,12 +159,12 @@ function init() {
 		console.log("Total animations: "+object.animations.length);
 		actions.test = mixer.clipAction(object.animations[0]);
 		actions.test.setLoop(THREE.LoopOnce);
-		actions.test.timeScale = 4;
+		actions.test.timeScale = 3;
 		//actions.test.clampWhenFinished = true;
 		// TEMP: First time animation trigger (ABOUT Section)
 		//TriggerAnim(1);
 	} );
-	renderer = new THREE.WebGLRenderer( { antialias: true } );
+	renderer = new THREE.WebGLRenderer( { antialias: false } );
 	renderer.setClearColor( 0x000000 );
 	renderer.autoClear = false;
 	renderer.setPixelRatio( window.devicePixelRatio );
@@ -186,7 +186,7 @@ function init() {
 	orthoQuad = new THREE.Mesh( new THREE.PlaneGeometry( 1, 1 ), zoomBlurShader );
 	orthoScene.add( orthoQuad );
 
-	baseTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH, SCREEN_HEIGHT, {
+	baseTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH*1.2, SCREEN_HEIGHT*1.2, {
 		minFilter: THREE.LinearFilter,
 		magFilter: THREE.LinearFilter,
 		format: THREE.RGBFormat
@@ -230,7 +230,12 @@ function init() {
 
 		depthWrite: false,
 
-	} );	
+	} );
+
+	
+	setInterval( function () {
+	    requestAnimationFrame( animate );
+	}, 1000 / 30 );
 }
 
 function TriggerAnim (index) {
@@ -273,7 +278,6 @@ function onWindowResize( event ) {
 	glowTexture.setSize( SCREEN_WIDTH/2, SCREEN_HEIGHT/2 );
 	blurTexture.setSize( SCREEN_WIDTH/2, SCREEN_HEIGHT/2 );
 
-
 	orthoQuad.scale.set( SCREEN_WIDTH, SCREEN_HEIGHT, 1 );
 	orthoCamera.left   = - SCREEN_WIDTH / 2;
 	orthoCamera.right  =   SCREEN_WIDTH / 2;
@@ -287,7 +291,7 @@ function onDocumentMouseMove( event ) {
 }
 //
 function animate() {
-	requestAnimationFrame( animate );
+	//requestAnimationFrame( animate );
 	targetX = mouseX * .001;
 	targetY = mouseY * .001;
 	if ( parent ) {
