@@ -58,7 +58,7 @@ h1,h2,h3,h4,h5,h6 {
 q:before,q:after {
     content:'';
 }
-abbr,acronym { border: 0;
+abbr,acronym { border: 0;#
 }
 
 
@@ -235,6 +235,21 @@ Aqui comienza para el menu
 	height: 10%;
 	width: 10%;
 	right: 5%;
+}
+#loadScreen{
+	position: absolute;
+	background-color: #000;
+	//background-image: url("../images/Pug.jpg");
+	left: 0%;
+	top: 0%;
+	height: 100%;
+	width: 100%;
+	z-index: 99;
+	background-repeat: no-repeat;
+	background-size: cover;
+	//visibility: hidden;
+	-webkit-filter: grayscale(100%) brightness(60%);
+	filter: grayscale(100%) brightness(60%);
 }
 #bigImage{
 	position: absolute;

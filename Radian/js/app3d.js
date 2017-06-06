@@ -27,6 +27,7 @@ var	SCREEN_WIDTH = window.innerWidth;
 var	SCREEN_HEIGHT = window.innerHeight;
 // DEBUG. GUI
 var gui;
+
 function initGUI() {
 	gui = new dat.GUI({
 	    height : 40 - 1
@@ -79,7 +80,7 @@ function init() {
 		path + 'pz' + format, path + 'nz' + format
 	];
 
-	var reflectionCube = new THREE.CubeTextureLoader().load( urls );
+	var reflectionCube = new THREE.CubeTextureLoader(manager).load( urls );
 	reflectionCube.format = THREE.RGBFormat;
 
 	var obj2Mats = [];
@@ -121,7 +122,7 @@ function init() {
 	*/
 
 	objMaterials.push(obj2Mats);
-	loader = new THREE.ObjectLoader();
+	loader = new THREE.ObjectLoader(manager);
 	loader.load( "obj/bot.json", function( obj ) {
 		oclObject = obj.clone( true );
 		//console.log(obj);
