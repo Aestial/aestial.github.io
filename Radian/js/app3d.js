@@ -33,9 +33,13 @@ function initGUI() {
 	    height : 40 - 1
 	});
 	var black = gui.addFolder('Black Sphere');
-	black.add(blackMat, 'opacity').min(0.0).max(1.0).step(0.0001).name("Material opacity");
+	black.add(blackMat, 'roughness').min(0.0).max(1.0).step(0.001).name("Roughness");
+	black.add(blackMat, 'metalness').min(0.0).max(1.0).step(0.001).name("Metalness");
+	black.add(blackMat, 'opacity').min(0.0).max(1.0).step(0.0001).name("Opacity");
 	black.add(blackMat, 'envMapIntensity').min(0.0).max(20.0).step(0.001).name("Reflect intensity");
 	var white = gui.addFolder('White Sphere');
+	white.add(whiteMat, 'roughness').min(0.0).max(1.0).step(0.001).name("Roughness");
+	white.add(whiteMat, 'metalness').min(0.0).max(1.0).step(0.001).name("Metalness");
 	white.add(whiteMat, 'envMapIntensity').min(0.0).max(15.0).step(0.001).name("Reflect intensity");
 	var glow = gui.addFolder('Glow Effect');
 	glow.add(compositeShader.uniforms[ 'glowStrength' ], 'value').min(0.0).max(0.8).step(0.005).name("Glow strength");
@@ -50,11 +54,8 @@ function init() {
 	// SCENE AND CAMERA
 	camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 12;
-
-	//var fog = new THREE.FogExp2( 0xff0024, 0.02 );
 	scene = new THREE.Scene();
 	glowScene = new THREE.Scene();
-	//scene.fog = fog;
 	parent = new THREE.Object3D();
 	glowParent = new THREE.Object3D();
 	glowSocket = new THREE.Object3D();
@@ -100,8 +101,7 @@ function init() {
 		roughness: 0.5,
 		metalness: 0.5,
 		envMap: reflectionCube,
-		envMapIntensity: 5,
-		fog: true
+		envMapIntensity: 5
 	} );
 	obj2Mats.push(whiteMat);
 	var emissive = new THREE.ShaderMaterial( {
