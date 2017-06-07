@@ -264,6 +264,24 @@ Aqui comienza para el menu
 	-webkit-filter: grayscale(100%) brightness(60%);
 	filter: grayscale(100%) brightness(60%);
 }
+#logo{
+	-ms-transform: translate(50%, 25%); /* IE 9 */
+	-webkit-transform: translate(50%, 25%); /* Safari */
+	transform: translate(50%, 25%);
+}
+#loadBarCont{
+	position: absolute;
+	bottom: 40%;
+	left: 50%;
+	width: 90px;
+	height: 9px;
+	-ms-transform: translate(-50%, -50%); /* IE 9 */
+	-webkit-transform: translate(-50%, -50%); /* Safari */
+	transform: translate(-50%, -50%);
+}
+.ldBar-label{
+	visibility: hidden;
+}
 .bigImage_toggle{
 	color:#aaa;
 }

@@ -9,6 +9,7 @@
 	<meta name="Resource-type" content="Document" />
 	<link rel="stylesheet" type="text/css" href="css/animate.min.css">
 	<link rel="stylesheet" type="text/css" href="css/jquery.fullPage.css" />
+	<link rel="stylesheet" type="text/css" href="css/loading-bar.css"/>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<!--[if IE]>
 	<script type="text/javascript">
@@ -22,6 +23,7 @@
 	<script type="text/javascript" src="js/Detector.js"></script>
 	<script type="text/javascript" src="js/stats.min.js"></script>
 	<script type="text/javascript" src="js/dat.gui.min.js"></script>
+	<script type="text/javascript" src="js/loading-bar.js"></script>
 	<script type="text/javascript" src="js/app3d.js"></script>
 	<script type="text/javascript" src="js/smokePixi.js"></script>
 	<script id="smoke_fragmentShader" type="shader-code">
@@ -144,6 +146,9 @@
 		var imageNames = ["French.jpg","Dog.jpg","Chilaquil.jpg","Pug.jpg"];
 		var isPlaying = false;
 		var loaded = false;
+		//var loadBar = new ldBar("#loadBar");
+		var loadBar;
+
 
 		var manager = new THREE.LoadingManager();
 		manager.onStart = function( item, loaded, total ) {
@@ -162,6 +167,7 @@
 		};
 		manager.onProgress = function( item, loaded, total ) {
 		    console.log( item, loaded, total );
+		    loadBar.set((loaded*100.0)/total*1.0)
 		};
 		manager.onError = function( url ) {
 		    console.log( 'Error loading' );
@@ -171,6 +177,7 @@
 		window.addEventListener( 'load', OnLoaded, false );
 
 		function OnLoaded() {
+			loadBar = document.getElementById('loadBar').ldBar;
 			init();
 			pixi_init();
 			if (debug) initGUI();			
@@ -363,11 +370,11 @@
 
 <div id="loadScreen" style="width:100%; height:100%;">
     <svg
-	   width="100%"
-	   height="100%"
+	   width="50%"
+	   height="50%"
 	   viewBox = "0 0 960 960"
 	   version="1.1"
-	   id="svg2985">
+	   id="logo">
 	  <g
 	     style="display:inline"
 	     id="Text">
@@ -437,6 +444,9 @@
 	       style="fill:#38a0e2;fill-opacity:1;stroke:none" />
 	  </g>
 	</svg>
+	<div id="loadBarCont">
+		<div id="loadBar" class="ldBar label-center" data-value="0"></div>
+	</div>
 </div>
 
 </body>
