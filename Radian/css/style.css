@@ -239,7 +239,6 @@ Aqui comienza para el menu
 #loadScreen{
 	position: absolute;
 	background-color: #000;
-	//background-image: url("../images/Pug.jpg");
 	left: 0%;
 	top: 0%;
 	height: 100%;
@@ -247,27 +246,34 @@ Aqui comienza para el menu
 	z-index: 99;
 	background-repeat: no-repeat;
 	background-size: cover;
-	//visibility: hidden;
-	-webkit-filter: grayscale(100%) brightness(60%);
-	filter: grayscale(100%) brightness(60%);
+	animation-duration: 4s;
 }
 #bigImage{
 	position: absolute;
-	//Default Image
-	//background-image: url("../images/Pug.jpg");
 	left: 16%;
 	height: 100%;
 	width: 100%;
 	background-repeat: no-repeat;
 	background-size: cover;
-	//visibility: hidden;
 	-webkit-filter: grayscale(100%) brightness(60%);
 	filter: grayscale(100%) brightness(60%);
 }
 #logo{
-	-ms-transform: translate(50%, 25%); /* IE 9 */
-	-webkit-transform: translate(50%, 25%); /* Safari */
-	transform: translate(50%, 25%);
+	-webkit-filter: grayscale(100%) brightness(60%);
+	filter: grayscale(100%) brightness(60%);
+	animation-duration: 1s;
+  	animation-delay: 3s;
+}
+#logo:hover{
+	-webkit-filter: grayscale(0%) brightness(60%);
+	filter: grayscale(0%) brightness(60%);
+}
+#logoCont{
+	position: absolute;
+	width:20%;
+	top:50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
 }
 #loadBarCont{
 	position: absolute;
@@ -278,6 +284,10 @@ Aqui comienza para el menu
 	-ms-transform: translate(-50%, -50%); /* IE 9 */
 	-webkit-transform: translate(-50%, -50%); /* Safari */
 	transform: translate(-50%, -50%);
+}
+#loadBar{
+	animation-duration: 1s;
+  	animation-delay: 0.5s;
 }
 .ldBar-label{
 	visibility: hidden;
