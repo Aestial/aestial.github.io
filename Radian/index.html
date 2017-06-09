@@ -157,6 +157,7 @@
 		manager.onLoad = function() {
 		    $('#logo').hover(function(){
 		    	$('#loadScreen').animateOnce('fadeOut');
+		    	$.fn.fullpage.setAllowScrolling(true);
 		    });
 		    $('#loadBar').animateOnce('fadeOut');
 		    $('#logo').animateOnce('tada');
@@ -216,8 +217,10 @@
 					//console.log("afterLoad--" + "anchorLink: " + anchorLink + " index: " + index );
 				}
 			});
-
+			$.fn.fullpage.moveTo('about');
+			$.fn.fullpage.setAllowScrolling(false);
 		});
+		
 
 		function checkAnimType(animationName) {
 			if (animationName.includes("In")){
