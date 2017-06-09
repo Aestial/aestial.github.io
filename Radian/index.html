@@ -162,6 +162,7 @@
 		    $('#loadBar').animateOnce('fadeOut');
 		    $('#logo').animateOnce('tada');
 		    console.log('Loading complete');
+		    $('#fullpage').fullpage.moveTo('about');
 		};
 		manager.onProgress = function( item, loaded, total ) {
 		    console.log( item, loaded, total );
@@ -217,8 +218,7 @@
 					//console.log("afterLoad--" + "anchorLink: " + anchorLink + " index: " + index );
 				}
 			});
-			$.fn.fullpage.setAllowScrolling(false);
-			$.fn.fullpage.moveTo('about');
+			$('#fullpage').fullpage.setAllowScrolling(false);
 		});
 		
 
