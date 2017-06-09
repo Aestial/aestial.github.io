@@ -217,8 +217,8 @@
 					//console.log("afterLoad--" + "anchorLink: " + anchorLink + " index: " + index );
 				}
 			});
-			$.fn.fullpage.moveTo('about');
 			$.fn.fullpage.setAllowScrolling(false);
+			$.fn.fullpage.moveTo('about');
 		});
 		
 
@@ -242,7 +242,7 @@
 		    		case CSSAnimType.Entrance:
 						this.addClass('animated ' + animationName).one(animationEnd, function() {
 				        	isPlaying = false;
-							console.log(isPlaying);
+							//console.log(isPlaying);
 				            $(this).removeClass('animated ' + animationName);
 				        }).css({
 				            	"visibility":"visible"
@@ -251,7 +251,7 @@
 		    		case CSSAnimType.Exit:
 			    		this.addClass('animated ' + animationName).one(animationEnd, function() {
 				        	isPlaying = false;
-							console.log(isPlaying);
+							//console.log(isPlaying);
 				            $(this).removeClass('animated ' + animationName)
 				            .css({
 				            	"visibility":"hidden"
