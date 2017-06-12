@@ -259,19 +259,19 @@ Aqui comienza para el menu
 	filter: grayscale(100%) brightness(60%);
 }
 #logo{
-	-webkit-filter: grayscale(100%) brightness(60%);
-	filter: grayscale(100%) brightness(60%);
+	/*-webkit-filter: grayscale(100%) brightness(60%);
+	filter: grayscale(100%) brightness(60%);*/
 	animation-duration: 1s;
   	animation-delay: 3s;
 }
 #logo:hover{
-	-webkit-filter: grayscale(0%) brightness(60%);
-	filter: grayscale(0%) brightness(60%);
+	-webkit-filter: grayscale(0%) brightness(200%);
+	filter: grayscale(0%) brightness(200%);
 }
 #logoCont{
 	position: absolute;
-	width:20%;
-	top:50%;
+	width:10%;
+	top:45%;
 	left: 50%;
 	transform: translate(-50%,-50%);
 }
