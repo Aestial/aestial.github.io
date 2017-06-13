@@ -159,14 +159,14 @@ function init() {
 		object = obj;
 		parent.add(object);
 		parent.position.set(5,0,0);
-		object.rotation.set(0,-Math.PI/2,0);
-		object.rotation.set(-Math.PI/2,0,0);
+		object.rotation.set(0,Math.PI/2,0);
+		//object.rotation.set(-Math.PI/2,0,0);
 		scene.add(parent);
 
 		glowParent.add(oclObject);
 		glowParent.position.set(5,0,0);
-		oclObject.rotation.set(0,-Math.PI/2,0);
-		oclObject.rotation.set(-Math.PI/2,0,0);
+		oclObject.rotation.set(0,Math.PI/2,0);
+		//oclObject.rotation.set(-Math.PI/2,0,0);
 		glowScene.add(glowParent);
 
 		mixer = new THREE.AnimationMixer( object );
