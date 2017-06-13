@@ -6,6 +6,7 @@ var clock = new THREE.Clock();
 var renderer, container, stats, loader;
 // Scene objects
 var camera, scene, parent, glowSocket;
+var object, oclObject;
 // Helper scenes
 var glowScene, glowParent, glowMesh, worldPos; // Glow emissive postprocessing scene
 // Materials
@@ -111,9 +112,9 @@ function init() {
 	obj2Mats.push(emissive);
 	
 	var oclMaterial = new THREE.MeshBasicMaterial( {
-		color: 0x000000
+		color: 0x010101
 	});
-	glowMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.7, 5 ), emissive );
+	glowMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.6, 5 ), emissive );
 	glowScene.add(glowMesh);
 	glowSocket.position.set(0,-1.7,0);
 	/*
@@ -128,7 +129,7 @@ function init() {
 		//console.log(obj);
 		//console.log(oclObject);
 		for (var i=0; i<obj.children.length; i++){
-			console.log(obj.children[i].name);
+			//console.log(obj.children[i].name);
 			switch (obj.children[i].name){
 				case "WhiteSphere":
 					console.log("Socket added!");
@@ -138,6 +139,8 @@ function init() {
 				default:
 					break;
 			}
+			oclObject.children[i].position = obj.children[i].position;
+			oclObject.children[i].quaternion = obj.children[i].quaternion;
 			oclObject.children[i].material = oclMaterial;	
 			if (objMaterials[i] != null){
 				obj.children[i].material = objMaterials[i];	
@@ -160,8 +163,8 @@ function init() {
 		console.log("Total animations: "+object.animations.length);
 		actions.test = mixer.clipAction(object.animations[0]);
 		actions.test.setLoop(THREE.LoopOnce);
-		actions.test.timeScale = 3;
-		//actions.test.clampWhenFinished = true;
+		actions.test.timeScale = 1;
+		actions.test.clampWhenFinished = true;
 		// TEMP: First time animation trigger (ABOUT Section)
 		//TriggerAnim(1);
 	} );
@@ -299,15 +302,36 @@ function animate() {
 		parent.rotation.y += 0.1 * ( targetX - parent.rotation.y );
 		parent.rotation.x += 0.1 * ( targetY - parent.rotation.x );
 	}
-	if ( glowParent ) {
-		glowParent.rotation.y += 0.1 * ( targetX - glowParent.rotation.y );
-		glowParent.rotation.x += 0.1 * ( targetY - glowParent.rotation.x );
-	}
 	glowMesh.position.x = glowSocket.getWorldPosition().x;
 	glowMesh.position.y = glowSocket.getWorldPosition().y;
 	glowMesh.position.z = glowSocket.getWorldPosition().z;
 	//console.log(glowSocket.getWorldPosition());
 	//console.log(glowMesh.position);
+	if ( typeof object != "undefined" ) {
+		for (var i=0; i<object.children.length; i++) {
+			// Position
+			oclObject.children[i].position.x = object.children[i].position.x;
+			oclObject.children[i].position.y = object.children[i].position.y;
+			oclObject.children[i].position.z = object.children[i].position.z;
+			// Scale
+			oclObject.children[i].scale.x = object.children[i].scale.x;
+			oclObject.children[i].scale.y = object.children[i].scale.y;
+			oclObject.children[i].scale.z = object.children[i].scale.z;
+			// Rotation
+			oclObject.children[i].rotation.x = object.children[i].rotation.x;
+			oclObject.children[i].rotation.y = object.children[i].rotation.y;
+			oclObject.children[i].rotation.z = object.children[i].rotation.z;
+			switch (object.children[i].name){
+				case "WhiteSphere":
+					glowMesh.scale.x = object.children[i].scale.x;
+					glowMesh.scale.y = object.children[i].scale.y;
+					glowMesh.scale.z = object.children[i].scale.z;
+					break;
+				default:
+					break;
+			}
+		}
+	}
 	glowMesh.getWorldPosition ( worldPos );
 	worldPos.project(camera);
 	worldPos.x = (worldPos.x * windowHalfX) + windowHalfX;
@@ -321,13 +345,14 @@ function animate() {
 	if ( debug ) stats.update();
 }
 function render() {
+	// renderer.render( glowScene, camera );
 	renderer.render( glowScene, camera, glowTexture, true );
 	renderer.render( scene, camera, baseTexture, true );
 	orthoQuad.material = zoomBlurShader;
 	orthoQuad.material.uniforms[ 'tDiffuse' ].value = glowTexture.texture;
 	orthoQuad.material.uniforms[ 'center' ].value = zoomCenter;
-  	renderer.render( orthoScene, orthoCamera, blurTexture, false );
-
+ 	renderer.render( orthoScene, orthoCamera, blurTexture, false );
+	// renderer.render( orthoScene, orthoCamera );
 	orthoQuad.material = compositeShader;
 	orthoQuad.material.uniforms[ 'tBase' ].value = baseTexture.texture;
 	orthoQuad.material.uniforms[ 'tGlow' ].value = blurTexture.texture;

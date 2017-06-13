@@ -46,7 +46,7 @@ function pixi_init() {
     videoSprite.height = pixi_renderer.height;
     videoSprite.alpha = 0.25;
     //stage.addChild(videoSprite);
-    console.log(videoSprite);
+    //console.log(videoSprite);
     //Video Mask
     var mask = PIXI.Sprite.fromImage('images/arcade_mask.png');
     mask.width = pixi_renderer.height*0.85;
