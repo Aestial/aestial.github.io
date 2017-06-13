@@ -158,6 +158,7 @@
 		    $('#logo').hover(function(){
 		    	$('#loadScreen').animateOnce('fadeOut');
 		    	$.fn.fullpage.setAllowScrolling(true);
+		    	TriggerAnim(1);
 		    });
 		    $('#loadBar').animateOnce('fadeOut');
 		    $('#logo').animateOnce('tada');
@@ -172,20 +173,22 @@
 		    console.log( 'Error loading' );
 		};
 
-		// MAIN ON LOADED
+		// MAIN ON LOADED (Javascript method)
 		window.addEventListener( 'load', OnLoaded, false );
 
 		function OnLoaded() {
 			loadBar = document.getElementById('loadBar').ldBar;
 			init();
 			pixi_init();
+			fullpage_init();
 			if (debug) initGUI();			
 			loaded = true;
 			animate();
 			pixi_animate();
 		}
-
-		$(document).ready(function() {
+		// ON LOADED (Jquery ready method)
+		//$(document).ready(function() {
+		function fullpage_init() {
 			$('#fullpage').fullpage({
 				sectionsColor: ['rgba(0,0,0,0)'],
 				anchors: ['about', 'edesign', 'vfx', 'videogames', 'contact'],
@@ -219,8 +222,8 @@
 				}
 			});
 			$('#fullpage').fullpage.setAllowScrolling(false);
-		});
-		
+		//});
+		}
 
 		function checkAnimType(animationName) {
 			if (animationName.includes("In")){

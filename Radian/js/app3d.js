@@ -10,7 +10,7 @@ var object, oclObject;
 // Helper scenes
 var glowScene, glowParent, glowMesh, worldPos; // Glow emissive postprocessing scene
 // Materials
-var blackMat, whiteMat; 
+var blackMat, whiteMat, redMat; 
 var objMaterials = [];
 var zoomBlurShader, zoomCenter; // Glow emissive
 var opacity; // Black transparent
@@ -43,7 +43,7 @@ function initGUI() {
 	white.add(whiteMat, 'metalness').min(0.0).max(1.0).step(0.001).name("Metalness");
 	white.add(whiteMat, 'envMapIntensity').min(0.0).max(15.0).step(0.001).name("Reflect intensity");
 	var glow = gui.addFolder('Glow Effect');
-	glow.add(compositeShader.uniforms[ 'glowStrength' ], 'value').min(0.0).max(0.8).step(0.005).name("Glow strength");
+	glow.add(compositeShader.uniforms[ 'glowStrength' ], 'value').min(0.0).max(0.9).step(0.005).name("Glow strength");
 	glow.add(zoomBlurShader.uniforms[ 'strength' ], 'value').min(0.0).max(1.25).step(0.005).name("Blur strength");
 }
 
@@ -104,17 +104,26 @@ function init() {
 		envMap: reflectionCube,
 		envMapIntensity: 5
 	} );
+	redMat = new THREE.MeshStandardMaterial( {
+		color: 0xff0024,
+		roughness: 0.1,
+		metalness: 0.3,
+		transparent: true,
+		opacity: 0.8,
+		emissive: 0.5
+	} );
 	obj2Mats.push(whiteMat);
-	var emissive = new THREE.ShaderMaterial( {
+
+	var emissiveMat = new THREE.ShaderMaterial( {
 		vertexShader: document.getElementById( 'vertexShader' ).textContent,
 		fragmentShader: document.getElementById( 'fragmentShader' ).textContent
 	} );
-	obj2Mats.push(emissive);
+	obj2Mats.push(redMat);
 	
 	var oclMaterial = new THREE.MeshBasicMaterial( {
 		color: 0x010101
 	});
-	glowMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.6, 5 ), emissive );
+	glowMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.6, 5 ), emissiveMat );
 	glowScene.add(glowMesh);
 	glowSocket.position.set(0,-1.7,0);
 	/*
@@ -130,18 +139,19 @@ function init() {
 		//console.log(oclObject);
 		for (var i=0; i<obj.children.length; i++){
 			//console.log(obj.children[i].name);
+			oclObject.children[i].position = obj.children[i].position;
+			oclObject.children[i].quaternion = obj.children[i].quaternion;
+			oclObject.children[i].material = oclMaterial;
 			switch (obj.children[i].name){
 				case "WhiteSphere":
 					console.log("Socket added!");
 					//obj.children[i].add(glowMesh_DEBUG);
 					obj.children[i].add(glowSocket);
+					oclObject.children[i].material = [oclMaterial, emissiveMat];
 					break;
 				default:
 					break;
-			}
-			oclObject.children[i].position = obj.children[i].position;
-			oclObject.children[i].quaternion = obj.children[i].quaternion;
-			oclObject.children[i].material = oclMaterial;	
+			}	
 			if (objMaterials[i] != null){
 				obj.children[i].material = objMaterials[i];	
 			}
@@ -214,7 +224,7 @@ function init() {
 		uniforms: {
 			tDiffuse: { type: "t", value: 0, texture: blurTexture },
 			resolution: { type: "v2", value: new THREE.Vector2( window.innerWidth, window.innerHeight ) },
-			strength: { type: "f", value: 1.0 },
+			strength: { type: "f", value: 0.9 },
 			center: { type: "v2", value: zoomCenter }
 		},
 		vertexShader: document.getElementById( 'ortho_vertexShader' ).textContent,
@@ -227,7 +237,7 @@ function init() {
 		uniforms: {
 			tBase: { type: "t", value: 0, texture: baseTexture },
 			tGlow: { type: "t", value: 1, texture: blurTexture },
-			glowStrength: { type: "f", value: 0.6 }
+			glowStrength: { type: "f", value: 0.8 }
 		},
 		vertexShader: document.getElementById( 'ortho_vertexShader' ).textContent,
 		fragmentShader: document.getElementById( 'composite_fragmentShader' ).textContent,
@@ -245,7 +255,7 @@ function init() {
 function TriggerAnim (index) {
 	console.log("Animation index: "+index);
 	switch(index){
-		case 2:
+		case 1:
 			actions.test.reset();
 			actions.test.play();
 			break;
@@ -305,6 +315,10 @@ function animate() {
 	glowMesh.position.x = glowSocket.getWorldPosition().x;
 	glowMesh.position.y = glowSocket.getWorldPosition().y;
 	glowMesh.position.z = glowSocket.getWorldPosition().z;
+	// Parents rotations
+	glowParent.rotation.x = parent.rotation.x;
+	glowParent.rotation.y = parent.rotation.y;
+	glowParent.rotation.z = parent.rotation.z;
 	//console.log(glowSocket.getWorldPosition());
 	//console.log(glowMesh.position);
 	if ( typeof object != "undefined" ) {
@@ -331,28 +345,29 @@ function animate() {
 					break;
 			}
 		}
+		//glowMesh.getWorldPosition ( worldPos );
+		object.getWorldPosition ( worldPos );
+		worldPos.project(camera);
+		worldPos.x = (worldPos.x * windowHalfX) + windowHalfX;
+		worldPos.y = - (worldPos.y * windowHalfY) + windowHalfY;
+		worldPos.z = 0;
+		//console.log(worldPos);
+		zoomCenter.set(worldPos.x, worldPos.y);
+		//console.log(zoomCenter);
 	}
-	glowMesh.getWorldPosition ( worldPos );
-	worldPos.project(camera);
-	worldPos.x = (worldPos.x * windowHalfX) + windowHalfX;
-	worldPos.y = - (worldPos.y * windowHalfY) + windowHalfY;
-	worldPos.z = 0;
-	//console.log(worldPos);
-	zoomCenter.set(worldPos.x, worldPos.y);
-	//console.log(zoomCenter);
 	if (typeof mixer != "undefined") mixer.update( clock.getDelta() );
 	render();
 	if ( debug ) stats.update();
 }
 function render() {
-	// renderer.render( glowScene, camera );
+	//renderer.render( glowScene, camera );
 	renderer.render( glowScene, camera, glowTexture, true );
 	renderer.render( scene, camera, baseTexture, true );
 	orthoQuad.material = zoomBlurShader;
 	orthoQuad.material.uniforms[ 'tDiffuse' ].value = glowTexture.texture;
 	orthoQuad.material.uniforms[ 'center' ].value = zoomCenter;
  	renderer.render( orthoScene, orthoCamera, blurTexture, false );
-	// renderer.render( orthoScene, orthoCamera );
+	//renderer.render( orthoScene, orthoCamera );
 	orthoQuad.material = compositeShader;
 	orthoQuad.material.uniforms[ 'tBase' ].value = baseTexture.texture;
 	orthoQuad.material.uniforms[ 'tGlow' ].value = blurTexture.texture;
