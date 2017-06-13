@@ -163,6 +163,9 @@ Aqui comienza para el menu
 	padding: 20px 10px;
 
 }
+#title-logo{
+	display: none;
+}
 #menu{
 	font-family: Roboto-Light,helvetica;
 	position: absolute;
