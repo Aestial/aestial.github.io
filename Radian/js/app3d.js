@@ -92,7 +92,7 @@ function init() {
 		roughness: 0.1,
 		metalness: 1,
 		envMap: reflectionCube,
-		envMapIntensity: 9,
+		envMapIntensity: 6.5,
 		transparent: true,
 		opacity: 0.94
 	} );
@@ -102,7 +102,7 @@ function init() {
 		roughness: 0.5,
 		metalness: 0.5,
 		envMap: reflectionCube,
-		envMapIntensity: 5
+		envMapIntensity: 3.6
 	} );
 	redMat = new THREE.MeshStandardMaterial( {
 		color: 0xff0024,
@@ -123,7 +123,7 @@ function init() {
 	var oclMaterial = new THREE.MeshBasicMaterial( {
 		color: 0x010101
 	});
-	glowMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.6, 5 ), emissiveMat );
+	glowMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.7, 5 ), emissiveMat );
 	glowScene.add(glowMesh);
 	glowSocket.position.set(0,-1.7,0);
 	/*
@@ -200,7 +200,7 @@ function init() {
 	orthoQuad = new THREE.Mesh( new THREE.PlaneGeometry( 1, 1 ), zoomBlurShader );
 	orthoScene.add( orthoQuad );
 
-	baseTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH*1.2, SCREEN_HEIGHT*1.2, {
+	baseTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH*2, SCREEN_HEIGHT*2, {
 		minFilter: THREE.LinearFilter,
 		magFilter: THREE.LinearFilter,
 		format: THREE.RGBFormat
