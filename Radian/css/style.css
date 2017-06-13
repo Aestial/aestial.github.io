@@ -251,6 +251,9 @@ Aqui comienza para el menu
 	background-size: cover;
 	animation-duration: 4s;
 }
+.dummy{
+	display: none;
+}
 #bigImage{
 	position: absolute;
 	left: 16%;

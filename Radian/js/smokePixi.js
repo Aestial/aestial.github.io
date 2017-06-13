@@ -1,7 +1,6 @@
 var width = window.innerWidth;
 var height = window.innerHeight;
 var pixi_renderer, stage;
-
 // smoke shader
 var uniforms = {};
 uniforms.resolution = { type: 'v2', value: { x: width, y: height}};
@@ -11,29 +10,32 @@ uniforms.time = {type: '1f',value: 0};
 uniforms.speed = {type: 'v2', value: {x: 0.7, y: 0.4}};
 var shaderCode, shaderContainer;
 var smokeShader;
-
+var bg
 var count = 0
 
+//SHADER_LOADER.load(
+function shaderLoad (data) {
+	//shaderCode = document.getElementById( 'smoke_fragmentShader' ).innerHTML;
+	shaderCode = data.smoke.fragment;
+	smokeShader = new PIXI.AbstractFilter('',shaderCode, uniforms);
+	bg.filters = [smokeShader];
+	bg.width = width;
+	bg.height = height;
+	stage.addChild(bg);
+}
+//);
 function pixi_init() {
 	//The stage is the root container that will hold everything in our scene
 	stage = new PIXI.Container();
-	shaderCode = document.getElementById( 'smoke_fragmentShader' ).innerHTML;
 	shaderContainer = document.getElementById( 'smoke_cont' );
-	//console.log(shaderContainer);
 	//Chooses either WebGL if supported or falls back to Canvas rendering
 	pixi_renderer = new PIXI.autoDetectRenderer(width, height, {antialias: true, transparent: true, resolution: 1});
 	//pixi_renderer = new PIXI.autoDetectRenderer(width, height, shaderContainer, true);
 	pixi_renderer.view.className = "pixi";
 	//Add the render view object into the page
 	shaderContainer.appendChild(pixi_renderer.view);
-	smokeShader = new PIXI.AbstractFilter('',shaderCode, uniforms);
-	var bg = PIXI.Sprite.fromImage("images/pixi.png");
-	bg.width = width;
-	bg.height = height;
-	bg.filters = [smokeShader];
-	stage.addChild(bg);
-
-	 // create a video texture from a path
+	bg = PIXI.Sprite.fromImage("images/pixi.png");
+	// create a video texture from a path
     var video = PIXI.Texture.fromVideo('videos/BBB_720.mp4');
     video.baseTexture.source.autoplay = false;
     video.baseTexture.source.currentTime = 0;
@@ -46,7 +48,6 @@ function pixi_init() {
     videoSprite.height = pixi_renderer.height;
     videoSprite.alpha = 0.25;
     //stage.addChild(videoSprite);
-    //console.log(videoSprite);
     //Video Mask
     var mask = PIXI.Sprite.fromImage('images/arcade_mask.png');
     mask.width = pixi_renderer.height*0.85;
@@ -57,7 +58,7 @@ function pixi_init() {
     stage.addChild(mask);
 	videoSprite._mask = mask;
     stage.addChild(videoSprite);
-	
+	// Team silhouette
 	var team = PIXI.Sprite.fromImage("images/team_silhouette.png");
 	team.anchor.set(0.5,0.65);
 	team.x = width / 2;
@@ -68,13 +69,13 @@ function pixi_init() {
 	team.filters = [blur];
 	stage.addChild(team);
 }
-
 function pixi_animate() {
     // start the timer for the next animation loop
     requestAnimationFrame(pixi_animate);
     count+=0.01
-    smokeShader.uniforms.time.value = count;
-    //console.log(smokeShader.uniforms.time);
+    if ( typeof smokeShader != "undefined" ) {
+    	smokeShader.uniforms.time.value = count;
+    }
     // this is the main render call that makes pixi draw your container and its children.
     pixi_renderer.render(stage);
 }

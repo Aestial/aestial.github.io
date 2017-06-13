@@ -10,7 +10,7 @@ var object, oclObject;
 // Helper scenes
 var glowScene, glowParent, glowMesh, worldPos; // Glow emissive postprocessing scene
 // Materials
-var blackMat, whiteMat, redMat; 
+var blackMat, whiteMat, redMat, emissiveMat; 
 var objMaterials = [];
 var zoomBlurShader, zoomCenter; // Glow emissive
 var opacity; // Black transparent
@@ -85,6 +85,64 @@ function init() {
 	var reflectionCube = new THREE.CubeTextureLoader(manager).load( urls );
 	reflectionCube.format = THREE.RGBFormat;
 
+	baseTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH*2, SCREEN_HEIGHT*2, {
+		minFilter: THREE.LinearFilter,
+		magFilter: THREE.LinearFilter,
+		format: THREE.RGBFormat
+	} );
+	glowTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, {
+		minFilter: THREE.LinearFilter,
+		magFilter: THREE.LinearFilter,
+		format: THREE.RGBFormat
+	} );
+	//blurTexture = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, {
+	blurTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, {
+		minFilter: THREE.LinearFilter,
+		magFilter: THREE.LinearFilter,
+		format: THREE.RGBFormat
+	} );
+	zoomCenter = new THREE.Vector2( SCREEN_WIDTH*0.5, SCREEN_HEIGHT*0.5 );
+
+	SHADER_LOADER.load(
+		function (data) {
+			emissiveMat = new THREE.ShaderMaterial( {
+				vertexShader: data.emissive.vertex,
+				fragmentShader: data.emissive.fragment
+			} );
+			glowMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.7, 5 ), emissiveMat );
+			glowScene.add(glowMesh);
+
+			zoomBlurShader = new THREE.ShaderMaterial( {
+				uniforms: {
+					tDiffuse: { type: "t", value: 0, texture: blurTexture },
+					resolution: { type: "v2", value: new THREE.Vector2( window.innerWidth, window.innerHeight ) },
+					strength: { type: "f", value: 0.9 },
+					center: { type: "v2", value: zoomCenter }
+				},
+				vertexShader: data.ortho.vertex,
+				fragmentShader: data.zoom_blur.fragment,
+				depthWrite: false
+			} );
+			compositeShader = new THREE.ShaderMaterial( {
+
+				uniforms: {
+					tBase: { type: "t", value: 0, texture: baseTexture },
+					tGlow: { type: "t", value: 1, texture: blurTexture },
+					glowStrength: { type: "f", value: 0.8 }
+				},
+				vertexShader: data.ortho.vertex,
+				fragmentShader: data.composite.fragment,
+				depthWrite: false
+			} );
+			orthoScene = new THREE.Scene();
+			orthoCamera = new THREE.OrthographicCamera( 1 / - 2, 1 / 2, 1 / 2, 1 / - 2, .00001, 1000 );
+			orthoQuad = new THREE.Mesh( new THREE.PlaneGeometry( 1, 1 ), zoomBlurShader );
+			orthoScene.add( orthoQuad );
+			if (debug) initGUI();
+			shaderLoad(data);
+		}
+	);
+
 	var obj2Mats = [];
 
 	blackMat = new THREE.MeshStandardMaterial( {
@@ -113,18 +171,11 @@ function init() {
 		emissive: 0.5
 	} );
 	obj2Mats.push(whiteMat);
-
-	var emissiveMat = new THREE.ShaderMaterial( {
-		vertexShader: document.getElementById( 'vertexShader' ).textContent,
-		fragmentShader: document.getElementById( 'fragmentShader' ).textContent
-	} );
 	obj2Mats.push(redMat);
 	
 	var oclMaterial = new THREE.MeshBasicMaterial( {
 		color: 0x010101
 	});
-	glowMesh = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.7, 5 ), emissiveMat );
-	glowScene.add(glowMesh);
 	glowSocket.position.set(0,-1.7,0);
 	/*
 	var glowMesh_DEBUG = new THREE.Mesh( new THREE.IcosahedronGeometry( 0.7, 5 ), material );
@@ -194,58 +245,6 @@ function init() {
 	// EVENTS
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	window.addEventListener( 'resize', onWindowResize, false );
-
-	orthoScene = new THREE.Scene();
-	orthoCamera = new THREE.OrthographicCamera( 1 / - 2, 1 / 2, 1 / 2, 1 / - 2, .00001, 1000 );
-	orthoQuad = new THREE.Mesh( new THREE.PlaneGeometry( 1, 1 ), zoomBlurShader );
-	orthoScene.add( orthoQuad );
-
-	baseTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH*2, SCREEN_HEIGHT*2, {
-		minFilter: THREE.LinearFilter,
-		magFilter: THREE.LinearFilter,
-		format: THREE.RGBFormat
-	} );
-
-	glowTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, {
-		minFilter: THREE.LinearFilter,
-		magFilter: THREE.LinearFilter,
-		format: THREE.RGBFormat
-	} );
-
-	//blurTexture = new THREE.WebGLRenderTarget( window.innerWidth, window.innerHeight, {
-	blurTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH/2, SCREEN_HEIGHT/2, {
-		minFilter: THREE.LinearFilter,
-		magFilter: THREE.LinearFilter,
-		format: THREE.RGBFormat
-	} );
-
-	zoomCenter = new THREE.Vector2( SCREEN_WIDTH*0.5, SCREEN_HEIGHT*0.5 );
-	zoomBlurShader = new THREE.ShaderMaterial( {
-		uniforms: {
-			tDiffuse: { type: "t", value: 0, texture: blurTexture },
-			resolution: { type: "v2", value: new THREE.Vector2( window.innerWidth, window.innerHeight ) },
-			strength: { type: "f", value: 0.9 },
-			center: { type: "v2", value: zoomCenter }
-		},
-		vertexShader: document.getElementById( 'ortho_vertexShader' ).textContent,
-		fragmentShader: document.getElementById( 'zoomBlur_fragmentShader' ).textContent,
-		depthWrite: false,
-	} );
-
-	compositeShader = new THREE.ShaderMaterial( {
-
-		uniforms: {
-			tBase: { type: "t", value: 0, texture: baseTexture },
-			tGlow: { type: "t", value: 1, texture: blurTexture },
-			glowStrength: { type: "f", value: 0.8 }
-		},
-		vertexShader: document.getElementById( 'ortho_vertexShader' ).textContent,
-		fragmentShader: document.getElementById( 'composite_fragmentShader' ).textContent,
-
-		depthWrite: false,
-
-	} );
-
 	
 	setInterval( function () {
 	    requestAnimationFrame( animate );
@@ -312,9 +311,11 @@ function animate() {
 		parent.rotation.y += 0.1 * ( targetX - parent.rotation.y );
 		parent.rotation.x += 0.1 * ( targetY - parent.rotation.x );
 	}
-	glowMesh.position.x = glowSocket.getWorldPosition().x;
-	glowMesh.position.y = glowSocket.getWorldPosition().y;
-	glowMesh.position.z = glowSocket.getWorldPosition().z;
+	if ( typeof glowMesh != "undefined" ) {
+		glowMesh.position.x = glowSocket.getWorldPosition().x;
+		glowMesh.position.y = glowSocket.getWorldPosition().y;
+		glowMesh.position.z = glowSocket.getWorldPosition().z;
+	}
 	// Parents rotations
 	glowParent.rotation.x = parent.rotation.x;
 	glowParent.rotation.y = parent.rotation.y;
@@ -363,13 +364,17 @@ function render() {
 	//renderer.render( glowScene, camera );
 	renderer.render( glowScene, camera, glowTexture, true );
 	renderer.render( scene, camera, baseTexture, true );
-	orthoQuad.material = zoomBlurShader;
-	orthoQuad.material.uniforms[ 'tDiffuse' ].value = glowTexture.texture;
-	orthoQuad.material.uniforms[ 'center' ].value = zoomCenter;
- 	renderer.render( orthoScene, orthoCamera, blurTexture, false );
-	//renderer.render( orthoScene, orthoCamera );
-	orthoQuad.material = compositeShader;
-	orthoQuad.material.uniforms[ 'tBase' ].value = baseTexture.texture;
-	orthoQuad.material.uniforms[ 'tGlow' ].value = blurTexture.texture;
-	renderer.render( orthoScene, orthoCamera );
+	if (typeof zoomBlurShader != "undefined") {
+		orthoQuad.material = zoomBlurShader;
+		orthoQuad.material.uniforms[ 'tDiffuse' ].value = glowTexture.texture;
+		orthoQuad.material.uniforms[ 'center' ].value = zoomCenter;
+	 	renderer.render( orthoScene, orthoCamera, blurTexture, false );
+	 	//renderer.render( orthoScene, orthoCamera );
+	}
+	if (typeof zoomBlurShader != "undefined") {
+		orthoQuad.material = compositeShader;
+		orthoQuad.material.uniforms[ 'tBase' ].value = baseTexture.texture;
+		orthoQuad.material.uniforms[ 'tGlow' ].value = blurTexture.texture;
+		renderer.render( orthoScene, orthoCamera );
+	}
 }

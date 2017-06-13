@@ -6,7 +6,7 @@ var deleteLog = false;
 var imageActive = false;
 var imageNames = ["French.jpg","Dog.jpg","Chilaquil.jpg","Pug.jpg"];
 var isPlaying = false;
-var loaded = false;
+var isLoaded = false;
 var loadBar;
 
 // LOAD MANAGER (THREE)
@@ -23,6 +23,7 @@ manager.onLoad = function() {
     $('#logo').animateOnce('tada');
     console.log('Loading complete');
     $('#fullpage').fullpage.moveTo('about');
+    isLoaded = true;
 };
 manager.onProgress = function( item, loaded, total ) {
     //console.log( item, loaded, total );
@@ -39,8 +40,7 @@ function OnLoaded() {
 	fullpage_init();
 	init();
 	pixi_init();
-	if (debug) initGUI();			
-	loaded = true;
+	//if (debug) initGUI();			
 	animate();
 	pixi_animate();
 }
@@ -54,27 +54,35 @@ function fullpage_init() {
 		recordHistory: false,
 		menu: '#menu',
 		onLeave: function(index, nextIndex, direction){
-			if(deleteLog){
-				$('#callbacksDiv').html('');
-			}
-			$('#callbacksDiv').append('<p>onLeave - index:' + index + ' nextIndex:' + nextIndex + ' direction:' + direction + '</p>')
 			//console.log("onLeave--" + "index: " + index + " nextIndex: " + nextIndex + " direction: " +  direction);
 			hideBigImage();
 			// MENU
 			switch (index) {
 				case 1:
 					switch(nextIndex){
-						case 2:
-							$("#title").animateOnce('fadeOutUpBig', true, "block");
-							$("#title-logo").animateOnce('bounceInDown', true);
+						case 5:
 							break;
 						default:
+							$("#title").animateOnce('fadeOutUpBig', true, "block");
+							$("#title-logo").animateOnce('bounceInDown', true);
 							break;
 					}
 					break;
 				case 2:
 					switch(nextIndex){
 						case 1:
+						case 5:
+							$("#title-logo").animateOnce('bounceOutUp', true);
+							$("#title").animateOnce('fadeInDownBig', true, "block");
+							break;
+						default:
+							break;
+					}
+					break;
+				case 3:
+					switch(nextIndex){
+						case 1:
+						case 5:
 							$("#title-logo").animateOnce('bounceOutUp', true);
 							$("#title").animateOnce('fadeInDownBig', true, "block");
 							break;
@@ -84,6 +92,7 @@ function fullpage_init() {
 					break;
 				case 4:
 					switch(nextIndex){
+						case 1:
 						case 5:
 							$("#title-logo").animateOnce('bounceOutUp', true);
 							$("#title").animateOnce('fadeInDownBig', true, "block");
@@ -94,41 +103,30 @@ function fullpage_init() {
 					break;
 				case 5:
 					switch(nextIndex){
-						case 4:
-							$("#title").animateOnce('fadeOutUpBig', true, "block");
-							$("#title-logo").animateOnce('bounceInDown', true);
+						case 1:
 							break;
 						default:
+							$("#title").animateOnce('fadeOutUpBig', true, "block");
+							$("#title-logo").animateOnce('bounceInDown', true);
 							break;
 					}
 					break;
 				default:
 				break;
-			}/*
-			$("#title").css({
-				"display":((index==1||index==5)?"block":"none")
-			}).animateOnce('fadeInDown');
-			$("#title-logo").css({
-				"display":((index>1&&index<5)?"initial":"none")
-			}).animateOnce('bounceInDown');*/
+			}
 		},
 		afterRender: function(){
-			$('#callbacksDiv').append('<p>afterRender</p>');
 			//console.log("afterRender");
 		},
 		afterResize: function(){
-			$('#callbacksDiv').append('<p>afterResize</p>');
-			console.log("afterResize");
+			//console.log("afterResize");
 		},
 		afterLoad: function(anchorLink, index){
-			if (loaded) {
-				TriggerAnim(index);
-			}
-			console.log("after Load  " + index);
-			$('#callbacksDiv').append('<p>afterLoad - anchorLink:' + anchorLink + " index:" + index + '</p>');
-			deleteLog = true;
 			//console.log('===============');
 			//console.log("afterLoad--" + "anchorLink: " + anchorLink + " index: " + index );
+			if (isLoaded) {
+				TriggerAnim(index);
+			}
 		}
 	});
 	$('#fullpage').fullpage.setAllowScrolling(false);
