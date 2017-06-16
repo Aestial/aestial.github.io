@@ -29,7 +29,7 @@ function pixi_init() {
 	stage = new PIXI.Container();
 	shaderContainer = document.getElementById( 'smoke_cont' );
 	//Chooses either WebGL if supported or falls back to Canvas rendering
-	pixi_renderer = new PIXI.autoDetectRenderer(width, height, {antialias: true, transparent: true, resolution: 1});
+	pixi_renderer = new PIXI.autoDetectRenderer(width, height, {antialias: true, autoResize: true, transparent: true, resolution: 1});
 	//pixi_renderer = new PIXI.autoDetectRenderer(width, height, shaderContainer, true);
 	pixi_renderer.view.className = "pixi";
 	//Add the render view object into the page
@@ -53,16 +53,16 @@ function pixi_init() {
     mask.width = pixi_renderer.height*0.85;
     mask.height = pixi_renderer.height*0.85;
 	mask.anchor.set(0.5);
-	mask.x = width*0.52;
-	mask.y = height*0.57;
+	mask.x = pixi_renderer.width*0.52;
+	mask.y = pixi_renderer.height*0.57;
     stage.addChild(mask);
 	videoSprite._mask = mask;
     stage.addChild(videoSprite);
 	// Team silhouette
 	var team = PIXI.Sprite.fromImage("images/team_silhouette.png");
 	team.anchor.set(0.5,0.65);
-	team.x = width / 2;
-	team.y = height;
+	team.x = pixi_renderer.width / 2;
+	team.y = pixi_renderer.height;
 	//logo.blendMode = PIXI.BLEND_MODES.ADD;
 	blur = new PIXI.filters.BlurFilter(16, 2, 4, 11);
 	//blur.blurY = 20;

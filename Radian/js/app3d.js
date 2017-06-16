@@ -174,7 +174,7 @@ function init() {
 	obj2Mats.push(redMat);
 	
 	var oclMaterial = new THREE.MeshBasicMaterial( {
-		color: 0x010101
+		color: 0x000000
 	});
 	glowSocket.position.set(0,-1.7,0);
 	/*
