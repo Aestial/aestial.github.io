@@ -114,7 +114,7 @@ input:hover{
 	z-index: -1;	
 }
 .info {
-	padding-left: 55%;
+	/*padding-left: 55%;*/
 }
 .info h1{
 	width: 350px;

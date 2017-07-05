@@ -85,7 +85,7 @@ function init() {
 	var reflectionCube = new THREE.CubeTextureLoader(manager).load( urls );
 	reflectionCube.format = THREE.RGBFormat;
 
-	baseTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH*2, SCREEN_HEIGHT*2, {
+	baseTexture = new THREE.WebGLRenderTarget( SCREEN_WIDTH*1.25, SCREEN_HEIGHT*1.25, {
 		minFilter: THREE.LinearFilter,
 		magFilter: THREE.LinearFilter,
 		format: THREE.RGBFormat

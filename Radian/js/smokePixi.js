@@ -35,6 +35,7 @@ function pixi_init() {
 	//Add the render view object into the page
 	shaderContainer.appendChild(pixi_renderer.view);
 	bg = PIXI.Sprite.fromImage("images/pixi.png");
+	/*
 	// create a video texture from a path
     var video = PIXI.Texture.fromVideo('videos/BBB_720.mp4');
     video.baseTexture.source.autoplay = false;
@@ -58,6 +59,7 @@ function pixi_init() {
     stage.addChild(mask);
 	videoSprite._mask = mask;
     stage.addChild(videoSprite);
+    */
 	// Team silhouette
 	var team = PIXI.Sprite.fromImage("images/team_silhouette.png");
 	team.anchor.set(0.5,0.65);
