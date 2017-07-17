@@ -10,12 +10,12 @@ uniforms.time = {type: '1f',value: 0};
 uniforms.speed = {type: 'v2', value: {x: 0.7, y: 0.4}};
 var shaderCode, shaderContainer;
 var smokeShader;
-var bg
-var count = 0
+var bg;
+var team;
+var count = 0;
 
 //SHADER_LOADER.load(
 function shaderLoad (data) {
-	//shaderCode = document.getElementById( 'smoke_fragmentShader' ).innerHTML;
 	shaderCode = data.smoke.fragment;
 	smokeShader = new PIXI.AbstractFilter('',shaderCode, uniforms);
 	bg.filters = [smokeShader];
@@ -23,10 +23,13 @@ function shaderLoad (data) {
 	bg.height = height;
 	stage.addChild(bg);
 	// Team silhouette
-	var team = PIXI.Sprite.fromImage("images/siluetas.png");
-	team.anchor.set(0,0.8);
-	team.width = pixi_renderer.width;
-	// team.x = pixi_renderer.width / 2;
+	team = PIXI.Sprite.fromImage("images/siluetas.png");
+	team.anchor.set(0.5,0.95);
+	var textureRatio = 1920/441;
+	var newWidth = (pixi_renderer.width < 1280) ? 1280 : pixi_renderer.width;
+	team.width = newWidth;
+	team.height = newWidth/textureRatio*1.25;
+	team.x = pixi_renderer.width / 2;
 	team.y = pixi_renderer.height;
 	/*
 	//logo.blendMode = PIXI.BLEND_MODES.ADD;
@@ -74,7 +77,7 @@ function pixi_init() {
     stage.addChild(videoSprite);
     */
 	// Bind Events
-	window.addEventListener('resize', onWindowResize, false);
+	window.addEventListener('resize', rendererResize, false);
 
 }
 function pixi_animate() {
@@ -88,6 +91,13 @@ function pixi_animate() {
     pixi_renderer.render(stage);
 }
 
-function onWindowResize () {
-
+function rendererResize () {
+	console.log("Window resized");
+	var screenWidth = window.innerWidth;
+	var screenHeight = window.innerHeight;
+	pixi_renderer.resize(screenWidth, screenHeight);
+	bg.width = screenWidth;
+	bg.height = screenHeight;
+	uniforms.resolution = { type: 'v2', value: { x: screenWidth, y: screenHeight}};
+	team.x = screenWidth / 2;
 }
