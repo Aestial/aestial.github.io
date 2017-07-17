@@ -22,6 +22,19 @@ function shaderLoad (data) {
 	bg.width = width;
 	bg.height = height;
 	stage.addChild(bg);
+	// Team silhouette
+	var team = PIXI.Sprite.fromImage("images/siluetas.png");
+	team.anchor.set(0,0.8);
+	team.width = pixi_renderer.width;
+	// team.x = pixi_renderer.width / 2;
+	team.y = pixi_renderer.height;
+	/*
+	//logo.blendMode = PIXI.BLEND_MODES.ADD;
+	blur = new PIXI.filters.BlurFilter(16, 2, 4, 11);
+	//blur.blurY = 20;
+	team.filters = [blur];
+	*/
+	stage.addChild(team);
 }
 //);
 function pixi_init() {
@@ -60,16 +73,9 @@ function pixi_init() {
 	videoSprite._mask = mask;
     stage.addChild(videoSprite);
     */
-	// Team silhouette
-	var team = PIXI.Sprite.fromImage("images/team_silhouette.png");
-	team.anchor.set(0.5,0.65);
-	team.x = pixi_renderer.width / 2;
-	team.y = pixi_renderer.height;
-	//logo.blendMode = PIXI.BLEND_MODES.ADD;
-	blur = new PIXI.filters.BlurFilter(16, 2, 4, 11);
-	//blur.blurY = 20;
-	team.filters = [blur];
-	stage.addChild(team);
+	// Bind Events
+	window.addEventListener('resize', onWindowResize, false);
+
 }
 function pixi_animate() {
     // start the timer for the next animation loop
@@ -80,4 +86,8 @@ function pixi_animate() {
     }
     // this is the main render call that makes pixi draw your container and its children.
     pixi_renderer.render(stage);
+}
+
+function onWindowResize () {
+
 }

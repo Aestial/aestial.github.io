@@ -240,6 +240,8 @@ Aqui comienza para el menu
 	right: 5%;
 }
 #loadScreen{
+	display: none;
+
 	position: absolute;
 	background-color: #000;
 	left: 0%;

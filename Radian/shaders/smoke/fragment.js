@@ -27,13 +27,13 @@ float fbm(vec2 n) {
 void main() {
     //This is where our shader comes together
     const vec3 c1 = vec3(90.0/255.0, 90.0/255.0, 90.0/255.0);
-    const vec3 c2 = vec3(150.0/255.0, 150.0/255.0, 150.0/255.0);
-    const vec3 c3 = vec3(0.1, 0.1, 0.1);
+    const vec3 c2 = vec3(225.0/255.0, 225.0/255.0, 225.0/255.0);
+    const vec3 c3 = vec3(0.3, 0.3, 0.3);
     const vec3 c4 = vec3(120.0/255.0, 120.0/255.0, 120.0/255.0);
-    const vec3 c5 = vec3(0.1);
+    const vec3 c5 = vec3(0.3);
     const vec3 c6 = vec3(0.9);
     //This is how "packed" the smoke is in our area. Try changing 8.0 to 1.0, or something else
-    vec2 p = gl_FragCoord.xy * 8.0 / resolution.xx;
+    vec2 p = gl_FragCoord.xy * 5.0 / resolution.xx;
     //The fbm function takes p as its seed (so each pixel looks different) and time (so it shifts over time)
     float q = fbm(p - time * 0.11);
     vec2 r = vec2(fbm(p + q + time * speed.x - p.x - p.y), fbm(p + q - time * speed.y));

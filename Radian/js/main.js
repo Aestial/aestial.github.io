@@ -22,7 +22,9 @@ manager.onLoad = function() {
     $('#loadBar').animateOnce('fadeOut');
     $('#logo').animateOnce('tada');
     console.log('Loading complete');
-    $('#fullpage').fullpage.moveTo('about');
+    if (!debug) {
+    	$('#fullpage').fullpage.moveTo('about');	
+    }
     isLoaded = true;
 };
 manager.onProgress = function( item, loaded, total ) {
