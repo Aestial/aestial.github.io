@@ -247,7 +247,7 @@ function init() {
 	window.addEventListener( 'resize', onWindowResize, false );
 	
 	setInterval( function () {
-	    requestAnimationFrame( animate );
+	    if (!document.webkitHidden) requestAnimationFrame( animate );
 	}, 1000 / 30 );
 }
 

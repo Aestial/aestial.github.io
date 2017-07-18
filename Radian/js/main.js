@@ -131,7 +131,7 @@ function fullpage_init() {
 			}
 		}
 	});
-	$('#fullpage').fullpage.setAllowScrolling(false);
+	$('#fullpage').fullpage.setAllowScrolling(true);
 //});
 }
 function checkAnimType(animationName) {
