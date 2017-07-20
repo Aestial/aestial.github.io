@@ -90,19 +90,33 @@
 			<img src="images/Chilaquil.jpg" class="dummy" alt=""/>
 		</div>
 	</div>
-	<div class="section" id="section3">
-	<div id="smoke_cont"></div>
+	<div class="section" id="section4">
+		<div id="smoke_cont"></div>
 		<div class="contact">
 			<h1>CONTACT</h1>
-			<form>
-				<p contenteditable>NAME<!--input type="text" name="name"--></p>
-				<p contenteditable>MAIL<!--input type="email" name="email"--></p>
-				<p contenteditable>MESSAGE<!--input type="text" name="message"--></p>
-				<p>SEND</p>
+			<div id="form-messages"></div>
+			<form id="ajax-contact" method="post" action="mailer.php">
+				<div class="field">
+		      	  	<input type="text" id="name" name="name" placeholder="NAME" required>
+				</div>
+				<div class="field">
+			        <input type="email" id="email" name="email" placeholder="MAIL" required>
+			    </div>
+			    <div class="field">
+			        <textarea id="message" name="message" placeholder="MESSAGE" required></textarea>
+			    </div>
+			    <div class="field">
+			        <button type="submit">Send</button>
+			    </div>
+				<!--p contenteditable>NAME></p>
+				<p contenteditable>MAIL</p>
+				<p contenteditable>MESSAGE</p>
+				<p>SEND</p-->
 			</form>
 		</div>
 	</div>
 </div>
+
 <div id="contactMenu">
     <ul>
         <li><a href="https://www.facebook.com/3ETGames" target="_blank">Facebook</a></li>
@@ -110,14 +124,15 @@
         <li><a href="https://www.instagram.com/aestial" target="_blank">Instagram</a></li>
     </ul>
 </div>
+
 <div id="outer" style="width:100%">
 	<div id="scrollImg"></div>
 </div>
+
 <div id="loadScreen" style="width:100%; height:100%;">
 	<div id="logoCont">
 		<img id="logo" src="svg/logo_kata.svg"></img>
 	</div>
-    
 	<div id="loadBarCont">
 		<div id="loadBar" class="ldBar label-center" 
 			data-stroke="white"

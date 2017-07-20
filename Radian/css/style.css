@@ -61,7 +61,6 @@ q:before,q:after {
 abbr,acronym { border: 0;#
 }
 
-
 /* Custom CSS
  * --------------------------------------- */
 body{
@@ -81,26 +80,43 @@ h1{
 	letter-spacing: 15px;
 	padding: 20px 0px;
 }
-p{
+p,.field, #form-messages{
 	margin-left: 28%;
 	width: 300px;
 	font-size: 1.45em;
 	letter-spacing: 8px;
 }
-input{
+input,textarea{
 	z-index: 9;
-	color: #ddd;
+	color: #eee;
 	font-size: 1em;
 	font-family: Roboto-Light,helvetica;
 	border-style: inset;
 	border-width: 1px;
-	border-color: #ccc;
-	background-color: #000;
+	border-color: rgba(0,0,0,0);
+	background-color: rgba(0,0,0,0);
 	width: 300px;
 	letter-spacing: 1px;
+	padding: 10px 0px;
 }
-input:hover{
-	background-color: #555;
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+	font-family: Roboto-Light,helvetica;
+	color: #efefef;
+}
+::-moz-placeholder { /* Firefox 19+ */
+	font-family: Roboto-Light,helvetica;
+	color: #efefef;
+}
+:-ms-input-placeholder { /* IE 10+ */
+	font-family: Roboto-Light,helvetica;
+	color: #efefef;
+}
+:-moz-placeholder { /* Firefox 18- */
+	font-family: Roboto-Light,helvetica;
+	color: #efefef;
+}
+input:hover, textarea:hover{
+	background-color: #555555;
 }
 .pixi,.threecontainer {
 	position: absolute;
@@ -321,12 +337,12 @@ Aqui comienza para el menu
 	background-repeat: no-repeat;
 	background-size: contain;
 }
-
+/* fullPage Mods
+/* ------------------------------------- 
 .fullpage-wrapper {
 	width: 100%!important;
 	transform: none!important;
 }
-
 .fp-section {
 	width: 100%!important;
 	position: absolute;
@@ -335,11 +351,10 @@ Aqui comienza para el menu
 	visibility: hidden;
 	opacity: 0;
 	z-index: 0;
-	transition: all .7s ease-in-out;
+	transition: all 1.0s ease-in-out;
 }
-
 .fp-section.active {
 	visibility: visible;
 	opacity: 1;
 	z-index: 1;
-}
+} */
