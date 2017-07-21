@@ -61,12 +61,13 @@
 
 <div id="fullpage">
 	<div class="section" id="section0">
-		<h1>ABOUT</h1>
-		<p>We are RADIAN we can make you do anything for us!</p>
+		<div class="info" id="about">
+			<h1>ABOUT</h1>
+			<p>We are RADIAN we can make you do anything for us!</p>
+		</div>
 	</div>
 	<div class="section" id="section1">
-		<div class="info">
-			<!--img class="infoImg"-->
+		<div class="info project">
 			<h1>ELECTRONIC DESIGN</h1>
 			<p>Proyecto Dog Chow E-Design.</p>
 			<p><a class="bigImage_toggle" onclick = "toggleBigImage(0);">View project</a></p>
@@ -74,16 +75,15 @@
 		</div>
 	</div>	
 	<div class="section" id="section2">
-		<div class="info">
+		<div class="info project">
 			<h1>VFX</h1>
 			<p>Proyecto Nigga Arcade VFX.</p>
 			<p><a class="bigImage_toggle" onclick = "toggleBigImage(1);">View project</a></p>
 			<img src="images/Dog.jpg" class="dummy" alt=""/>
-			<!--div class="openProj" onclick = "fadeInBigImage();"></div-->
 		</div>
 	</div>
 	<div class="section" id="section3">
-		<div class="info">
+		<div class="info project">
 			<h1>VIDEOGAMES</h1>
 			<p>Proyecto Runners VR Videogames.</p>
 			<p><a class="bigImage_toggle" onclick = "toggleBigImage(2);">View project</a></p>
@@ -92,10 +92,10 @@
 	</div>
 	<div class="section" id="section4">
 		<div id="smoke_cont"></div>
-		<div class="contact">
+		<div class="info contact">
 			<h1>CONTACT</h1>
 			<div id="form-messages"></div>
-			<form id="ajax-contact" method="post" action="mailer.php">
+			<form id="ajax-contact" method="post" action="php/mailer.php">
 				<div class="field">
 		      	  	<input type="text" id="name" name="name" placeholder="NAME" required>
 				</div>
@@ -104,14 +104,10 @@
 			    </div>
 			    <div class="field">
 			        <textarea id="message" name="message" placeholder="MESSAGE" required></textarea>
-			    </div>
+			    </div>	
 			    <div class="field">
 			        <button type="submit">Send</button>
 			    </div>
-				<!--p contenteditable>NAME></p>
-				<p contenteditable>MAIL</p>
-				<p contenteditable>MESSAGE</p>
-				<p>SEND</p-->
 			</form>
 		</div>
 	</div>
@@ -119,9 +115,9 @@
 
 <div id="contactMenu">
     <ul>
-        <li><a href="https://www.facebook.com/3ETGames" target="_blank">Facebook</a></li>
+        <li><a href="https://www.facebook.com/RadianDevStudio" target="_blank">Facebook</a></li>
         <li><a href="https://twitter.com/Aestial" target="_blank">Twitter</a></li>
-        <li><a href="https://www.instagram.com/aestial" target="_blank">Instagram</a></li>
+        <li><a href="https://www.instagram.com/radian_ds" target="_blank">Instagram</a></li>
     </ul>
 </div>
 

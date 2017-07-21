@@ -24,11 +24,11 @@ function shaderLoad (data) {
 	stage.addChild(bg);
 	// Team silhouette
 	team = PIXI.Sprite.fromImage("images/siluetas.png");
-	team.anchor.set(0.5,0.95);
+	team.anchor.set(0.5,0.9);
 	var textureRatio = 1920/441;
 	var newWidth = (pixi_renderer.width < 1280) ? 1280 : pixi_renderer.width;
 	team.width = newWidth;
-	team.height = newWidth/textureRatio*1.25;
+	team.height = newWidth/textureRatio*1.1;
 	team.x = pixi_renderer.width / 2;
 	team.y = pixi_renderer.height;
 	/*

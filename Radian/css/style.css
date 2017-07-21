@@ -68,23 +68,10 @@ body{
 	color: #fff;
 	background-color: rgba(0,0,0,1);
 }
-.wrap{
-	margin-left: auto;
-	margin-right: auto;
-	width: 960px;
-	position: relative;
-}
 h1{
-	margin-left: 28%;
 	font-size: 3.8em;
 	letter-spacing: 15px;
 	padding: 20px 0px;
-}
-p,.field, #form-messages{
-	margin-left: 28%;
-	width: 300px;
-	font-size: 1.45em;
-	letter-spacing: 8px;
 }
 input,textarea{
 	z-index: 9;
@@ -95,9 +82,9 @@ input,textarea{
 	border-width: 1px;
 	border-color: rgba(0,0,0,0);
 	background-color: rgba(0,0,0,0);
-	width: 300px;
+	width: 360px;
 	letter-spacing: 1px;
-	padding: 10px 0px;
+	padding: 6px 0px;
 }
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
 	font-family: Roboto-Light,helvetica;
@@ -118,6 +105,18 @@ input,textarea{
 input:hover, textarea:hover{
 	background-color: #555555;
 }
+p,.field, #form-messages{
+/*	margin-left: 28%;*/
+	width: 360px;
+	font-size: 1.45em;
+	letter-spacing: 8px;
+}
+.wrap{
+	margin-left: auto;
+	margin-right: auto;
+	width: 960px;
+	position: relative;
+}
 .pixi,.threecontainer {
 	position: absolute;
 	top: 0;
@@ -130,36 +129,25 @@ input:hover, textarea:hover{
 	z-index: -1;	
 }
 .info {
+	margin-left: 250px;
 	/*padding-left: 55%;*/
 }
-.info h1{
+.project h1{
 	width: 350px;
 	font-size: 1.4em;
 	letter-spacing: 10px;
 	padding: 10px 0px;
 	padding-top: 150px;
 }
-.info p{
+.project p{
 	width: 350px;
 	font-size: 1.3em;
 	padding: 10px 0px;
 }
-
-.contact {
-	margin-left: -50px;
-}
-
 .contact h1{
 	font-family: Renogare,helvetica;
 	width: 350px;
 	font-size: 1.7em;
-	letter-spacing: 5px;
-	padding: 30px 0px;
-}
-.contact .field{
-	width: 400px;
-	font-size: 1.3em;
-	padding: 20px 0px;
 	letter-spacing: 5px;
 }
 .contact p{
@@ -168,11 +156,12 @@ input:hover, textarea:hover{
 	padding: 20px 0px;
 	letter-spacing: 5px;
 }
-
-.section{
-	//text-align:center;
+.contact .field{
+	width: 400px;
+	font-size: 1.3em;
+	padding: 10px 0px;
+	letter-spacing: 5px;
 }
-
 /*
 Aqui comienza para el menu 
 */
@@ -212,21 +201,12 @@ Aqui comienza para el menu
 #menu li a:hover{
 	color: #aaa	;
 }
-
 #menu li.active a{
 	color: #fff;
 }
-
 #menu li.active a:hover{
 	color: #fff;
 }
-/*
-#menu li a,
-#menu li.active a{
-	padding: 9px 18px;
-	display:block;
-}
-*/
 #contactMenu{
 	font-family: Roboto-Light,helvetica;
 	height: 20px;
@@ -262,8 +242,9 @@ Aqui comienza para el menu
 	right: 5%;
 }
 #loadScreen{
+	/* DEBUG: ----- */
 	display: none;
-
+	/* ------------ */
 	position: absolute;
 	background-color: #000;
 	left: 0%;
@@ -344,7 +325,8 @@ Aqui comienza para el menu
 	background-size: contain;
 }
 /* fullPage Mods
-/* ------------------------------------- 
+/* ------------------------------------- */
+/*
 .fullpage-wrapper {
 	width: 100%!important;
 	transform: none!important;
@@ -363,4 +345,5 @@ Aqui comienza para el menu
 	visibility: visible;
 	opacity: 1;
 	z-index: 1;
-} */
+}
+*/
