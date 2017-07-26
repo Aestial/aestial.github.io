@@ -23,7 +23,7 @@ manager.onLoad = function() {
     $('#logo').animateOnce('tada');
     console.log('Loading complete');
     if (!debug) {
-    	$('#fullpage').fullpage.moveTo('about');	
+    	$('#fullpage').fullpage.moveTo('aboutus');	
     }
     isLoaded = true;
 };
@@ -52,7 +52,7 @@ function OnLoaded() {
 function fullpage_init() {
 	$('#fullpage').fullpage({
 		sectionsColor: ['rgba(0,0,0,0)'],
-		anchors: ['about', 'edesign', 'vfx', 'videogames', 'contact'],
+		anchors: ['aboutus', 'edesign', 'vfx', 'videogames', 'contact'],
 		recordHistory: false,
 		menu: '#menu',
 		onLeave: function(index, nextIndex, direction){

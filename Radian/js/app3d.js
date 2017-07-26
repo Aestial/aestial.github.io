@@ -74,8 +74,8 @@ function init() {
 	//scene.add( lights[ 1 ] );
 	//scene.add( lights[ 2 ] );
 	// REFLECTION
-	var path = "textures/cube/SwedishCastle/";
-	var format = '.jpg';
+	var path = "textures/cube/one/";
+	var format = '.png';
 	var urls = [
 		path + 'px' + format, path + 'nx' + format,
 		path + 'py' + format, path + 'ny' + format,
