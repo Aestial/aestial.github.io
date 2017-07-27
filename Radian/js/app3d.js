@@ -74,7 +74,7 @@ function init() {
 	//scene.add( lights[ 1 ] );
 	//scene.add( lights[ 2 ] );
 	// REFLECTION
-	var path = "textures/cube/two/";
+	var path = "textures/cube/three/";
 	var format = '.png';
 	var urls = [
 		path + 'px' + format, path + 'nx' + format,
