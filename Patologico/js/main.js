@@ -1,4 +1,6 @@
-var colors = ['red', '#000000', 'green', 'blue', 'orange', 'yellow'];
+var colors= ['aqua', 'black', 'blue', 'fuchsia', 'gray', 'green',
+'lime', 'maroon', 'navy', 'olive', 'orange', 'purple', 'red',
+'silver', 'teal', 'white', 'yellow'];
 function svgMod()
 {
   var camisa_fill_color = document.getElementById("camisa_fill");
