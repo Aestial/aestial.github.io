@@ -1,0 +1,246 @@
+@CHARSET "ISO-8859-1";
+@font-face {
+    font-family: Renogare;
+    src: url(../fonts/Renogare.ttf);
+    font-weight: bold;
+}
+@font-face {
+    font-family: Roboto-Light;
+    src: url(../fonts/Roboto-Light.ttf);
+    font-weight: bold;
+}
+@font-face {
+    font-family: Roboto-Thin;
+    src: url(../fonts/Roboto-Thin.ttf);
+    font-weight: bold;
+}
+html, body {margin: 0; height: 100%; overflow: hidden}
+body{
+	font-family: Roboto-Thin,helvetica;
+	color: #000;
+	background-color: #6b6b6b;
+}
+h1{
+	font-size: 2.2em;
+	letter-spacing: 15px;
+	padding: 20px 0px;
+}
+.info {
+	margin-left: 250px;
+	/*padding-left: 55%;*/
+}
+.project h1{
+	width: 350px;
+	font-size: 1.15em;
+	letter-spacing: 10px;
+	padding: 10px 0px;
+	padding-top: 150px;
+}
+.project p{
+	width: 350px;
+	font-size: 0.95em;
+	padding: 10px 0px;
+}
+.contact h1{
+	font-family: Renogare,helvetica;
+	width: 350px;
+	font-size: 1.7em;
+	letter-spacing: 5px;
+}
+.contact p{
+	width: 350px;
+	font-size: 1.3em;
+	padding: 20px 0px;
+	letter-spacing: 5px;
+}
+.contact .field{
+	width: 400px;
+	font-size: 1.3em;
+	padding: 10px 0px;
+	letter-spacing: 5px;
+}
+/*
+Aqui comienza para el menu
+*/
+#title{
+	font-family: Renogare,helvetica;
+	font-size: 1.3em;
+	display: block;
+    width: 120px;
+	color: #fff;
+	padding: 20px 10px;
+
+}
+#title-logo{
+	display: none;
+}
+#menu{
+	font-family: Roboto-Light,helvetica;
+	position: absolute;
+	top: 25px;
+	left: 40px;
+	z-index: 10;
+}
+#menu li {
+	letter-spacing: 3px;
+	color: #fff;
+}
+#menu li.active{
+	color: #ddd;
+}
+#menu li a{
+  font-size: 0.85em;
+	display: block;
+  width: 150px;
+	text-decoration:none;
+	color: #777	;
+	padding: 6px 10px;
+}
+#menu li a:hover{
+	color: #aaa	;
+}
+#menu li.active a{
+	color: #fff;
+}
+#menu li.active a:hover{
+	color: #fff;
+}
+#contactMenu{
+	font-family: Roboto-Light,helvetica;
+	height: 20px;
+	color: #f2f2f2;
+	position:fixed;
+	z-index:8;
+	bottom:0;
+	width:100%;
+	text-align:right;
+	font-size: 1.1em;
+	padding: 0px 0px 15px 0px;
+	letter-spacing: 2px;
+}
+#contactMenu ul{
+	padding: 0 35px;
+}
+#contactMenu li{
+	display:inline-block;
+	position:relative;
+}
+#contactMenu li a{
+	display: block;
+	margin: 0 20px 0 0;
+	color: #888;
+}
+#contactMenu li a:hover{
+	color: #fff;
+}
+#openDesc{
+	position: fixed;
+	height: 10%;
+	width: 10%;
+	right: 5%;
+}
+#main_screen{
+	/* DEBUG: ----- */
+	/* display: none;
+	/* ------------ */
+	position: absolute;
+	background-color: rbga(0,0,0,0);
+	left: 0%;
+	top: 0%;
+	height: 100%;
+	width: 100%;
+	z-index: 99;
+	background-repeat: no-repeat;
+	background-size: cover;
+	animation-duration: 4s;
+}
+.dummy{
+	display: none;
+}
+#bigImage{
+	position: absolute;
+	left: 16%;
+	height: 100%;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	-webkit-filter: grayscale(100%) brightness(60%);
+	filter: grayscale(100%) brightness(60%);
+}
+#logo{
+	/*-webkit-filter: grayscale(100%) brightness(60%);
+	filter: grayscale(100%) brightness(60%);*/
+	animation-duration: 1s;
+  	animation-delay: 3s;
+}
+/*#logo:hover{
+	-webkit-filter: grayscale(0%) brightness(200%);
+	filter: grayscale(0%) brightness(200%);
+}*/
+#logo_container{
+	position: absolute;
+	top:50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+#loadBarCont{
+	position: absolute;
+	bottom: 40%;
+	left: 50%;
+	width: 90px;
+	height: 9px;
+	-ms-transform: translate(-50%, -50%); /* IE 9 */
+	-webkit-transform: translate(-50%, -50%); /* Safari */
+	transform: translate(-50%, -50%);
+}
+#loadBar{
+	animation-duration: 1s;
+  	animation-delay: 0.5s;
+}
+.ldBar-label{
+	visibility: hidden;
+}
+.bigImage_toggle{
+	color:#aaa;
+}
+.bigImage_toggle:hover{
+	color:#fff;
+}
+#outer{
+	position: absolute;
+	bottom: 10px;
+}
+#scrollImg{
+	display: table;
+    margin: auto;
+	background-image: url("../images/ScrollDown.png");
+	z-index: 7;
+	bottom: 10px;
+	width: 80px;
+	height: 80px;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+/* fullPage Mods
+/* ------------------------------------- */
+/*
+.fullpage-wrapper {
+	width: 100%!important;
+	transform: none!important;
+}
+.fp-section {
+	width: 100%!important;
+	position: absolute;
+	left: 0;
+	top: 0;
+	visibility: hidden;
+	opacity: 0;
+	z-index: 0;
+	transition: all 1.0s ease-in-out;
+}
+.fp-section.active {
+	visibility: visible;
+	opacity: 1;
+	z-index: 1;
+}
+*/
