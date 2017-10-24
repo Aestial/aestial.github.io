@@ -1,42 +1,21 @@
-@CHARSET "ISO-8859-1";
-@font-face {
-    font-family: Renogare;
-    src: url(../fonts/Renogare.ttf);
-    font-weight: bold;
-}
-@font-face {
-    font-family: Roboto-Light;
-    src: url(../fonts/Roboto-Light.ttf);
-    font-weight: bold;
-}
-@font-face {
-    font-family: Roboto-Thin;
-    src: url(../fonts/Roboto-Thin.ttf);
-    font-weight: bold;
-}
 html, body {margin: 0; height: 100%; overflow: hidden}
 body{
-	font-family: Roboto-Thin,helvetica;
+	font-family: MyFrida,helvetica;
 	color: #000;
 	background-color: #6b6b6b;
 }
-h1{
-	font-size: 2.2em;
-	letter-spacing: 15px;
-	padding: 20px 0px;
-}
 #contactMenu{
-	font-family: Roboto-Light,helvetica;
-	height: 20px;
-	color: #f2f2f2;
-	position:fixed;
-	z-index:10;
-	bottom:0;
+  color: #f2f2f2;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1.3em;
+	/*text-align:right;*/
+  height: 50px;
 	width:100%;
-	text-align:right;
-	font-size: 1.1em;
-	padding: 0px 0px 15px 0px;
-	letter-spacing: 2px;
+	position:fixed;
+	bottom:0;
+	z-index:10;
+  padding: 0px 0px 15px 0px;
 }
 #contactMenu ul{
 	padding: 0 35px;
@@ -52,11 +31,6 @@ h1{
 }
 #contactMenu li a:hover{
 	color: #fff;
-}
-#change_button{
-  position: absolute;
-	left: 0%;
-	top: 0%;
 }
 #main_screen{
 	/* DEBUG: ----- */

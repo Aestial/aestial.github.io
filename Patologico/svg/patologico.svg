@@ -19,7 +19,7 @@
    inkscape:export-filename="C:\Users\aesti\Desktop\Patologico.png"
    inkscape:export-xdpi="157.38342"
    inkscape:export-ydpi="157.38342"
-   viewBox="-0.1 0 640 910">
+   viewBox="0 0 640 910">
   <metadata
      id="metadata8">
     <rdf:RDF>
@@ -249,19 +249,19 @@
      sodipodi:insensitive="true" />
   <g
      inkscape:groupmode="layer"
-     id="camisa_color"
+     id="camisa-color"
      inkscape:label="Camisa 1"
      style="display:inline">
     <path
        style="fill:#218cba;fill-opacity:1;stroke:none;stroke-width:0.43108627"
        d="m 158.11317,880.45902 16.80669,-86.30465 12.26434,-77.21994 11.81011,-80.85382 14.53552,-49.51156 32.25068,-15.89827 53.59971,-18.62361 -5.56437,-6.92706 -1.9305,-22.5982 8.5169,-11.01521 8.17623,7.15423 15.10331,3.17959 -9.77533,16.54119 8.20484,20.51209 c -26.10608,89.00352 -65.87748,174.68882 -36.55914,274.85785 l 43.19043,36.74411 29.0085,-18.69437 10.31414,-18.04974 c 17.31701,-106.09579 9.05399,-196.55932 -17.40509,-275.90304 l 6.44632,-23.20685 -14.25514,-14.94885 22.56333,-2.0512 8.43274,-4.10245 -0.68373,-11.39563 10.02814,3.41869 4.78616,5.92575 2.27913,35.09847 c 0,0 69.74111,24.38662 72.47611,23.475 2.73496,-0.91167 3.64654,42.84751 3.64654,42.84751 l 13.67476,103.92801 15.95384,77.4902 21.4238,76.5785 4.55822,10.48397 H 263.53785 Z"
-       id="path3896"
+       id="camisa"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccccccccccccccccccccccccccccc" />
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer4"
+     id="camisa-out"
      inkscape:label="Camisa 2"
      style="display:inline"
      sodipodi:insensitive="true">
@@ -396,7 +396,7 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer6"
+     id="corbata-color"
      inkscape:label="Corbata 1"
      style="display:inline"
      sodipodi:insensitive="true">
