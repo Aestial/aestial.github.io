@@ -31,7 +31,13 @@ window.onload = function () {
         var color = camisa_colors[index%camisa_colors.length];
         camisa.attr({fill: color});
       };
+      var hoverFunc = function () {
+        console.log("Hover Camisa lol!");
+        var color = camisa_colors[index%camisa_colors.length];
+        root.attr({fill: color});
+      };
       root.click( clickFunc );
+      root.hover( hoverFunc );
       root.transform( 't700,100');
       var top = g.g();
       top.add(root);

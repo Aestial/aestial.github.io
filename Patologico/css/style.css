@@ -2,23 +2,23 @@ html, body {margin: 0; height: 100%; overflow: hidden}
 body{
 	font-family: MyFrida,helvetica;
 	color: #000;
-	background-color: #e9e9e9;
+	background-color: #696969;
 }
 #contactMenu{
   color: #f2f2f2;
   font-weight: bold;
   font-style: italic;
-  font-size: 1.3em;
+  font-size: 1.1em;
 	/*text-align:right;*/
   height: 50px;
 	width:100%;
 	position:fixed;
 	bottom:0;
 	z-index:10;
-  padding: 0px 0px 15px 0px;
+  padding: 0px 0px 10px 0px;
 }
 #contactMenu ul{
-	padding: 0 35px;
+	padding: 0 30px;
 }
 #contactMenu li{
 	display:inline-block;
@@ -27,32 +27,8 @@ body{
 #contactMenu li a{
 	display: block;
 	margin: 0 20px 0 0;
-	color: #888;
+	color: #1e1e1e;
 }
 #contactMenu li a:hover{
-	color: #fff;
-}
-#main_screen{
-	/* DEBUG: ----- */
-	/* display: none;
-	/* ------------ */
-	position: absolute;
-	background-color: rbga(0,0,0,0);
-	left: 0%;
-	top: 0%;
-	height: 100%;
-	width: 100%;
-	z-index: -1;
-	background-repeat: no-repeat;
-	background-size: cover;
-	animation-duration: 4s;
-}
-.dummy{
-	display: none;
-}
-#center_image{
-	position: absolute;
-	top:50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
+	color: #4f4f4f;
 }
