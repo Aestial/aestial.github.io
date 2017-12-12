@@ -2,6 +2,13 @@ var colors= ['aqua', 'blue', 'fuchsia', 'gray', 'green',
 'lime', 'maroon', 'navy', 'olive', 'orange', 'purple', 'red',
 'silver', 'teal', 'white', 'yellow'];
 
+var camisa_colors = [
+  "#333333",
+  "#666a86",
+  "#95b8d1",
+  "#e8ddb5",
+  "#edafb8"
+];
 window.onload = function () {
   var g = Snap();
   g.attr({
@@ -14,26 +21,45 @@ window.onload = function () {
     rombos = f.select("#rombos");
     var top = g.g();
     top.add(root);
-    console.log(rombos.children());
-    window.onclick = function () {
-      var color = colors[Math.floor(Math.random() * colors.length)];
-      var color2 = colors[Math.floor(Math.random() * colors.length)];
-      var color3 = colors[Math.floor(Math.random() * colors.length)];
-      camisa.attr({fill: color});
-      corbata.attr({fill: color2});
-      cambiaRombos(color3);
-    };
-    function cambiaRombos (color)
-    {
-      for(var i = 0; i < rombos.children().length; i++)
-      {
-        if (rombos.children()[i].type == "rect"
-         || rombos.children()[i].type == "path")
-        {
-          console.log(rombos.children()[i].type);
-          rombos.children()[i].attr({fill: color});
-        }
-      }
-    }
+    //console.log(rombos.children());
+    Snap.load("svg/Camisa.svg", function(f) {
+      var root = f.select("#root");
+      var index = 0;
+      var clickFunc = function () {
+        console.log("Clicked Camisa lol!");
+        index++;
+        var color = camisa_colors[index%camisa_colors.length];
+        camisa.attr({fill: color});
+      };
+      root.click( clickFunc );
+      root.transform( 't700,100');
+      var top = g.g();
+      top.add(root);
+      //console.log(root);
+    });
+    // window.onclick = function () {
+    //   var color = colors[Math.floor(Math.random() * colors.length)];
+    //   var color2 = colors[Math.floor(Math.random() * colors.length)];
+    //   corbata.attr({fill: color2});
+    //   for(var i = 0; i < rombos.children().length; i++)
+    //   {
+    //     if (rombos.children()[i].type == "rect"
+    //      || rombos.children()[i].type == "path")
+    //     {
+    //       console.log(rombos.children()[i].type);
+    //       rombos.children()[i].attr({fill: color});
+    //     }
+    //   }
+    // };
   });
+  // g.attr({
+  //   viewBox: [0, 0, 96, 120]
+  // });
+
+  // Snap.load("svg/Corbata.svg", function(f) {
+  //   var root = f.select("#root");
+  //   var top = g.g();
+  //   top.add(root);
+  //   console.log(root);
+  // });
 };

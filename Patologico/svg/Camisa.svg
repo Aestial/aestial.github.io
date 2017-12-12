@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="svg10"
+   width="96.599632"
+   height="120.50291"
+   viewBox="0 0 96.599632 120.50291"
+   sodipodi:docname="Camisa.svg"
+   inkscape:version="0.48.5 r10040">
+  <metadata
+     id="metadata16">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1280"
+     inkscape:window-height="706"
+     id="namedview12"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="4.0579935"
+     inkscape:cx="48.299849"
+     inkscape:cy="60.25145"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer3"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+     <g
+       id="root"
+       style="display:inline">
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Camisa"
+     style="display:inline"
+     transform="translate(-1719.2661,-332.74331)">
+    <g
+       style="display:inline"
+       transform="matrix(1.451632,0,0,1.451632,1618.756,74.412089)"
+       id="g4697">
+      <path
+         sodipodi:nodetypes="ccccccccccccccccccccc"
+         inkscape:connector-curvature="0"
+         id="path4548"
+         d="m 94.487945,181.81661 c 0.43418,-1.87883 1.48195,-3.51509 5.891315,-3.82234 l 5.99652,-0.0351 c 5.29717,0.06 5.78085,2.00329 6.4524,3.89248 l 12.16838,3.96261 c 3.39984,1.47967 5.29562,4.32669 5.7861,8.45124 2.44466,13.15105 4.81739,27.08092 4.50635,45.40526 l 0.49593,16.46479 c -3.37826,2.62471 -6.41363,2.20087 -9.99294,0.19837 0.37472,-10.69656 -0.76831,-19.11652 -1.84746,-27.63227 l 0.0701,26.79147 c -3.74825,5.51759 -8.5794,6.16207 -13.81655,4.97957 -7.00688,-2.11995 -11.025385,-1.77123 -13.746415,-0.35068 -7.39715,2.17595 -11.341068,-1.07461 -14.868559,-4.97956 L 82.284463,229.403 c -0.990047,7.30361 -1.945347,16.09505 -2.384581,27.00187 -3.472289,1.29744 -6.816868,1.8093 -10.660479,-0.42081 l 0.983889,-23.35547 c 1.267492,-16.69599 3.149805,-27.85198 5.157647,-37.69049 0.229283,-4.14442 1.528815,-7.66921 6.744612,-8.9267 z"
+         style="opacity:0.5;fill:#faf6f3;fill-opacity:1;stroke:none" />
+      <g
+         id="g4657"
+         transform="matrix(0.88221241,0,0,0.88221241,45.026848,8.7665242)" />
+      <g
+         transform="matrix(-0.88221241,0,0,0.88221241,161.73034,8.7665242)"
+         id="g4663" />
+    </g>
+  </g>
+  </g>
+</svg>
