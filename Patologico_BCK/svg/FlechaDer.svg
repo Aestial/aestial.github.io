@@ -11,10 +11,10 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
    id="svg10"
-   width="1920"
-   height="1200"
-   viewBox="0 0 1920 1200"
-   sodipodi:docname="Fondo Select Der SVG.svg"
+   width="66.053711"
+   height="81.208084"
+   viewBox="0 0 66.053711 81.208084"
+   sodipodi:docname="Flecha Select Der.svg"
    inkscape:version="0.48.5 r10040">
   <metadata
      id="metadata16">
@@ -24,7 +24,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -46,17 +46,25 @@
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:zoom="6.0215678"
-     inkscape:cx="1809.9575"
-     inkscape:cy="606.07741"
+     inkscape:cx="33.02686"
+     inkscape:cy="40.604045"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer4" />
+     inkscape:current-layer="layer4"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+     <g
+       id="root"
+       style="display:inline">
   <g
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Fondo Select Der"
-     style="display:inline">
+     style="display:inline"
+     transform="translate(-1776.9306,-553.31855)">
     <g
        style="display:inline"
        transform="matrix(2.0842162,0,0,2.0842162,1431.5464,281.68881)"
@@ -80,4 +88,5 @@
       </g>
     </g>
   </g>
+</g>
 </svg>

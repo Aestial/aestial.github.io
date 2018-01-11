@@ -1,0 +1,25 @@
+{
+  "name": "patologico",
+  "version": "1.0.0",
+  "description": "patologico svg front end webpage",
+  "main": "/js/app.js",
+  "scripts": {
+    "start:dev": "webpack-dev-server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "svg",
+    "pato",
+    "logico"
+  ],
+  "author": "Jaime Hernandez/David Rosales",
+  "license": "MIT",
+  "dependencies": {
+    "snapsvg": "^0.5.1"
+  },
+  "devDependencies": {
+    "imports-loader": "^0.7.1",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.10.1"
+  }
+}
