@@ -16,33 +16,60 @@
     font-weight: bold;
 }
 
-
-*{ box-sizing: border-box; margin: 0; padding: 0 }
-
 body {
-    color: #000000f;
+    color: #efe;
     font-family: tahoma;
-    background-color: rgb(224,255,233);
-    background-image: -o-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
-    background-image: -moz-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
-    background-image: -webkit-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,255) 100%);
-    background-image: -ms-linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
-    background-image: linear-gradient(bottom, rgb(255,229,237) 0%, rgb(224,255,233) 100%);
+    background-color: rgb(224, 255, 233);
+    /* background-image: -webkit-linear-gradient(bottom, rgb(180,25,90) 0%, rgb(80,85,175) 100%); */
+
+    background-image: -o-linear-gradient(
+        bottom,
+        rgb(180, 25, 90) 0%,
+        rgb(80, 85, 175) 100%
+    );
+    background-image: -moz-linear-gradient(
+        bottom,
+        rgb(180, 25, 90) 0%,
+        rgb(80, 85, 175) 100%
+    );
+    background-image: -webkit-linear-gradient(
+        bottom,
+        rgb(180, 25, 90) 0%,
+        rgb(80, 85, 175) 100%
+    );
+    background-image: -ms-linear-gradient(
+        bottom,
+        rgb(180, 25, 90) 0%,
+        rgb(80, 85, 175) 100%
+    );
+    background-image: linear-gradient(
+        bottom,
+        rgb(180, 25, 90) 0%,
+        rgb(80, 85, 175) 100%
+    );
     margin: 0px;
     overflow: hidden;
-    width : 100%;
+    width: 100%;
     height: 100%;
 }
 
-p {
-    //font-family: Thunderman, Helvetica, Arial, sans-serif;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
+
+/* p {
+    font-family: Thunderman, Helvetica, Arial, sans-serif;
+}*/
 
 .countMessage {
     font-family: Bubblegum, Helvetica, Arial, sans-serif;
-    font-size:2vmin;
+    font-size: 2vmin;
     position: absolute;
-    left: 15px; top: 15px; line-height: 1.6em;
+    left: 15px;
+    top: 15px;
+    line-height: 1.6em;
     opacity: 0.035;
 }
 
@@ -58,30 +85,37 @@ p {
 }
 
 #hbd {
-    //right: 50%;
-    top: 17%; line-height: 1.6em;
-    font-size:6.2vmin;
-    opacity: 0.0;
+    /* right: 50%; */
+    top: 17%;
+    line-height: 1.6em;
+    font-size: 6.2vmin;
+    opacity: 0;
 }
 
 #wte {
-    //right: 50%;
-    top: 75%; line-height: 1.6em;
-    font-size:4.3vmin;
-    opacity: 0.0;
+    /* right: 50%; */
+    top: 75%;
+    line-height: 1.6em;
+    font-size: 4.3vmin;
+    opacity: 0;
 }
 
-.countMessage:hover{ opacity: 0.55 }
+.countMessage:hover {
+    opacity: 0.55;
+}
 
-a{ color: black; text-shadow: 0 1px 0 rgba( 0,0,0,.5 ) }
+a {
+    color: black;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+}
 
-div#container{
+div#container {
     position: absolute;
 }
 
 svg {
     visibility: hidden;
-    //width:55%;
+    /* width:55%; */
 }
 
 img {
