@@ -2,25 +2,27 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
+subtitle: >
+  :computer: Computer Engineer. XR Developer.
 
 profile:
   align: right
   image: prof_pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>aestial@me.com</p>
+    <p>Greater Philadelphia, 08002</p>
 
 news: true  # includes a list of news items
 latest_posts: true  # includes a list of the newest posts
-selected_papers: true # includes a list of papers marked as "selected={true}"
+selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+Passionate about the [Aesthetics of Video Games](https://www.artstation.com/aestial) :space_invader:
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+I consider myself fortunate to be part of this remarkable era of digital innovation and the continuous evolution of computer graphics. My journey into the world of technology began with the NES, a console that my dad used as an excuse to introduce me to imported tech. Today, I'm just one more individual delving deep into the captivating universe of computer science and application development as an engineer.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](http://fortawesome.github.io/Font-Awesome/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+At present, I'm immersed in the development of Mixed Reality applications, working with a variety of devices, including custom peripherals. Join me on this exciting journey through my social media channels and explore more on this website. 
+
+Keep up with the latest developments in experimental Human-Machine Interface (HMI) applications by following [my blog](/blog/)! :flying_saucer:	
