@@ -1,61 +1,53 @@
 {
   "basics": {
-    "name": "Albert Einstein",
-    "label": "Scientist",
+    "name": "Jaime Hernandez",
+    "label": "XR Engineer",
     "image": "",
-    "email": "albert@einstein.de",
-    "phone": "(912) 123-4567",
-    "url": "https://alshedivat.github.io/al-folio/",
-    "summary": "A German-born theoretical physicist, widely ranked among the greatest and most influential scientists of all time",
+    "email": "jaimevazz@gmail.com",
+    "phone": "+52 (55) 5456-6560",
+    "url": "https://aestial.github.io/",
+    "summary": "Computer Engineer and currently XR developer. Mexican-born computer graphics enthusiast.",
     "location": {
-      "address": "2712 Broadway St",
-      "postalCode": "CA 94115",
-      "city": "San Francisco",
+      "address": "836 Cooper Landing Rd",
+      "postalCode": "NJ 08002",
+      "city": "Cherry Hill",
       "countryCode": "US",
-      "region": "California"
+      "region": "Philadelphia"
     },
     "profiles": [
       {
         "network": "Twitter",
-        "username": "AlbertEinstein",
-        "url": "https://twitter.com/AlbertEinstein"
+        "username": "Aestial",
+        "url": "https://twitter.com/Aestial"
       }
     ]
   },
   "work": [
     {
-      "name": "Institute for Advanced Study, Princeton University",
-      "position": "Professor of Theoretical Physics",
-      "url": "https://example.com",
-      "startDate": "1933-01-01",
+      "name": "Jitsik LLC",
+      "position": "XR Engineer",
+      "url": "https://jitsik.com",
+      "startDate": "2023-02-15",
       "endDate": "1955-01-01",
-      "summary": "Teaching at Palmer Physical Laboratory (now 302 Frist Campus Center). While not a professor at Princeton, I associated with the physics professors and continued to give lectures on campus.",
-      "highlights": ["Relativity"]
+      "summary": "Design and develop of Drivers' Education Mixed Reality application for Meta Quest devices. Built PoC prototypes from scratch and currently developing MVP for deployment.",
+      "highlights": [
+        "Mixed Reality",
+        "Custom Hardware"
+      ]
     }
   ],
-  "volunteer": [
-    {
-      "organization": "People's Climate March",
-      "location": "Zurich, Switzerland",
-      "position": "Lead Organizer",
-      "url": "https://example.com",
-      "startDate": "2014-04-01",
-      "endDate": "2015-07-01",
-      "summary": "Lead organizer for the New York City branch of the People's Climate March, the largest climate march in history.",
-      "highlights": ["Awarded 'Climate Hero' award by Greenpeace for my efforts organizing the march.", "Men of the year 2014 by Time magazine"]
-    }
-  ],
+  "volunteer": [],
   "education": [
     {
-      "institution": "University of Zurich, Zurich, Switzerland",
-      "location": "Zurich, Switzerland",
-      "url": "https://www.uzh.ch/",
-      "area": "Software Development",
-      "studyType": "PhD",
-      "startDate": "1905-01-01",
-      "endDate": "1905-01-01",
-      "score": "10",
-      "courses": ["Theory of Relativity"]
+      "institution": "Universidad Nacional Autonoma de Mexico",
+      "location": "Mexico City, Mexico",
+      "url": "https://www.unam.mx/",
+      "area": "Computer Engineer",
+      "studyType": "Bachelors",
+      "startDate": "2008-08-15",
+      "endDate": "2013-06-01",
+      "score": "8.9110",
+      "courses": ["Computer graphics"]
     }
   ],
   "awards": [
@@ -151,13 +143,23 @@
   ],
   "languages": [
     {
-      "language": "German",
+      "language": "Spanish",
       "fluency": "Native speaker",
       "icon": ""
     },
     {
       "language": "English",
       "fluency": "Fluent",
+      "icon": ""
+    },
+    {
+      "language": "German",
+      "fluency": "Basic",
+      "icon": ""
+    },
+    {
+      "language": "Portuguese",
+      "fluency": "Basic",
       "icon": ""
     }
   ],
