@@ -1,9 +1,9 @@
 ---
 layout: page
-title: project 4
-description: another without an image
-img:
-importance: 3
+title: Poleanapp
+description: Ludo-like tabletop simulator
+img: assets/img/projects/Poleanapp.jpg
+importance: 1
 category: fun
 ---
 

@@ -1,10 +1,9 @@
 ---
 layout: page
-title: project 3 with very long name
-description: a project that redirects to another website
-img: assets/img/7.jpg
-redirect: https://unsplash.com
-importance: 3
+title: Metadrive XR
+description: Mixed Reality application for Drivers' Ed
+img: assets/img/projects/MetadriveXR.png
+importance: 1
 category: work
 ---
 
