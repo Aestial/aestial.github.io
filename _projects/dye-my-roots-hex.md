@@ -35,6 +35,7 @@ Selected venue in Philly, PA. [Global Game Jawn 2023 submission](https://globalg
 
 Made in Godot.
 
+---
 ### Testimonials
 > "Going to Ms Kelly completely changed my life. It was always my dream to be in the beauty industry, but it was not considered a “real career” to some people in my life. Even though I was very hesitant at first to sign up, after coming up here for a walk threw and meeting Ms Kelly."
 > – Samantha K.
