@@ -1,11 +1,10 @@
 ---
 layout: page
-title: project 1
-description: a project with a background image
-img: assets/img/12.jpg
+title: Metadrive XR
+description: Mixed Reality application for Drivers' Ed
+img: assets/img/projects/MetadriveXR.png
 importance: 1
 category: work
-related_publications: einstein1956investigations, einstein1950meaning
 ---
 
 Every project has a beautiful feature showcase page.

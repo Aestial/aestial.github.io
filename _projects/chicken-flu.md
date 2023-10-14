@@ -1,9 +1,9 @@
 ---
 layout: page
-title: project 4
-description: another without an image
-img:
-importance: 3
+title: Chicken Flu!
+description: Couch, local party multiplayer contagious game
+img: assets/img/projects/ChickenFlu.png
+importance: 2
 category: fun
 ---
 

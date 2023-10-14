@@ -1,9 +1,9 @@
 ---
 layout: page
-title: project 6
-description: a project with no image
-img:
-importance: 4
+title: Dye my Roots HEX
+description: Mini game for the 2023 Global Game Jam.
+img: assets/img/projects/Dye-my-Roots-HEX.png
+importance: 3
 category: fun
 ---
 

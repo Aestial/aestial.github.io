@@ -1,8 +1,8 @@
 ---
 layout: page
-title: project 5
-description: a project with a background image
-img: assets/img/1.jpg
+title: Super Penguin Rescue 64
+description: Rescue poor thrown penguins from death!!
+img: assets/img/projects/SPR64.png
 importance: 3
 category: fun
 ---
