@@ -19,7 +19,7 @@ selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-Passionate about the [Aesthetics of Video Games](https://www.artstation.com/aestial) :space_invader:
+Passionate about [Video Games Aesthetics](https://www.artstation.com/aestial) :space_invader:
 
 I consider myself fortunate to be part of this remarkable era of digital innovation and the continuous evolution of computer graphics. My journey into the world of technology began with the NES, a console that my dad used as an excuse to introduce me to imported tech. Today, I'm just one more individual delving deep into the captivating universe of computer science and application development as an engineer.
 
