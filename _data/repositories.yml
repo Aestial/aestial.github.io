@@ -1,12 +1,9 @@
 github_users:
-  - torvalds
-  - alshedivat
+  - aestial
 
 github_repos:
-  - alshedivat/al-folio
-  - twbs/bootstrap
-  - jekyll/jekyll
-  - jquery/jquery
-  - FortAwesome/Font-Awesome
-  - jpswalsh/academicons
-  - mathjax/MathJax
+  - Aestial/OVR-UnityIngameDebugConsole
+  - Aestial/Super-Penguin-Rescue-64
+  - Aestial/dye-my-roots-hex
+  - Aestial/Patologico
+  - Aestial/FlappyBurger
