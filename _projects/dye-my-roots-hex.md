@@ -11,26 +11,23 @@ category: fun
 
 ## Play Now!
 <iframe src="https://itch.io/embed/1913892?linkback=true&amp;border_width=3&amp;bg_color=272323&amp;fg_color=e4e2dc&amp;link_color=fa70c9&amp;border_color=653757" width="556" height="171" frameborder="0"><a href="https://aestial.itch.io/dye-my-roots-hex">Dye my Roots HEX by Liquid Cat</a></iframe>
+
 <br>
 
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/Dye-my-Roots-HEX.png" title="cover" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    <a href="https://globalgamejam.org/2023/jam-sites/global-game-jam-philly" target="_blank">Global Game Jawn 2023 submission</a>
-</div>
+This is a submission for the 2023 Global Game Jam. Theme was *Roots*.
 
-### Watch gameplay on Twitch!
-<div class="row">
-    <div class="col-sm mt-3 mt-md-0">
+Selected venue in Philly, PA. [Global Game Jawn 2023 submission](https://globalgamejam.org/2023/jam-sites/global-game-jam-philly)
+
+<br>
+
+## Watch on Twitch!
+<p  align="center" class="mt-0 mt-md-3">
     <iframe src="https://player.twitch.tv/?video=1736783207&parent=aestial.github.io" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
-    </div>
-</div>
-<div class="caption">
+</p>
+<div class="caption">    
     <a href="https://www.twitch.tv/videos/1736783207" target="_blank">Global Game Jam 2023 (Theme: Roots) - Philly Games by HeartLamp</a>
 </div>
+
 
 ## Credits
 - [**Sakbé Corona**](https://dori.science/) - Game Design/2D Art.
