@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://aestial.github.io//sitemap.xml
+Sitemap: https://aestial.github.io/sitemap.xml
