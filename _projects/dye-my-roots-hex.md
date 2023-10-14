@@ -7,74 +7,37 @@ importance: 3
 category: fun
 ---
 
-Every project has a beautiful feature showcase page.
-It's easy to include images in a flexible 3-column grid format.
-Make your photos 1/3, 2/3, or full width.
+> Help Ms Kelly to fade non-dyed hair roots by providing the hexadecimal code for the color the client wants!!
 
-To give your project a background in the portfolio page, just add the img tag to the front matter like so:
-
-    ---
-    layout: page
-    title: project
-    description: a project with a background image
-    img: /assets/img/12.jpg
-    ---
+## Play Now!
+<iframe src="https://itch.io/embed/1913892?linkback=true&amp;border_width=3&amp;bg_color=272323&amp;fg_color=e4e2dc&amp;link_color=fa70c9&amp;border_color=653757" width="556" height="171" frameborder="0"><a href="https://aestial.itch.io/dye-my-roots-hex">Dye my Roots HEX by Liquid Cat</a></iframe>
+<br>
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/1.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/3.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+        {% include figure.html path="assets/img/projects/Dye-my-Roots-HEX.png" title="cover" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
-    Caption photos easily. On the left, a road goes through a tunnel. Middle, leaves artistically fall in a hipster photoshoot. Right, in another hipster photoshoot, a lumberjack grasps a handful of pine needles.
+    <a href="https://globalgamejam.org/2023/jam-sites/global-game-jam-philly" target="_blank">Global Game Jawn 2023 submission</a>
 </div>
+
+### Watch gameplay on Twitch!
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/5.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+    <iframe src="https://player.twitch.tv/?video=1736783207&parent=aestial.github.io" frameborder="0" allowfullscreen="true" scrolling="no" height="378" width="620"></iframe>
     </div>
 </div>
 <div class="caption">
-    This image can also have a caption. It's like magic.
+    <a href="https://www.twitch.tv/videos/1736783207" target="_blank">Global Game Jam 2023 (Theme: Roots) - Philly Games by HeartLamp</a>
 </div>
 
-You can also put regular text between your rows of images.
-Say you wanted to write a little bit about your project before you posted the rest of the images.
-You describe how you toiled, sweated, *bled* for your project, and then... you reveal its glory in the next row of images.
+## Credits
+- [**Sakbé Corona**](https://dori.science/) - Game Design/2D Art.
+- [**Jaime Hernandez**](https://dori.science/) - Programming
 
+Made in Godot.
 
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-<div class="caption">
-    You can also have artistically styled 2/3 + 1/3 images, like these.
-</div>
-
-
-The code is simple.
-Just wrap your images with `<div class="col-sm">` and place them inside `<div class="row">` (read more about the <a href="https://getbootstrap.com/docs/4.4/layout/grid/">Bootstrap Grid</a> system).
-To make images responsive, add `img-fluid` class to each; for rounded corners and shadows use `rounded` and `z-depth-1` classes.
-Here's the code for the last row of images above:
-
-{% raw %}
-```html
-<div class="row justify-content-sm-center">
-    <div class="col-sm-8 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/6.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-    <div class="col-sm-4 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/11.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
-    </div>
-</div>
-```
-{% endraw %}
+### Testimonials
+> "Going to Ms Kelly completely changed my life. It was always my dream to be in the beauty industry, but it was not considered a “real career” to some people in my life. Even though I was very hesitant at first to sign up, after coming up here for a walk threw and meeting Ms Kelly."
+> – Samantha K.
