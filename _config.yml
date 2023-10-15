@@ -266,8 +266,8 @@ display_categories: ['dev'] # these categories will be displayed on the front pa
 # -----------------------------------------------------------------------------
 
 scholar:
-  last_name: [Einstein]
-  first_name: [Albert, A.]
+  last_name: [Hernandez-Vazquez]
+  first_name: [Jaime]
 
   style: apa
   locale: en
