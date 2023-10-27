@@ -6,6 +6,7 @@ date:   2023-10-08 19:30:00
 description: Organic material experiments made in Substance Designer.
 tags: material substance designer
 categories: art
+thumbnail: assets/img/posts/2023-10-08-designer-material-beef-belly-0.jpg
 ---
 
 > :warning:	
