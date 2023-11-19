@@ -12,7 +12,7 @@ thumbnail: assets/img/posts/2023-09-30-tiktok-effect-buddha-in-sky.jpg
 ## Result
 
 <div class="row justify-content-center mt-3">
-    <button type="button" class="btn btn-lg btn-block">Try now on TikTok!</button>
+    <a class="btn btn-lg btn-block" href="https://vm.tiktok.com/ZMjKgGoKn/" role="button" target="_blank">Try now on TikTok!</a>
 </div>
 
 <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@kusheesh/video/7286554333880028422" data-video-id="7286554333880028422" style="max-width: 605px;min-width: 325px;" data-autoplay="false" muted> <section> <a target="_blank" title="@kusheesh" href="https://www.tiktok.com/@kusheesh?refer=embed">@kusheesh</a> God Buddha head seen above buildings. 30th street station <a title="buddha" target="_blank" href="https://www.tiktok.com/tag/buddha?refer=embed">#buddha</a> <a title="gods" target="_blank" href="https://www.tiktok.com/tag/gods?refer=embed">#gods</a> <a title="extraordinary" target="_blank" href="https://www.tiktok.com/tag/extraordinary?refer=embed">#extraordinary</a> <a target="_blank" title="♬ Buddham Saranam Gacchami - Lalitya Munshaw" href="https://www.tiktok.com/music/Buddham-Saranam-Gacchami-6714343013839013890?refer=embed">♬ Buddham Saranam Gacchami - Lalitya Munshaw</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
