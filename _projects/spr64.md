@@ -33,7 +33,7 @@ category: fun
         }
     </style>
     <div class='itch-widget-container'>
-        <<iframe frameborder="0" src="https://itch.io/embed/1821161?border_width=4&amp;bg_color=fafbfc&amp;fg_color=43546f&amp;link_color=f186be&amp;border_color=aac7dc" width="558" height="173"><a href="https://aestial.itch.io/super-penguin-rescue-64">Super Penguin Rescue 64 by Liquid Cat</a></iframe>
+        <iframe frameborder="0" src="https://itch.io/embed/1821161?border_width=4&amp;bg_color=fafbfc&amp;fg_color=43546f&amp;link_color=f186be&amp;border_color=aac7dc" width="558" height="173"><a href="https://aestial.itch.io/super-penguin-rescue-64">Super Penguin Rescue 64 by Liquid Cat</a></iframe>
     </div>
 </div>
 
