@@ -6,9 +6,10 @@ img: assets/img/projects/patologico.jpg
 importance: 3
 category: fun
 ---
+<div class="row justify-content-center mt-3">
+    <a class="btn btn-lg btn-block" href="https://aestial.github.io/Patologico/" role="button" target="_blank">Visit now!</a>
+</div>
 
-<h2><a href="https://aestial.github.io/Patologico/" target="_blank">Visit now!</a></h2>
-<br>
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
         <a href="https://aestial.github.io/Patologico/" target="_blank">
