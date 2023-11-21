@@ -3,6 +3,7 @@ layout: page
 title: Metadrive XR
 description: Mixed Reality application for Drivers' Ed
 img: assets/img/projects/MetadriveXR.png
+redirect: https://jitsik.com
 importance: 1
 category: work
 ---
