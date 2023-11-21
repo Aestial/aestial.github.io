@@ -258,8 +258,8 @@ jekyll-archives:
   books:
     enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
 
-display_tags: ['code', 'images', 'links', 'web'] # these tags will be displayed on the front page of your blog
-display_categories: ['dev'] # these categories will be displayed on the front page of your blog
+display_tags: ['code', 'effect', 'web'] # these tags will be displayed on the front page of your blog
+display_categories: ['art', 'dev', 'news'] # these categories will be displayed on the front page of your blog
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
