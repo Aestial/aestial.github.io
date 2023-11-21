@@ -2,7 +2,7 @@
 layout: post
 title: >
     TikTok Effect House: Buddha in the Sky
-date:   2023-10-08 19:30:00
+date:   2023-09-30 15:30:00
 description: Using TikTok's Effect House for creating an sky segmentation effect featuring a huge Buddha head.
 tags: TikTok effect buddha head
 categories: ar-effects
