@@ -6,10 +6,13 @@ img: assets/img/projects/patologico.jpg
 importance: 3
 category: fun
 ---
+
+> Select your favorite colors for Patologico!! Don't forget to take a screenshot XD.
+
 <div class="row justify-content-center mt-3">
     <a class="btn btn-lg btn-block" href="https://aestial.github.io/Patologico/" role="button" target="_blank">Visit now!</a>
 </div>
-
+<br>
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
         <a href="https://aestial.github.io/Patologico/" target="_blank">
