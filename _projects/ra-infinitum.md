@@ -3,7 +3,8 @@ layout: page
 title: RA Infinitum
 description: Augmented Reality with image recognition
 img: assets/img/projects/RAInfinitum.jpg
-importance: 3
+redirect: http://raeninfinitum.com/
+importance: 2
 category: work
 ---
 
