@@ -30,7 +30,7 @@ JavaScript.
 
 #### Third Eye Team are:
 
-- **Art**: David Rosales
+- **Art**: [David Rosales](https://www.instagram.com/4stronomo/)
 - **Programming**: Jaime Hernandez
 
-[Open source repository](https://github.com/Aestial/Patologico/)
+##### [Open source repository](https://github.com/Aestial/Patologico/)
