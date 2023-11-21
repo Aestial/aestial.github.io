@@ -3,7 +3,7 @@ layout: page
 title: Super Penguin Rescue 64
 description: Rescue baby penguins thrown ungratefully from a cliff...
 img: assets/img/projects/SPR64.png
-importance: 3
+importance: 2
 category: fun
 ---
 
