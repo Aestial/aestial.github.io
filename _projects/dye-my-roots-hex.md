@@ -40,12 +40,21 @@ category: fun
 
 <br>
 
+#### [View on GitHub](https://github.com/Aestial/dye-my-roots-hex)
+
+<!-- Star on GitHub button -->
+<iframe src="https://ghbtns.com/github-btn.html?user=Aestial&repo=dye-my-roots-hex&type=star&count=true&size=large" frameborder="0" scrolling="0" width="180" height="30" title="GitHub"></iframe>
+
+---
+
+## About
+
 This is a submission for the 2023 Global Game Jam. Theme was *Roots*.
 
 Selected venue in Philly, PA. [Global Game Jawn 2023 submission](https://globalgamejam.org/2023/jam-sites/global-game-jam-philly)
 <br>
 
-## Watch on Twitch!
+### Watch on Twitch!
 
 <div>
     <style>
@@ -75,13 +84,15 @@ Selected venue in Philly, PA. [Global Game Jawn 2023 submission](https://globalg
 </div>
 
 
-## Credits
+### Credits
+
 - [**Sakbé Corona**](https://dori.science/) - Game Design/2D Art.
 - [**Jaime Hernandez**](https://dori.science/) - Programming
 
-Made in Godot.
+`Made in Godot.`
 
 ---
+
 ### Testimonials
 > "Going to Ms Kelly completely changed my life. It was always my dream to be in the beauty industry, but it was not considered a “real career” to some people in my life. Even though I was very hesitant at first to sign up, after coming up here for a walk threw and meeting Ms Kelly."
 > – Samantha K.

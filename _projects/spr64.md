@@ -38,7 +38,16 @@ category: fun
     </div>
 </div>
 
-## Plot
+<br>
+
+#### [View on GitHub](https://github.com/Aestial/Super-Penguin-Rescue-64)
+
+<!-- Star on GitHub button -->
+<iframe src="https://ghbtns.com/github-btn.html?user=Aestial&repo=Super-Penguin-Rescue-64&type=star&count=true&size=large" frameborder="0" scrolling="0" width="180" height="30" title="GitHub"></iframe>
+
+---
+
+## About
 Evil Mario threw some slippery baby penguins **off a cliff**!!!
 Help our hero rescue those poor babies from death.
 
@@ -69,13 +78,16 @@ Help our hero rescue those poor babies from death.
     See how evil Mario is. He threw some slippery baby penguins off a cliff!!
 </div>
 
+---
 
-## Credits
+#### すみません!!
+**I do not own the rights of any of media content.**
+
+### Credits
+
 - *Lakitu [SM 64] - free 3D model* by Hasksoft.
 - *Penguin - free 3D model* by alec pike. 
 
-Made with Godot.
+`Made with Godot.`
 
 ---
-#### すみません!!
-**I do not own the rights of any of media content.**
