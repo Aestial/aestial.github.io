@@ -19,6 +19,11 @@ thumbnail: assets/img/posts/2023-10-08-designer-material-beef-belly-3.jpg
     Beef belly material made in Substance Designer.
 </div>
 
+#### [View on GitHub](https://github.com/Aestial/Designer-BeefBelly)
+
+<!-- Star on GitHub button -->
+<iframe src="https://ghbtns.com/github-btn.html?user=Aestial&repo=Designer-BeefBelly&type=star&count=true&size=large" frameborder="0" scrolling="0" width="180" height="30" title="GitHub"></iframe>
+
 ---
 
 ## Background

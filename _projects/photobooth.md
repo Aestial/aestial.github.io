@@ -36,7 +36,7 @@ category: work
     Photo Booth as the central attraction in the Google for Entrepreneurs event in Mexico City.
 </div>
 
-## Description
+## About
 
 This project consisted of two parts:
 
@@ -56,7 +56,7 @@ This project consisted of two parts:
     Installation components. On the left, users customizing their picture and then send it to printer, process supervised by staff. Right, DJ party featuring real-time video gallery wall.
 </div>
 
-## Credits
+### Credits
 
 Thanks to all [Intus](https://intus.tv) staff, specially Gil who is always pushing further.
 

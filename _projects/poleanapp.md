@@ -9,10 +9,7 @@ category: fun
 
 > Everybody should build their own Poleana board, so I did it in Unreal...
 
-
-Poleanapp is based in a Mexican ludo-like board game called [Poleana](https://gatopardo.com/estilo-de-vida/poleana-el-juego-de-mesa-de-la-carcel/) and this board simulator is made using Unreal Engine 4.
-
-This simulator is programmed using Blueprints only. It tries to replicate real board, chips, dices and turns. Both meshes of the board and dices were modeled and "textured" inside Unreal. Some other assets from Epic templates were used.
+## Result
 
 <div>
     <style>
@@ -40,6 +37,19 @@ This simulator is programmed using Blueprints only. It tries to replicate real b
 <div class="caption">
     Poleanapp gameplay
 </div>
+
+#### [View on GitHub](https://github.com/Aestial/Poleanapp)
+
+<!-- Star on GitHub button -->
+<iframe src="https://ghbtns.com/github-btn.html?user=Aestial&repo=Poleanapp&type=star&count=true&size=large" frameborder="0" scrolling="0" width="180" height="30" title="GitHub"></iframe>
+
+---
+
+## About
+
+Poleanapp is based in a Mexican ludo-like board game called [Poleana](https://gatopardo.com/estilo-de-vida/poleana-el-juego-de-mesa-de-la-carcel/) and this board simulator is made using Unreal Engine 4.
+
+This simulator is programmed using Blueprints only. It tries to replicate real board, chips, dices and turns. Both meshes of the board and dices were modeled and "textured" inside Unreal. Some other assets from Epic templates were used.
 
 
 <div class="row">

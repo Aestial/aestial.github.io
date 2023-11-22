@@ -24,13 +24,19 @@ category: fun
     Customize Patologico colors with this super funny wallpaper application for the office.
 </div>
 
-### Description
+#### [View on GitHub](https://github.com/Aestial/Patologico)
+
+<!-- Star on GitHub button -->
+<iframe src="https://ghbtns.com/github-btn.html?user=Aestial&repo=Patologico&type=star&count=true&size=large" frameborder="0" scrolling="0" width="180" height="30" title="GitHub"></iframe>
+
+---
+
+## About 
+
 Third Eye Team favorite mascot and desk jockey duck. Full single HTML page featuring our SVG character with customizable colors. Node.js frontend web application compiled using SVG, HTML5, CSS, Webpack and Vanilla
 JavaScript.
 
-#### Third Eye Team are:
+### Third Eye Team are:
 
 - **Art**: [David Rosales](https://www.instagram.com/4stronomo/)
 - **Programming**: Jaime Hernandez
-
-##### [Open source repository](https://github.com/Aestial/Patologico/)
