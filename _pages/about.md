@@ -11,7 +11,7 @@ profile:
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>aestial@me.com</p>
-    <p>Greater Philadelphia, 08002</p>
+    <p>Philadelphia, 08002</p>
 
 news: true  # includes a list of news items
 latest_posts: true  # includes a list of the newest posts
