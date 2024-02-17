@@ -2,7 +2,7 @@
 layout: page
 title: Dye my Roots HEX
 description: Mini game for the 2023 Global Game Jam.
-img: assets/img/projects/Dye-my-Roots-HEX.png
+img: assets/img/projects/DyeMyRoots-HEX.png
 importance: 3
 category: fun
 ---
@@ -86,8 +86,8 @@ Selected venue in Philly, PA. [Global Game Jawn 2023 submission](https://globalg
 
 ### Credits
 
-- [**Sakbé Corona**](https://dori.science/) - Game Design/2D Art.
-- [**Jaime Hernandez**](https://dori.science/) - Programming
+- [**Sakbé Corona**](https://dori.science/) - Concept/Game Design/2D Art.
+- [**Jaime Hernandez**](/) - Programming/Sound Curator
 
 `Made in Godot.`
 
