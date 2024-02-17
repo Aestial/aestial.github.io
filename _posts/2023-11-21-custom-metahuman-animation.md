@@ -5,6 +5,7 @@ date:   2023-11-21 13:30:00
 description: Animation of a custom MetaHuman character using UE5 template.
 tags: animation metahuman ue5 
 categories: art
+thumbnail: https://i.vimeocdn.com/video/1640894439-c3c86b8cef35ecb733cb3315904c18562851c98ac58c3c431624b3d31f6db905-d
 ---
 
 > Unreal Engine's MetaHuman Creator is a powerful online tool for authoring realistic characters ready to be used inside UE5.
