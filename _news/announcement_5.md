@@ -1,29 +1,33 @@
 ---
 layout: post
 title: >
-    New Video Game Concept: La Mano Peluda!
-date: 2023-11-19 12:15:00-0400
+    "Dope Me Laugh" winner Most Fun 2024 PGM GGJ!!!
+date: 2024-01-25 23:30:00-0500
 inline: false
 related_posts: false
 ---
 
-Exploring ***La Mano Peluda***: A New Video Game Unraveling Paranormal Stories.
+***Dope Me Laugh*** got two prices in the **2024 Global Game Jawn**!! Thanks for all Philly Game Mechanics!
 
 ---
-## Plot
+## Background
+*Global Game Jam* is a massive event that happens every year about end of January where people gather together in different venues all around the world or lately, without leave home comfort. To be honest, I really like this flexibility and many other updates through the years I've been attending GGJ!
 
-The concept behind the *La Mano Peluda* video game draws inspiration from the iconic radio show of the same name. For those familiar with the program, *La Mano Peluda* was renowned for its enthralling interviews on paranormal experiences, captivating a wide audience with spine-chilling tales shared passionately by participants, evoking a palpable sense of fear and excitement.
+For the second time we attended the [Global Game Jawn in Philly](https://globalgamejam.org/jam-sites/2024/global-game-jawn-2024) with our great hosts of [Philly Game Mechanics](https://www.phillygamemechanics.com). Unfortunately our participation was fully remote this year (yes, we missed the pizza lol). That said we want to show our gratitude for being such amazing hosts!
 
-In this immersive game, you step into the shoes of an interviewee while the AI, portraying Juan Ramon Saenz, replicates the famed radio storyteller's voice and mannerisms with precision.
+## About Us
+Tamal Rosita is an alternative game studio focused on non-conventional aesthetics, mechanics and story telling. Founded by [Sakbe Corona](https://dori.science) (my wife) and myself to express ourselves while having lots of fun, specially during the annual Global Game Jam festivities.
 
-Your task is to narrate your paranormal experience, with the AI adjusting its responses dynamically, considering factors such as intensity, coherence, duration, and more. The game strives to replicate the atmospheric flow of the radio program, aiming for sessions lasting between 20 minutes to an hour.
+## Test playing
+We had a blast testing some of the PGM games for the jam (among others), got some great feedback about our game and learnt how other indie developers use technologies and even how they promote and distribute. Also during this week we had the chance to test the games at home and vote anonymously for our favorite ones.
 
-Players will find themselves engaged in an ever-evolving narrative, where their storytelling choices impact the game's progression. The AI adapts seamlessly to the narration, enhancing the immersive experience as if participating in a live broadcast of *La Mano Peluda*.
+Fortunately *Dope Me Laugh* got into the heart of its players. We appreciate all the love and motivation to keep pushing forward!
 
-## References
+---
 
-- [Wikipedia - La Mano Peluda](https://es.wikipedia.org/wiki/La_Mano_Peluda)
-- [Wikidata - La Mano Peluda](https://www.wikidata.org/wiki/Q5964211)
-- [BBC News - La Mano Peluda](https://www.bbc.com/news/world-latin-america-42679414)
+## Winners
+*Dope Me Laugh* won **Most Fun** game and **Best SFX**. 
+
+Thanks everyone for playing and loving our game!!
 
 ---
