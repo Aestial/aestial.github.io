@@ -5,7 +5,7 @@
     "image": "",
     "email": "jaimevazz@gmail.com",
     "phone": "+52 (55) 5456-6560",
-    "url": "https://aestial.github.io/",
+    "url": "https://oxido.dev/",
     "summary": "Computer Engineer and currently XR developer. Mexican-born computer graphics enthusiast. Currently in Philadelphia, PA.",
     "location": {
       "address": "836 Cooper Landing Rd",
@@ -16,9 +16,14 @@
     },
     "profiles": [
       {
-        "network": "Twitter",
+        "network": "GitHub",
         "username": "Aestial",
-        "url": "https://twitter.com/Aestial"
+        "url": "https://www.github.com/Aestial"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "Aestial",
+        "url": "https://www.linkedin.com/in/Aestial"
       }
     ]
   },
@@ -33,7 +38,7 @@
     },
 
     {
-      "name": "Jitzu SA de CV",
+      "name": "Jitzu",
       "position": "AR/VR Developer",
       "url": "https://www.linkedin.com/company/jitzu/",
       "startDate": "2021-09",
@@ -71,7 +76,6 @@
   
     }
   ],
-  "volunteer": [],
   "education": [
     {
       "institution": "Engineering Faculty, UNAM",
@@ -88,7 +92,6 @@
       ]
     }
   ],
-  "awards": [],
   "certificates": [
     {
       "name": "Unity Certified Developer",
@@ -97,11 +100,10 @@
       "url": "https://www.credly.com/badges/8d46be4d-d659-4a3a-b340-67f724e3feaf/public_url"
     }
   ],
-  "publications": [],
   "skills": [
     {
       "name": "Unity Development",
-      "level": "Full proficency",
+      "level": "Full proficiency",
       "keywords": ["Unity3D", "C#", "Mobile", "OOP", "XR", "Design Patterns"]
     },
     {
@@ -127,7 +129,7 @@
     },
     {
       "language": "English",
-      "fluency": "Full proficency"
+      "fluency": "Full proficiency"
     },
     {
       "language": "German",
@@ -138,7 +140,10 @@
       "fluency": "Basic"
     }
   ],
+  "awards": [],
   "interests": [],
+  "projects": [],
+  "publications": [],
   "references": [],
-  "projects": []
+  "volunteer": []
 }
