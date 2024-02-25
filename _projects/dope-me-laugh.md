@@ -7,7 +7,7 @@ importance: 1
 category: fun
 ---
 
-> You are the nurse in charge of tonight’s shift at the asylum!
+> You are the nurse in charge of tonight's shift at the asylum!
 
 ## Play Now!
 
@@ -90,6 +90,6 @@ Selected Jam site [Global Game Jawn 2024](https://globalgamejam.org/jam-sites/20
 - [**Sakbé Corona**](https://dori.science/) - Game Design/2D Art.
 - [**Jaime Hernandez**]({{ site.baseurl }}/) - Programming
 
-`Made in Godot.`
+`Made with Godot.`
 
 ---

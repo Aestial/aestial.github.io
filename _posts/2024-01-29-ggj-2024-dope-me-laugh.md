@@ -12,16 +12,19 @@ thumbnail: assets/img/projects/DopeMeLaugh.png
 
 <div>
     <style>
-        .embed-container {
+        .itch-widget-container {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
             position: relative;
-            padding-bottom: 56.25%;
+            padding-bottom: 173px;
             height: 0;
             overflow: hidden;
-            max-width: 100%;
+            max-width: 558px;
         }
-        .embed-container iframe,
-        .embed-container object,
-        .embed-container embed {
+        .itch-widget-container iframe,
+        .itch-widget-container object,
+        .itch-widget-container embed {
             position: absolute;
             top: 0;
             left: 0;
@@ -29,15 +32,12 @@ thumbnail: assets/img/projects/DopeMeLaugh.png
             height: 100%;
         }
     </style>
-    <div class='embed-container'>
-        <iframe frameborder="0" src="https://itch.io/embed-upload/9638526?color=f4f4f4" allowfullscreen="" width="1152" height="668"><a href="https://aestial.itch.io/dope-me-laugh">Play Dope Me Laugh on itch.io</a></iframe>
+    <div class='itch-widget-container'>
+        <iframe frameborder="0" src="https://itch.io/embed/2494836?border_width=3&amp;fg_color=2347a1&amp;link_color=e96868&amp;border_color=40e43b" width="556" height="171"><a href="https://aestial.itch.io/dope-me-laugh">Dope Me Laugh by Liquid Cat</a></iframe>
     </div>
 </div>
-<div class="caption">
-    Play it here or visit 
-    <a href="https://aestial.itch.io/dope-me-laugh" target="_blank">itch.io</a>
-    page.
-</div>
+
+---
 
 ## Background
 
