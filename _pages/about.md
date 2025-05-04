@@ -3,7 +3,7 @@ layout: about
 title: about
 permalink: /
 subtitle: >
-  :computer: Computer Engineer. XR Developer.
+  🧑‍💻 Computer Engineer. XR Developer.
 
 profile:
   align: right
@@ -27,10 +27,10 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Passionate about [Video Games Aesthetics](https://www.artstation.com/aestial) :space_invader:
+Passionate about [Video Games Aesthetics](https://www.artstation.com/aestial) 🎮
 
-I consider myself fortunate to be part of this remarkable era of digital innovation and the continuous evolution of computer graphics. My journey into the world of technology began with the NES, a console that my dad used as an excuse to introduce me to imported tech. Today, I'm just one more individual delving deep into the captivating universe of computer science and application development as an engineer.
+My journey into technology began with a deep passion for gadgets and video games resulting into a persuit for an Computer Engineering career. At present, I'm immersed into the development of broad computer applications including software and hardware solutions.
 
-At present, I'm immersed in the development of Mixed Reality applications, working with a variety of devices, including custom peripherals. Join me on this exciting journey through my social media channels and explore more on this website. 
+Join me on this exciting journey through my social media channels and explore more on this website. 
 
-Keep up with the latest developments in experimental Human-Machine Interface (HMI) applications by following [my blog](/blog/)! :flying_saucer:	
+Keep up with the latest developments in experimental Human-Machine Interface (HMI) applications by following [my blog](/blog/)! 👾
