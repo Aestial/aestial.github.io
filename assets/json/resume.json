@@ -1,18 +1,18 @@
 {
   "basics": {
     "name": "Jaime Hernandez-Vazquez",
-    "label": "XR Engineer",
+    "label": "Computer Engineer",
     "image": "",
     "email": "jaimevazz@gmail.com",
     "phone": "+52 (55) 5456-6560",
     "url": "https://oxido.dev/",
-    "summary": "Computer Engineer and currently XR developer. Mexican-born computer graphics enthusiast. Currently in Philadelphia, PA.",
+    "summary": "Computer Engineer, embedded and XR developer. Mexican-born computer graphics enthusiast. Currently living in the Greater Philadelphia Area.",
     "location": {
-      "address": "836 Cooper Landing Rd",
+      "address": "Cooper Landing Rd",
       "postalCode": "NJ 08002",
       "city": "Cherry Hill",
       "countryCode": "US",
-      "region": "Philadelphia, PA"
+      "region": "Greater Philadelphia Area"
     },
     "profiles": [
       {
@@ -36,7 +36,6 @@
       "summary": "Designed and developed a Mixed Reality Drivers' Education app for Meta Quest devices. From scratch, I created proof-of-concept prototypes and am currently working on the MVP for deployment.",
       "highlights": ["Mixed Reality", "Custom Hardware"]
     },
-
     {
       "name": "Jitzu",
       "position": "AR/VR Developer",
@@ -46,11 +45,10 @@
       "summary": "Main developer of XR applications using Unity and SparkAR Studio",
       "highlights": [
         "Designed and prototyped a Unity-based VR educational app with a mobile companion app, both created by me for control and monitoring.",
-        "ArchVIz VR interactive galleries.",
+        "ArchViz VR interactive galleries.",
         "Instagram filters and effects."
       ]
     },
-
     {
       "name": "Edvolution",
       "position": "Junior Front-end Engineer",
@@ -73,7 +71,6 @@
       "endDate": "2019-10",
       "summary": "Leaded Unity development of RA Infinitum and Claro RA and released around a dozen Facebook camera effects",
       "highlights": [ "Unity", "C#", "Spark AR", "JS", "ARKit", "MAXST AR SDK", "Github"]
-  
     }
   ],
   "education": [
@@ -99,55 +96,86 @@
       "date": "2018-07",
       "issuer": "Unity Technologies",
       "url": "https://www.credly.com/badges/8d46be4d-d659-4a3a-b340-67f724e3feaf/public_url",
-      "icon": "fa-solid fa-location-dot"
+      "icon": "fa-brands fa-unity"
     }
-  ],
+  ], 
   "skills": [
     {
       "name": "Unity Development",
-      "level": "Full proficiency",
-      "keywords": ["Unity3D", "C#", "Mobile", "OOP", "XR", "Design Patterns"]
+      "level": "Advanced proficiency",
+      "icon": "fa-brands fa-unity",
+      "keywords": ["Unity Engine", "C#", "Android", "iOS", "AR/VR/XR"]
     },
     {
       "name": "Web Development",
-      "level": "Intermediate",
-      "keywords": ["HTML", "CSS", "Js", "Django", "node.js", "three.js"]
+      "level": "Intermediate proficiency",
+      "icon": "fa-solid fa-globe",
+      "keywords": ["HTML", "CSS", "Javascript", "Django", "Svelte", "Google Workspace"]
     },
     {
-      "name": "Maker",
-      "level": "Beginner",
+      "name": "Embedded Development",
+      "level": "Basic proficiency",
+      "icon": "fa-solid fa-microchip",
       "keywords": ["Arduino", "Raspberry PI", "C++", "ASM", "Python", "Digital design"]
     },
     {
       "name": "Digital Artist",
       "level": "Hobbyist",
-      "keywords": ["Blender", "TouchDesigner", "Photoshop", "Premiere Pro", "Substance Designer"]
+      "icon": "fa-solid fa-palette",
+      "keywords": ["3D Modeling/Materials", "Blender", "Image Processing", "TouchDesigner", "Video Editing"]
     }
-  ],,
+  ],
   "languages": [
     {
       "language": "Spanish",
       "fluency": "Native speaker",
-      "icon": ""
+      "icon": "fa-solid fa-earth-americas"
     },
     {
       "language": "English",
       "fluency": "Full proficency",
-      "icon": ""
+      "icon": "fa-solid fa-earth-oceania"
     },
     {
       "language": "German",
       "fluency": "B1 (ÖSD-ZD)",
-      "icon": ""
+      "icon": "fa-solid fa-earth-africa"
     },
     {
       "language": "Swedish",
       "fluency": "Basic",
-      "icon": ""
+      "icon": "fa-solid fa-earth-europe"
+    },
+    {
+      "language": "Chinese",
+      "fluency": "Beginner",
+      "icon": "fa-solid fa-earth-asia"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Game Development",
+      "icon": "fa-solid fa-gamepad",
+      "keywords": [
+        "Bevy",
+        "Godot",
+        "Unreal Engine",
+        "Unity 3D"
+      ]
+    },
+    {
+      "name": "Object-Oriented Programming",
+      "icon": "fa-solid fa-cubes",
+      "keywords": [
+        "C++",
+        "C#",
+        "Design Patterns",
+        "Refactoring",
+        "SOLID"
+      ]
     }
   ],
   "awards": [],
-  "interests": [],
   "projects": [],
   "publications": [],
   "references": [],
