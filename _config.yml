@@ -8,15 +8,15 @@ middle_name:
 last_name: Hernandez
 contact_note: >
   You can even add a little note about which of these is the best way to reach you.
-description: > # the ">" symbol means to ignore newlines until "footer_text:" # A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
+description:
+  > # the ">" symbol means to ignore newlines until "footer_text:" # A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
   Computer engineer portfolio website to showcase ideas, jobs and experiments.
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
 keywords: portfolio-website, jekyll, jekyll-theme, academic-website # add your own keywords or leave empty
-
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
-icon: 👾  # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
+icon: 👾 # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
 
 url: https://aestial.github.io # the base hostname & protocol for your site
 baseurl: # the subpath of your site, e.g. /blog/. Leave blank for root
@@ -188,11 +188,12 @@ exclude:
   - lighthouse_results/
   - package.json
   - package-lock.json
-  - _pages/about_einstein.md
   - purgecss.config.js
   - README.md
   - readme_preview/
   - vendor
+  - _posts/_examples/
+  - _projects/_examples/
 keep_files:
   - CNAME
   - .nojekyll
@@ -257,8 +258,8 @@ jekyll-archives:
   books:
     enabled: [year, tags, categories] # enables year, tag and category archives (remove if you need to disable one of them).
 
-display_tags: ['code', 'effect', 'web'] # these tags will be displayed on the front page of your blog
-display_categories: ['art', 'dev', 'news'] # these categories will be displayed on the front page of your blog
+display_tags: ["code", "effect", "web"] # these tags will be displayed on the front page of your blog
+display_categories: ["art", "dev", "news"] # these categories will be displayed on the front page of your blog
 
 # -----------------------------------------------------------------------------
 # Jekyll Scholar
