@@ -229,3 +229,14 @@ $nord14: #a3be8c;
 /// @group aurora
 /// @since 0.1.0
 $nord15: #b48ead;
+
+/// Extra-dark background color.
+/// 
+/// Not officially documented but used by authors in the Nord Theme webpage: https://www.nordtheme.com/
+/// This can be used as a darker background color when nord0 is not enough. Values: rgb(36, 41, 51)
+/// Discovered and added by: Jaime Hernandez (Aestial)
+/// 
+/// @access public
+/// @group extra
+/// @since dev
+$nordbg: #242933;
