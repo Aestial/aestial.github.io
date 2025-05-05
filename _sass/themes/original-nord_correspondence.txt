@@ -1,0 +1,11 @@
+# Correspondence
+white-color : nord.$nord6
+black-color : nord.$nord0
+grey-color : nord.$nord2
+grey-color-dark : nord.$nord1
+grey-color-light : nord.$nord4
+
+red-color-dark : nord.$nord11
+
+code-bg-color-light : nord.$nord4
+code-bg-color-dark : nord.$nord
