@@ -24,11 +24,11 @@ The time has come for the game development community, both seasoned Unity vetera
 In conclusion, the evolution of Unity and the broader world of game development tools represents an exciting chapter in our creative journey. It's not just about an engine; it's a story of an industry evolving to meet the demands of a diverse community of developers and artists. Unity's journey, whether it continues to lead or graciously yields the spotlight, remains pivotal in shaping the future of game development—an ongoing quest driven by the values of diversity, choice, and the relentless pursuit of innovation, with AI as a trusted companion along the way.
 
 ---
+
 #### More on this
 
-* [The Death of Unity](https://www.gamedeveloper.com/business/the-death-of-unity)
-* [Unity closes 2 offices after receiving death threat - Fortune](https://fortune.com/2023/09/14/unity-closes-offices-death-threat/)
-
+- [The Death of Unity](https://www.gamedeveloper.com/business/the-death-of-unity)
+- [Unity closes 2 offices after receiving death threat - Fortune](https://fortune.com/2023/09/14/unity-closes-offices-death-threat/)
 
 <div class="caption">
     Vlogers opinion on Unity's Death or The Death of Unity.
@@ -56,6 +56,7 @@ In conclusion, the evolution of Unity and the broader world of game development 
 ---
 
 #### Godot on X (Twitter)
+
 Get some inspiration on my favorite Open Source Unity alternative:
 
 {% twitter https://twitter.com/godotengine maxwidth=500 limit=3 %}

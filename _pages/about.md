@@ -31,6 +31,6 @@ Passionate about [Video Games Aesthetics](https://www.artstation.com/aestial) ðŸ
 
 My journey into technology began with a deep passion for gadgets and video games resulting into a persuit for an Computer Engineering career. At present, I'm immersed into the development of broad computer applications including software and hardware solutions.
 
-Join me on this exciting journey through my social media channels and explore more on this website. 
+Join me on this exciting journey through my social media channels and explore more on this website.
 
 Keep up with the latest developments in experimental Human-Machine Interface (HMI) applications by following [my blog](/blog/)! ðŸ‘¾

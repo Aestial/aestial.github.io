@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  GGJ 2024 - Dope me Laugh!
-date:   2024-01-29 20:00:00
+title: GGJ 2024 - Dope me Laugh!
+date: 2024-01-29 20:00:00
 description: Our participation in the Global Gam Jam 2024 with the theme "Make me Laugh".
 tags: ggj godot 2d-game game-dev
 categories: game dev
@@ -44,7 +44,8 @@ thumbnail: assets/img/projects/DopeMeLaugh.png
 It's been seven years since my first GGJ at Lisbon and every year is funnier. That should be because I found better tools lately so I can focus on deliver a funny game loop instead of worrying about basic flow implementations.
 
 ## Process
-*WIP*
+
+_WIP_
 
 To read more about <a href="{{ site.baseurl }}/projects/dope-me-laugh/">this project description</a> please visit <a href="{{ site.baseurl }}/projects/">projects section.</a>
 
@@ -53,4 +54,3 @@ To read more about <a href="{{ site.baseurl }}/projects/dope-me-laugh/">this pro
 I never been so happy with a GGJ project result, despite feeling complete, there are a lot of ways to improve this game and in an easy way using the Godot Engine.
 
 **We :heart: OSS!!**
-

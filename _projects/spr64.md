@@ -48,6 +48,7 @@ category: fun
 ---
 
 ## About
+
 Evil Mario threw some slippery baby penguins **off a cliff**!!!
 Help our hero rescue those poor babies from death.
 
@@ -81,12 +82,13 @@ Help our hero rescue those poor babies from death.
 ---
 
 #### すみません!!
+
 **I do not own the rights of any of media content.**
 
 ### Credits
 
-- *Lakitu [SM 64] - free 3D model* by Hasksoft.
-- *Penguin - free 3D model* by alec pike. 
+- _Lakitu [SM 64] - free 3D model_ by Hasksoft.
+- _Penguin - free 3D model_ by alec pike.
 
 `Made with Godot.`
 

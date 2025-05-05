@@ -49,7 +49,7 @@ category: fun
 
 ## About
 
-This is a submission for the 2023 Global Game Jam. Theme was *Roots*.
+This is a submission for the 2023 Global Game Jam. Theme was _Roots_.
 
 Selected venue in Philly, PA. [Global Game Jawn 2023 submission](https://globalgamejam.org/2023/jam-sites/global-game-jam-philly)
 <br>
@@ -82,7 +82,6 @@ Selected venue in Philly, PA. [Global Game Jawn 2023 submission](https://globalg
 <div class="caption">
     <a href="https://www.twitch.tv/videos/1736783207" target="_blank">Global Game Jam 2023 (Theme: Roots) - Philly Games by HeartLamp</a>
 </div>
-
 
 ### Credits
 

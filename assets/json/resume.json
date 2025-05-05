@@ -56,12 +56,7 @@
       "startDate": "2021-04",
       "endDate": "2021-08",
       "summary": "Improved and maintained in-house front-end applications while also aiding other teams in automating scripts for Google Workspace and data processing.",
-      "highlights": [
-        "Angular 10+",
-        "Google Apps Script",
-        "JavaScript",
-        "Tailwind CSS"
-      ]
+      "highlights": ["Angular 10+", "Google Apps Script", "JavaScript", "Tailwind CSS"]
     },
     {
       "name": "Innovación Digital Carso",
@@ -70,7 +65,7 @@
       "startDate": "2018-06",
       "endDate": "2019-10",
       "summary": "Leaded Unity development of RA Infinitum and Claro RA and released around a dozen Facebook camera effects",
-      "highlights": [ "Unity", "C#", "Spark AR", "JS", "ARKit", "MAXST AR SDK", "Github"]
+      "highlights": ["Unity", "C#", "Spark AR", "JS", "ARKit", "MAXST AR SDK", "Github"]
     }
   ],
   "education": [
@@ -83,11 +78,7 @@
       "startDate": "2008-08-15",
       "endDate": "2013-06-01",
       "score": "8.91",
-      "courses": [
-        "Computer Architecture and Design",
-        "Graphics with OpenGL and C++",
-        "NLP and Neural Networks"
-      ]
+      "courses": ["Computer Architecture and Design", "Graphics with OpenGL and C++", "NLP and Neural Networks"]
     }
   ],
   "certificates": [
@@ -98,7 +89,7 @@
       "url": "https://www.credly.com/badges/8d46be4d-d659-4a3a-b340-67f724e3feaf/public_url",
       "icon": "fa-brands fa-unity"
     }
-  ], 
+  ],
   "skills": [
     {
       "name": "Unity Development",
@@ -156,23 +147,12 @@
     {
       "name": "Game Development",
       "icon": "fa-solid fa-gamepad",
-      "keywords": [
-        "Bevy",
-        "Godot",
-        "Unreal Engine",
-        "Unity 3D"
-      ]
+      "keywords": ["Bevy", "Godot", "Unreal Engine", "Unity 3D"]
     },
     {
       "name": "Object-Oriented Programming",
       "icon": "fa-solid fa-cubes",
-      "keywords": [
-        "C++",
-        "C#",
-        "Design Patterns",
-        "Refactoring",
-        "SOLID"
-      ]
+      "keywords": ["C++", "C#", "Design Patterns", "Refactoring", "SOLID"]
     }
   ],
   "awards": [],

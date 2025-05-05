@@ -1,12 +1,11 @@
 ---
 layout: post
-title:  VCast revamp with URP and Nilo toon shader
-date:   2024-01-01 16:20:00
+title: VCast revamp with URP and Nilo toon shader
+date: 2024-01-01 16:20:00
 description: Using a neat URP code shader (no Visual nodes) for anime-like cartoony characters.
 tags: unity vroid urp shaders hlsl
 categories: shaders
 thumbnail: assets/img/posts/2024-01-01-urp-nilotoon-vcast-revamp.gif
-
 ---
 
 > Despite the popularity of visual nodes shader authoring in Unity, writing shaders is still available for the Universal Render Pipeline. Nilo Toon (creator) is sharing a real cool shader guide for learning the basics on Toon techniques in URP.
@@ -24,7 +23,7 @@ thumbnail: assets/img/posts/2024-01-01-urp-nilotoon-vcast-revamp.gif
 
 ## Background
 
-VRM humanoids are a well established standard file format in Japan and it's also used by popular international apps like [VR-Chat](https://hello.vrchat.com/). When I discovered the [VRoid](https://vroid.com/en) ecosystem, I realized it would be easy to make a self-portrait using anime style rather than Pixel art lol. 
+VRM humanoids are a well established standard file format in Japan and it's also used by popular international apps like [VR-Chat](https://hello.vrchat.com/). When I discovered the [VRoid](https://vroid.com/en) ecosystem, I realized it would be easy to make a self-portrait using anime style rather than Pixel art lol.
 
 ## Process
 
@@ -38,4 +37,4 @@ Inside Unity it was easy to setup an environment with lighting, particles and pr
 
 Nilo toon shader replacement for UniVRM shaders is awesome! It just gave a modern and polished look to my previous work on anime characters inside Unity. Please stay tunned for more information about VRM in game engines for different purposes like rendering or games. Cheers to [Genshin Impact](https://genshin.hoyoverse.com/en/) creators!
 
-*Thanks for reading this far, happy creations!* :smiley:
+_Thanks for reading this far, happy creations!_ :smiley:

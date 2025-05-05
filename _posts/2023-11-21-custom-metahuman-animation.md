@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  Custom Epic MetaHuman animation in UE5
-date:   2023-11-21 13:30:00
+title: Custom Epic MetaHuman animation in UE5
+date: 2023-11-21 13:30:00
 description: Animation of a custom MetaHuman character using UE5 template.
-tags: animation metahuman ue5 
+tags: animation metahuman ue5
 categories: art
 thumbnail: https://i.vimeocdn.com/video/1640894439-c3c86b8cef35ecb733cb3315904c18562851c98ac58c3c431624b3d31f6db905-d
 ---
@@ -43,13 +43,12 @@ As I haven't seen some mexican-look characters made in [Unreal Engine's MetaHuma
 
 ## Process
 
-I just edited character online and save it in the Cloud for further reference inside Unreal Engine. Then I opened MetaHuman project template that contains an already setup `Level` with a couple of pre-made MetaHuman characters. 
+I just edited character online and save it in the Cloud for further reference inside Unreal Engine. Then I opened MetaHuman project template that contains an already setup `Level` with a couple of pre-made MetaHuman characters.
 
 Replacement is easy and animations will adapt out of the box. For the custom animation I decided to go the hard way creating, modifying, moving and deleting some animation keyframes to achieve that nasty snake tongue effect.
 
 ## Conclusion
 
-Resulting sequence with modified character animation and camera effects is a bliss considering my lack of experience. Once again Unreal Engine tools surpass any expectation and are here to help anyone with their creativity processes. 
+Resulting sequence with modified character animation and camera effects is a bliss considering my lack of experience. Once again Unreal Engine tools surpass any expectation and are here to help anyone with their creativity processes.
 
-*Thanks for reading this far, happy creations!* :smiley:
-
+_Thanks for reading this far, happy creations!_ :smiley:

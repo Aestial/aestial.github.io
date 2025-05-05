@@ -84,7 +84,6 @@ Selected Jam site [Global Game Jawn 2024](https://globalgamejam.org/jam-sites/20
     <a href="https://www.twitch.tv/videos/2048729108" target="_blank">Playing through the GGJ 2024 games - Theme: Make Me Laugh by HeartLamp</a>
 </div>
 
-
 ### Credits
 
 - [**Sakbé Corona**](https://dori.science/) - Game Design/2D Art.

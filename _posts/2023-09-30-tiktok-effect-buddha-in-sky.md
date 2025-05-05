@@ -1,8 +1,8 @@
 ---
 layout: post
 title: >
-    TikTok Effect House: Buddha in the Sky
-date:   2023-09-30 15:30:00
+  TikTok Effect House: Buddha in the Sky
+date: 2023-09-30 15:30:00
 description: Using TikTok's Effect House for creating an sky segmentation effect featuring a huge Buddha head.
 tags: TikTok effect buddha head
 categories: ar-effects
@@ -28,9 +28,10 @@ thumbnail: assets/img/posts/2023-09-30-tiktok-effect-buddha-in-sky.jpg
 ---
 
 ## Background
+
 A former colleague ask me to test TikTok's Sky Segmentation (SS) right away for marketing purposes. They want to display some huge objects on top of some specific building, all rendered just in the sky avoiding other buildings and trees, through an Augmented Reality (AR) camera effect.
 
-Let's take a look at what others have done so far. First hit on Google was *the always helpful* [Emiliusvgs](https://www.patreon.com/emiliusvgs) spanish tutorial on Sky Segmentation effects. Thanks again Emilio!
+Let's take a look at what others have done so far. First hit on Google was _the always helpful_ [Emiliusvgs](https://www.patreon.com/emiliusvgs) spanish tutorial on Sky Segmentation effects. Thanks again Emilio!
 
 <div>
     <style>
@@ -61,11 +62,12 @@ Let's take a look at what others have done so far. First hit on Google was *the 
 </div>
 
 ## Approach
+
 To create TikTok AR effects and filters, we need to use Effect House (EH). It has never been so easy because EH has several templates that have been updated continuously, side by side with each Effect House software update. Following Emiliusvgs tutorial I'll be using the latest available Sky Segmentation template.
 
-Template features a castle in the sky laying over a piece of ground that took off from land and is now floating in the sky with (of course) some particles to enhance the sense of pandemonium. Existing particles are a perfect match for this effect purpose. A full sky replacement is featured in template, meaning that a fully opaque skybox image is overlay when sky detected. This is a cool Sky Segmentation use case but I really want it to be as seamless as possible with most of current sky seen on video feed with a subtle transparency blending. 
+Template features a castle in the sky laying over a piece of ground that took off from land and is now floating in the sky with (of course) some particles to enhance the sense of pandemonium. Existing particles are a perfect match for this effect purpose. A full sky replacement is featured in template, meaning that a fully opaque skybox image is overlay when sky detected. This is a cool Sky Segmentation use case but I really want it to be as seamless as possible with most of current sky seen on video feed with a subtle transparency blending.
 
-To achieve such sky blending I started using an AI *skybox* generator called [Blockade Labs](https://skybox.blockadelabs.com/), as Emiliusvgs suggested. It is known for its excellent results taking a simple prompt and delivering a full resolution cubemap texture ready to use in games and, like in this particular case, AR effects. Also I used a blend option for just tinting the real sky exactly where I want it: around Buddha's head. It is an overlay, so I just needed some additive blending in the material and voila!
+To achieve such sky blending I started using an AI _skybox_ generator called [Blockade Labs](https://skybox.blockadelabs.com/), as Emiliusvgs suggested. It is known for its excellent results taking a simple prompt and delivering a full resolution cubemap texture ready to use in games and, like in this particular case, AR effects. Also I used a blend option for just tinting the real sky exactly where I want it: around Buddha's head. It is an overlay, so I just needed some additive blending in the material and voila!
 
 <div class="row justify-content-center mt-3">
     <div class="col-sm-7 mt-3 mt-md-0">
@@ -107,10 +109,9 @@ Buddha head 3D model is free for commercial and personal uses, it has the Creati
 </div>
 
 > :eyes: **Be aware!**
-> 
-> TikTok is asking creators wether they are heavily using  assets created through generative AI models for effects.
+>
+> TikTok is asking creators wether they are heavily using assets created through generative AI models for effects.
 
 So I don't want to be tagged for using too much generative content. Skybox generation is ok, but other assets were either provided by TikTok itself or downloaded from SketchFab.
 
-
-*Thanks for reading, and happy creations!!!* :smiley:
+_Thanks for reading, and happy creations!!!_ :smiley:

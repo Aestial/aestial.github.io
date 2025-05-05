@@ -51,7 +51,6 @@ Poleanapp is based in a Mexican ludo-like board game called [Poleana](https://ga
 
 This simulator is programmed using Blueprints only. It tries to replicate real board, chips, dices and turns. Both meshes of the board and dices were modeled and "textured" inside Unreal. Some other assets from Epic templates were used.
 
-
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="assets/img/projects/poleanapp/Poleanapp-SS01.jpg" title="Dice physics" class="img-fluid rounded z-depth-1" zoomable=true %}

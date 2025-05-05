@@ -1,16 +1,8 @@
 {
   "cSpell.language": "en",
   "cSpell.enabled": true,
-  "spellright.language": [
-    "en-US-10-1."
-  ],
-  "spellright.documentTypes": [
-    "markdown",
-    "latex",
-    "plaintext",
-    "code-runner-output",
-    "json"
-  ],
+  "spellright.language": ["en-US-10-1."],
+  "spellright.documentTypes": ["markdown", "latex", "plaintext", "code-runner-output", "json"],
   "spellright.parserByClass": {
     "code-runner-output": {
       "parser": "markdown"
