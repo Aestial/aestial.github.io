@@ -2,10 +2,13 @@
   "cSpell.language": "en",
   "cSpell.enabled": true,
   "spellright.language": ["en-US-10-1."],
-  "spellright.documentTypes": ["markdown", "latex", "plaintext", "code-runner-output", "json"],
+  "spellright.documentTypes": ["markdown", "latex", "plaintext", "code-runner-output", "json", "liquid"],
   "spellright.parserByClass": {
     "code-runner-output": {
       "parser": "markdown"
+    },
+    "liquid": {
+      "parser": "code"
     }
   }
 }
