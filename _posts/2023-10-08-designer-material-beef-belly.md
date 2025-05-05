@@ -12,7 +12,7 @@ thumbnail: assets/img/posts/2023-10-08-designer-material-beef-belly-3.jpg
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/posts/2023-10-08-designer-material-beef-belly-0.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/posts/2023-10-08-designer-material-beef-belly-0.png" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
 </div>
 <div class="caption">
@@ -46,7 +46,7 @@ Following images were arranged inside PureRef to be easily seen when using any c
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/posts/2023-10-08-designer-material-beef-belly-1.jpg" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/posts/2023-10-08-designer-material-beef-belly-1.jpg" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
 </div>
 <div class="caption">
@@ -57,7 +57,7 @@ Alright! This should be easy using a geometrical node and the most suitable one 
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/posts/2023-10-08-designer-material-beef-belly-2.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/posts/2023-10-08-designer-material-beef-belly-2.png" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
 </div>
 <div class="caption">
@@ -70,10 +70,10 @@ Normal and height map where used for displacement. It is maxed at its most for g
 
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/posts/2023-10-08-designer-material-beef-belly-3.jpg" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/posts/2023-10-08-designer-material-beef-belly-3.jpg" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
      <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/posts/2023-10-08-designer-material-beef-belly-0.png" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/posts/2023-10-08-designer-material-beef-belly-0.png" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
 </div>
 <div class="caption">

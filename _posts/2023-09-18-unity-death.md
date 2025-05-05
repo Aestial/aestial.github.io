@@ -35,10 +35,10 @@ In conclusion, the evolution of Unity and the broader world of game development 
 </div>
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include video.html path="https://www.youtube.com/embed/1zuZaJE3n-4?si=Va_r_mftZG6RG75R" class="img-fluid rounded z-depth-1" %}
+        {% include video.liquid path="https://www.youtube.com/embed/1zuZaJE3n-4?si=Va_r_mftZG6RG75R" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include video.html path="https://www.youtube.com/embed/sxU5XwDuo2Y?si=mijaqNe-7bGC6oyI" class="img-fluid rounded z-depth-1" %}
+        {% include video.liquid path="https://www.youtube.com/embed/sxU5XwDuo2Y?si=mijaqNe-7bGC6oyI" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
@@ -46,10 +46,10 @@ In conclusion, the evolution of Unity and the broader world of game development 
 </div>
 <div class="row mt-3">
     <div class="col-sm mt-3 mt-md-0">
-        {% include video.html path="https://www.youtube.com/embed/Duo0kC1IitU?si=ef28cOpYDAQXQmBL" class="img-fluid rounded z-depth-1" %}
+        {% include video.liquid path="https://www.youtube.com/embed/Duo0kC1IitU?si=ef28cOpYDAQXQmBL" class="img-fluid rounded z-depth-1" %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include video.html path="https://www.youtube.com/embed/ZJ8fzanm4_0?si=I3yWKoxjmA6B7iYd" class="img-fluid rounded z-depth-1" %}
+        {% include video.liquid path="https://www.youtube.com/embed/ZJ8fzanm4_0?si=I3yWKoxjmA6B7iYd" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 

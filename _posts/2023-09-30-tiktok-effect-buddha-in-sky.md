@@ -69,7 +69,7 @@ To achieve such sky blending I started using an AI *skybox* generator called [Bl
 
 <div class="row justify-content-center mt-3">
     <div class="col-sm-7 mt-3 mt-md-0">
-        {% include figure.html path="assets/img/posts/2023-09-30-tiktok-effect-buddha-in-sky.jpg" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/posts/2023-09-30-tiktok-effect-buddha-in-sky.jpg" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
 </div>
 <div class="caption">

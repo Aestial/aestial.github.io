@@ -46,10 +46,10 @@ This project consisted of two parts:
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/photobooth/photobooth-touchscreen.jpg" title="touchscreen booth" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/projects/photobooth/photobooth-touchscreen.jpg" title="touchscreen booth" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/photobooth/photobooth-gallerywall.jpg" title="wall gallery" class="img-fluid rounded z-depth-1" zoomable=true %}
+        {% include figure.liquid path="assets/img/projects/photobooth/photobooth-gallerywall.jpg" title="wall gallery" class="img-fluid rounded z-depth-1" zoomable=true %}
     </div>
 </div>
 <div class="caption">
@@ -62,7 +62,7 @@ Thanks to all [Intus](https://intus.tv) staff, specially Gil who is always pushi
 
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.html path="assets/img/projects/photobooth/google-photobooth.jpg" title="Gallery wall and me" class="img-fluid rounded z-depth-1" %}
+        {% include figure.liquid path="assets/img/projects/photobooth/google-photobooth.jpg" title="Gallery wall and me" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 <div class="caption">
