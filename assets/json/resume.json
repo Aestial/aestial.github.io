@@ -1,4 +1,9 @@
 {
+  "meta": {
+    "version": "v0.2.0",
+    "theme": "jsonresume-theme-paper",
+    "lastModified": "2025-05-07T14:59:59.305Z"
+  },
   "basics": {
     "name": "Jaime Hernandez-Vazquez",
     "label": "Computer Engineer",
@@ -6,7 +11,7 @@
     "email": "jaimevazz@gmail.com",
     "phone": "+52 (55) 5456-6560",
     "url": "https://oxido.dev/",
-    "summary": "Computer Engineer, embedded and XR developer. Mexican-born computer graphics enthusiast. Currently living in the Greater Philadelphia Area.",
+    "summary": "Computer Engineer, embedded and XR developer. Mexican-born computer graphics enthusiast.",
     "location": {
       "address": "Cooper Landing Rd",
       "postalCode": "NJ 08002",
@@ -27,6 +32,19 @@
       }
     ]
   },
+  "education": [
+    {
+      "institution": "Engineering Faculty, UNAM",
+      "location": "Mexico City, Mexico",
+      "url": "https://www.unam.mx/",
+      "area": "Computer Graphics",
+      "studyType": "Computer Engineering",
+      "startDate": "2008-08-15",
+      "endDate": "2013-06-01",
+      "score": "8.91",
+      "courses": ["Computer Architecture and Design", "Graphics with OpenGL and C++", "NLP and Neural Networks"]
+    }
+  ],
   "work": [
     {
       "name": "Jitsik LLC",
@@ -64,21 +82,8 @@
       "url": "https://www.linkedin.com/company/alucina-studio/",
       "startDate": "2018-06",
       "endDate": "2019-10",
-      "summary": "Leaded Unity development of RA Infinitum and Claro RA and released around a dozen Facebook camera effects",
-      "highlights": ["Unity", "C#", "Spark AR", "JS", "ARKit", "MAXST AR SDK", "Github"]
-    }
-  ],
-  "education": [
-    {
-      "institution": "Engineering Faculty, UNAM",
-      "location": "Mexico City, Mexico",
-      "url": "https://www.unam.mx/",
-      "area": "Computer Graphics",
-      "studyType": "Computer Engineering",
-      "startDate": "2008-08-15",
-      "endDate": "2013-06-01",
-      "score": "8.91",
-      "courses": ["Computer Architecture and Design", "Graphics with OpenGL and C++", "NLP and Neural Networks"]
+      "summary": "Lead development team for maintenance and enhacement of RA Infinitum and Claro RA augmented reality apps, optimized art team workflow for delivering content for apps 4x faster. Reduced cloud services costs replacing Vuforia SDK with MaxstAR SDK. Created and released around a dozen Instagram camera effects with Spark AR Studio.",
+      "highlights": ["Unity/C#", "Spark AR Studio", "AR Frameworks and SDKS", "Web Development"]
     }
   ],
   "certificates": [
@@ -131,11 +136,6 @@
       "language": "German",
       "fluency": "B1 (ÖSD-ZD)",
       "icon": "fa-solid fa-earth-africa"
-    },
-    {
-      "language": "Swedish",
-      "fluency": "Basic",
-      "icon": "fa-solid fa-earth-europe"
     },
     {
       "language": "Chinese",
