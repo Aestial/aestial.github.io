@@ -61,6 +61,11 @@ on:
       - "!FAQ.md"
       - "!INSTALL.md"
       - "!README.md"
+  workflow_run:
+    workflows:
+      - JSON Resumed PDF Generator
+    types:
+      - completed
   workflow_dispatch:
 
 concurrency:
