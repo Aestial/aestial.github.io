@@ -6,11 +6,13 @@ on:
       - main
     paths:
       - assets/json/resume.json
+      - .github/workflows/jsonresume-pdf-generator.yml
   pull_request:
     branches:
       - main
     paths:
       - assets/json/resume.json
+      - .github/workflows/jsonresume-pdf-generator.yml
   workflow_dispatch:
 
 jobs:
