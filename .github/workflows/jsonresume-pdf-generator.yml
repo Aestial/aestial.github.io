@@ -98,3 +98,11 @@ jobs:
           commit_message: Update resume PDF
           file_pattern: assets/pdf/resume-jhv-ce.pdf
           commit_user_name: My GitHub Actions Bot
+
+      - name: Verify Commit Action
+        run: |
+          git log -1 --pretty=format:'%h %s' | grep "Update resume PDF"
+          if [ $? -ne 0 ]; then
+            echo "Commit action failed"
+            exit 1
+          fi
