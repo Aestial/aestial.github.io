@@ -1,8 +1,8 @@
 {
   "meta": {
-    "version": "0.2.1",
+    "version": "0.2.2",
     "theme": "jsonresume-theme-paper",
-    "lastModified": "2025-05-08T15:20:59.305Z"
+    "lastModified": "2025-05-08T19:20:59.305Z"
   },
   "basics": {
     "name": "Jaime Hernandez-Vazquez",
@@ -11,7 +11,7 @@
     "email": "jaimevazz@gmail.com",
     "phone": "+52 (55) 5456-6560",
     "url": "https://oxido.dev/",
-    "summary": "Computer Engineer and software developer. Enthusiast of videogames, computer graphics and technology overall.",
+    "summary": "Computer Engineer and Software Developer. Enthusiast of videogames, computer graphics and technology overall.",
     "location": {
       "address": "Cooper Landing Rd",
       "postalCode": "NJ 08002",
@@ -34,7 +34,7 @@
   },
   "education": [
     {
-      "institution": "Engineering Faculty, UNAM",
+      "institution": "Engineering Faculty, Universidad Nacional Autonoma de México (UNAM)",
       "location": "Mexico City, Mexico",
       "url": "https://www.unam.mx/",
       "area": "Computer Graphics",

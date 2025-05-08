@@ -19,6 +19,6 @@
             transform: translate(-50%, -50%);
         }
     </style>
-    <a href="https://apps.apple.com/us/app/id1533323997" class="storeLink"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1276560000&h=7e7b68fad19738b5649a1bfb78ff46e9" alt="Download on the App Store" ></a>
-    <a href='https://play.google.com/store/apps/details?id=com.robota.boom.game' class="storeLink"><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' style="--width: 128%" /></a>
+    <a href="" class="storeLink"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1276560000&h=7e7b68fad19738b5649a1bfb78ff46e9" alt="Download on the App Store" ></a>
+    <a href='' class="storeLink"><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' style="--width: 128%" /></a>
 </div> -->
