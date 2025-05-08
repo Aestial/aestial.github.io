@@ -15,6 +15,9 @@ on:
       - .github/workflows/jsonresume-pdf-generator.yml
   workflow_dispatch:
 
+concurrency:
+  group: deploy
+  cancel-in-progress: ${{ github.workflow.concurrency.group }}
 jobs:
   validate:
     name: Validate JSON
