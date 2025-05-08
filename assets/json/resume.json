@@ -1,8 +1,8 @@
 {
   "meta": {
-    "version": "v0.2.0",
+    "version": "0.2.1",
     "theme": "jsonresume-theme-paper",
-    "lastModified": "2025-05-07T14:59:59.305Z"
+    "lastModified": "2025-05-08T15:20:59.305Z"
   },
   "basics": {
     "name": "Jaime Hernandez-Vazquez",
@@ -11,7 +11,7 @@
     "email": "jaimevazz@gmail.com",
     "phone": "+52 (55) 5456-6560",
     "url": "https://oxido.dev/",
-    "summary": "Computer Engineer, embedded and XR developer. Mexican-born computer graphics enthusiast.",
+    "summary": "Computer Engineer and software developer. Enthusiast of videogames, computer graphics and technology overall.",
     "location": {
       "address": "Cooper Landing Rd",
       "postalCode": "NJ 08002",
@@ -52,7 +52,7 @@
       "url": "https://jitsik.com",
       "startDate": "2023-02",
       "summary": "Designed and developed a Mixed Reality Drivers' Education app for Meta Quest devices. From scratch, I created proof-of-concept prototypes and am currently working on the MVP for deployment.",
-      "highlights": ["Mixed Reality", "Custom Hardware"]
+      "highlights": ["Mixed Reality", "Custom Hardware", "Simulation", "Game Engines"]
     },
     {
       "name": "Jitzu",
