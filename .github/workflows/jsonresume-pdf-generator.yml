@@ -1,0 +1,104 @@
+name: JSON Resumed PDF Generator
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - assets/json/resume.json
+  pull_request:
+    branches:
+      - main
+    paths:
+      - assets/json/resume.json
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate JSON
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate JSON with Resumed
+        id: validate
+        continue-on-error: true
+        uses: Devleaps/jsonresume-generator@v1.1.0
+        with:
+          action: validate
+          file: resume.json
+          folder: assets/json"
+
+      - name: Validate JSON result
+        env:
+          OUTCOME: ${{ steps.validate.outcome }}
+          ERROR: ${{ steps.validate.outputs.error }}
+        run: |
+          if [ "$OUTCOME" == "success" ]; then
+            echo "JSON is valid"
+          else
+            echo "JSON is invalid: $ERROR"
+            exit 1
+          fi
+
+  generate:
+    name: Generate PDF
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Resumed PDF Generator
+        uses: Devleaps/jsonresume-generator@v1.1.0
+        with:
+          action: render
+          file: resume.json
+          folder: assets/json
+          output-type: pdf
+          theme-local: false
+          theme-name: jsonresume-theme-paper
+
+      - name: Check PDF generation
+        run: |
+          if [ -f assets/json/resume.pdf ]; then
+            echo "PDF generated successfully"
+          else
+            echo "PDF generation failed"
+            exit 1
+          fi
+
+      - name: Move to assets/pdf
+        run: |
+          mkdir -p assets/pdf
+          mv assets/json/resume.pdf assets/pdf/resume-jhv-ce.pdf
+
+      - name: Check PDF final location
+        run: |
+          if [ -f assets/pdf/resume-jhv-ce.pdf ]; then
+            echo "PDF moved successfully"
+          else
+            echo "Moving PDF failed"
+            exit 1
+          fi
+
+  upload:
+    name: Upload PDF
+    runs-on: ubuntu-latest
+    needs: generate
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.REPO_SCOPED_PAT }}
+
+      - name: Commit PDF
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update resume PDF
+          file_pattern: assets/pdf/resume-jhv-ce.pdf
+          commit_user_name: My GitHub Actions Bot          
+          

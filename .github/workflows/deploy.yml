@@ -7,6 +7,7 @@ on:
       - main
     paths:
       - "assets/**"
+      - "!assets/json/resume.json"
       - "_sass/**"
       - "**.bib"
       - "**.html"
@@ -21,6 +22,7 @@ on:
       - "!.github/workflows/deploy-docker-tag.yml"
       - "!.github/workflows/deploy-image.yml"
       - "!.github/workflows/docker-slim.yml"
+      - "!.github/workflows/jsonresume-pdf-generator.yml"
       - "!.github/workflows/lighthouse-badger.yml"
       - "!.github/workflows/prettier.yml"
       - "!lighthouse_results/**"
@@ -35,6 +37,7 @@ on:
       - main
     paths:
       - "assets/**"
+      - "!assets/json/resume.json"
       - "_sass/**"
       - "**.bib"
       - "**.html"
@@ -49,6 +52,7 @@ on:
       - "!.github/workflows/deploy-docker-tag.yml"
       - "!.github/workflows/deploy-image.yml"
       - "!.github/workflows/docker-slim.yml"
+      - "!.github/workflows/jsonresume-pdf-generator.yml"
       - "!.github/workflows/lighthouse-badger.yml"
       - "!.github/workflows/prettier.yml"
       - "!lighthouse_results/**"
