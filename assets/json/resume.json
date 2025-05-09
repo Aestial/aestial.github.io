@@ -1,8 +1,8 @@
 {
   "meta": {
-    "version": "0.2.2",
+    "version": "0.2.3",
     "theme": "jsonresume-theme-paper",
-    "lastModified": "2025-05-08T19:20:59.305Z"
+    "lastModified": "2025-05-08T23:59:59.305Z"
   },
   "basics": {
     "name": "Jaime Hernandez-Vazquez",
@@ -60,7 +60,7 @@
       "url": "https://www.linkedin.com/company/jitzu/",
       "startDate": "2021-09",
       "endDate": "2022-01",
-      "summary": "Main developer of XR applications using Unity and SparkAR Studio",
+      "summary": "Main developer of multiple VR applications using Unity and AR filters using SparkAR Studio from Meta.",
       "highlights": [
         "Designed and prototyped a Unity-based VR educational app with a mobile companion app, both created by me for control and monitoring.",
         "ArchViz VR interactive galleries.",
@@ -74,7 +74,7 @@
       "startDate": "2021-04",
       "endDate": "2021-08",
       "summary": "Improved and maintained in-house front-end applications while also aiding other teams in automating scripts for Google Workspace and data processing.",
-      "highlights": ["Angular 10+", "Google Apps Script", "JavaScript", "Tailwind CSS"]
+      "highlights": ["Angular Framework", "Google Apps Script", "Tailwind CSS", "Svelte", "Typescript"]
     },
     {
       "name": "Innovación Digital Carso",
