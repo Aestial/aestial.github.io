@@ -110,17 +110,6 @@ ninja.data = [{
             window.location.href = "/blog/2023/tiktok-effect-buddha-in-sky/";
           
         },
-      },{id: "post-the-death-of-unity-engine",
-        
-          title: "The Death of Unity Engine",
-        
-        description: "My two cents on new Unity&#39;s license policy.",
-        section: "Posts",
-        handler: () => {
-          
-            window.location.href = "/blog/2023/unity-death/";
-          
-        },
       },{id: "books-the-godfather",
           title: 'The Godfather',
           description: "",
