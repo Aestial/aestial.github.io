@@ -1,0 +1,12 @@
+exclude_path = [
+  "README.md",
+  "CUSTOMIZE.md",
+  "_pages/404.md",
+  "_pages/blog.md",
+  "_pages/about.md",
+  "_books/the_godfather.md"
+]
+no_progress = true
+timeout = 30
+user_agent = 'curl/7.54'
+verbose = "info"
