@@ -2,5 +2,9 @@
   "devDependencies": {
     "@shopify/prettier-plugin-liquid": "1.4.0",
     "prettier": "3.1.1"
+  },
+  "dependencies": {
+    "jsonresume-theme-paper": "^0.5.0",
+    "resumed": "^5.0.0"
   }
 }
