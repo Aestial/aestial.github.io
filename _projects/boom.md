@@ -44,6 +44,8 @@ category: fun
 
 #### [View on GitHub](https://github.com/Aestial/BOOM)
 
+> Note: Repo fix work in progress, please be patient!
+
 <!-- Star on GitHub button -->
 <iframe src="https://ghbtns.com/github-btn.html?user=Aestial&repo=BOOM&type=star&count=true&size=large" frameborder="0" scrolling="0" width="180" height="30" title="GitHub"></iframe>
 

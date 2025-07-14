@@ -6,7 +6,7 @@ inline: false
 related_posts: false
 ---
 
-New WIP version of [Liquid Cat](https://liquidcat.dev) portfolio website and blog.
+Now using JAMStack for portfolio website and blog!
 
 ---
 
@@ -32,4 +32,4 @@ As far as I got, all development process is way faster and learning curve is muc
 > They must often change, who would be constant in happiness or wisdom.
 > – Confucius
 
-Farewell my dear Django
+Farewell my dear Django, at least for my personal website!
