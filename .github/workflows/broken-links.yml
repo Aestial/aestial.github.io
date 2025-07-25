@@ -41,6 +41,8 @@ on:
 jobs:
   link-checker:
     runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ vars.BASE_URL || 'https://aestial.github.io/' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -49,4 +51,4 @@ jobs:
         with:
           fail: true
           # removed md files that include liquid tags
-          args: --base ${{ github.event.repository.url }} --config .github/config/broken-links_lychee.toml './**/*.md' './**/*.html'
+          args: --base ${{ env.BASE_URL }} --config .github/config/broken-links_lychee.toml './**/*.md' './**/*.html'
