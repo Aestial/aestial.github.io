@@ -1,6 +1,9 @@
 exclude_path = [
-  "README.md",
+  "CONTRIBUTING.md",
   "CUSTOMIZE.md",
+  "INSTALL.md",
+  "FAQ.md",
+  "README.md",
   "_pages/404.md",
   "_pages/blog.md",
   "_pages/about.md",

@@ -47,7 +47,7 @@ It's been seven years since my first GGJ at Lisbon and every year is funnier. Th
 
 _WIP_
 
-To read more about <a href="{{ site.url }}{{ site.baseurl }}/projects/dope-me-laugh/">this project description</a> please visit <a href="{{ site.url }}{{ site.baseurl }}/projects/">projects section.</a>
+To read more about <a href="/projects/dope-me-laugh/">this project description</a> please visit <a href="/projects/">projects section.</a>
 
 ## Conclusion
 
