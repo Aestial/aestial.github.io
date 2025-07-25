@@ -49,4 +49,4 @@ jobs:
         with:
           fail: true
           # removed md files that include liquid tags
-          args: --base-url="${{ github.event.repository.url }}" --config .github/config/broken-links_lychee.toml  './**/*.md' './**/*.html'
+          args: --base-url ${{ github.event.repository.url }} --config .github/config/broken-links_lychee.toml  './**/*.md' './**/*.html'
