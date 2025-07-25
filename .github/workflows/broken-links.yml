@@ -45,8 +45,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Link Checker 🔗
-        uses: lycheeverse/lychee-action@v2
+        uses: lycheeverse/lychee-action@v2.1.0
         with:
           fail: true
           # removed md files that include liquid tags
-          args: --base-url ${{ github.event.repository.url }} --config .github/config/broken-links_lychee.toml './**/*.md' './**/*.html'
+          args: --base ${{ github.event.repository.url }} --config .github/config/broken-links_lychee.toml './**/*.md' './**/*.html'
