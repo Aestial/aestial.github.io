@@ -52,7 +52,7 @@
       "url": "https://jitsik.com",
       "startDate": "2023-02",
       "summary": "Main software engineer in charge of design and develop a Mixed Reality Drivers' Education suite for Meta Quest devices. Implemented custom input device to create an immersive driving environment in any car. Academic research colaboration with UPenn XLab, published a couple of tech reports.",
-      "highlights": [       
+      "highlights": [
         "Impemented custom sensors as input devices. Refactored firmware in C++ for Arduino using PlatformIO.",
         "Designed and implemented Companion app and custom hardware driver for sensor calibration using C# and Unity.",
         "Created Mixed Reality protototype for driving simulation using Unity, C# and several plugins.",
