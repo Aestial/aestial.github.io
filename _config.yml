@@ -2,12 +2,12 @@
 # Site settings
 # -----------------------------------------------------------------------------
 
-title: Jaime Hernandez
+title: Software Dev - Jaime Hernandez
 first_name: Jaime
 middle_name:
 last_name: Hernandez
 contact_note: >
-  You can even add a little note about which of these is the best way to reach you.
+  Please feel free to send me an email, follow me on GitHub and add me on social media. Thank you for reaching this far!
 description:
   > # the ">" symbol means to ignore newlines until "footer_text:" # A simple, whitespace theme for academics. Based on [*folio](https://github.com/bogoli/-folio) design.
   Computer engineer portfolio website to showcase ideas, jobs and experiments.
