@@ -38,5 +38,5 @@ JavaScript.
 
 ### Third Eye Team are:
 
-- **Art**: [David Rosales](https://www.instagram.com/4stronomo/)
+- **Art**: [David Rosales](https://www.artstation.com/davidrosalescastillo) ##(https://www.instagram.com/4stronomo/)
 - **Programming**: Jaime Hernandez

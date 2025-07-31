@@ -42,7 +42,7 @@ jobs:
   link-checker:
     runs-on: ubuntu-latest
     env:
-      BASE_URL: ${{ vars.BASE_URL || 'https://aestial.github.io/' }}
+      BASE_URL: ${{ vars.BASE_URL != '' && vars.BASE_URL || 'https://aestial.github.io/' }}
     steps:
       - uses: actions/checkout@v4
 
