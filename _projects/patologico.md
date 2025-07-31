@@ -33,10 +33,11 @@ category: fun
 
 ## About
 
-Third Eye Team favorite mascot and desk jockey duck. Full single HTML page featuring our SVG character with customizable colors. Node.js frontend web application compiled using SVG, HTML5, CSS, Webpack and Vanilla
-JavaScript.
+Third Eye Team favorite mascot and desk jockey duck. Full single HTML page featuring our SVG character with customizable colors. Node.js frontend web application compiled using SVG, HTML5, CSS, Webpack and Vanilla JavaScript.
 
-### Third Eye Team are:
+## Credits
 
-- **Art**: [David Rosales](https://www.artstation.com/davidrosalescastillo) <!-- (https://www.instagram.com/4stronomo/) -->
+### Third Eye Team
+
+- **Art**: [David Rosales](https://www.facebook.com/profile.php?id=100058685050471) <!-- 1.(https://www.artstation.com/davidrosalescastillo) 2.(https://www.instagram.com/4stronomo/) -->
 - **Programming**: [Jaime Hernandez](https://aestial.github.io)
