@@ -1,7 +1,7 @@
 ---
 layout: post
 title: >
-  "Dope Me Laugh" winner Most Fun 2024 PGM GGJ!!!
+  "Dope Me Laugh" winner Most Fun game PGM Global Game Jam 2024!!
 date: 2024-01-25 23:30:00-0500
 inline: false
 related_posts: false

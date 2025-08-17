@@ -1,10 +1,10 @@
 ---
 layout: post
 title: >
-  New Dorita 's blog portfolio.
-date: 2025-04-16 11:30:00-0500
+  Mini Game Work Jam 2025 - GB Studio game.
+date: 2025-07-05 11:30:00-0500
 inline: true
 related_posts: false
 ---
 
-Nada puede malir sal...
+MGWJ 2025. Tema Secreto: La Biblioteca Nacional de Antropología e Historia (INAH).
