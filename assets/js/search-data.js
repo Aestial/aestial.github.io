@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-ggj-2024-dope-me-laugh",
+        },{id: "post-mgwj-2025-el-tesoro-de-boturini",
+        
+          title: "MGWJ 2025 - El Tesoro de Boturini",
+        
+        description: "Creating a nonogram GB Studio game for the Mini Game Work Jam 2025.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/nonogram-gb-studio-game/";
+          
+        },
+      },{id: "post-ggj-2024-dope-me-laugh",
         
           title: "GGJ 2024 - Dope me Laugh!",
         
