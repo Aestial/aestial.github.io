@@ -126,11 +126,6 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-this-jekyll-based-webpage-is-live",
-          title: 'This Jekyll-based webpage is live!',
-          description: "",
-          section: "News",handler: () => {
-              window.location.href = "/news/announcement_1/";
             },},{id: "news-updating-portfolio-and-host-to-github-pages",
           title: 'Updating portfolio and host to GitHub pages',
           description: "",
@@ -139,18 +134,13 @@ ninja.data = [{
             },},{id: "news-google-analytics-now-available-for-this-website",
           title: 'Google Analytics now available for this website!',
           description: "",
-          section: "News",},{id: "news-new-video-game-concept-la-mano-peluda",
-          title: 'New Video Game Concept: La Mano Peluda!',
-          description: "",
-          section: "News",handler: () => {
-              window.location.href = "/news/announcement_4/";
-            },},{id: "news-quot-dope-me-laugh-quot-winner-most-fun-2024-pgm-ggj",
-          title: '&amp;quot;Dope Me Laugh&amp;quot; winner Most Fun 2024 PGM GGJ!!!',
+          section: "News",},{id: "news-quot-dope-me-laugh-quot-winner-most-fun-game-pgm-global-game-jam-2024",
+          title: '&amp;quot;Dope Me Laugh&amp;quot; winner Most Fun game PGM Global Game Jam 2024!!',
           description: "",
           section: "News",handler: () => {
               window.location.href = "/news/announcement_5/";
-            },},{id: "news-nada-puede-malir-sal",
-          title: 'Nada puede malir sal…',
+            },},{id: "news-mgwj-2025-tema-secreto-la-biblioteca-nacional-de-antropología-e-historia-inah",
+          title: 'MGWJ 2025. Tema Secreto: La Biblioteca Nacional de Antropología e Historia (INAH).',
           description: "",
           section: "News",},{id: "projects-boom-destroy-planets",
           title: 'BOOM! Destroy Planets',
