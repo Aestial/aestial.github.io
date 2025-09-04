@@ -2,7 +2,7 @@
 layout: page
 title: El Tesoro de Boturini
 description: Top-down adventure with nonogram puzzles made with GB Studio.
-img: assets/img/projects/el-tesoro-de-boturini/TDB_Box&Cartdrige.png
+img: assets/img/projects/el-tesoro-de-boturini/TDB_Box&Cartridge.png
 importance: 1
 category: fun
 ---
