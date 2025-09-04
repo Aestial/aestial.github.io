@@ -59,6 +59,17 @@ category: fun
 
 This is a submission for the Mini Game Work Jam 2025. Secret theme was **Biblioteca Nacional de Antropología e Historia**.
 
+## Features
+
+<div class="row justify-content-center mt-3">
+    <div class="col-sm-6 mt-3 mt-md-0">
+        {% include figure.liquid path="assets/img/projects/el-tesoro-de-boturini/TDB_Agente00Cheemte.gif" class="img-fluid rounded z-depth-1" zoomable=true %}
+    </div>
+</div>
+<div class="caption">
+    Agente00Cheemte first appearance.
+</div>
+
 ### Credits
 
 - [**Jaime Hernandez**]({{ site.baseurl }}/) - Programming
