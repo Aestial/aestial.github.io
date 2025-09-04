@@ -157,6 +157,11 @@ ninja.data = [{
           description: "Mini game for the 2023 Global Game Jam.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/dye-my-roots-hex/";
+            },},{id: "projects-el-tesoro-de-boturini",
+          title: 'El Tesoro de Boturini',
+          description: "Top-down adventure with nonogram puzzles made with GB Studio.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/el-tesoro-de-boturini/";
             },},{id: "projects-metadrive-xr",
           title: 'Metadrive XR',
           description: "Mixed Reality application for Drivers&#39; Ed",
