@@ -44,7 +44,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-mgwj-2025-el-tesoro-de-boturini",
+        },{id: "post-preserving-history-in-8-bits-from-boturini-to-naia-with-tamal-rosita",
+        
+          title: "Preserving History in 8 Bits: From Boturini to NAIA with Tamal Rosita",
+        
+        description: "Reflecting on developing El Tesoro de Boturini and NAIA for INAH &amp; Mermelada de Juegos, team consolidation with CaffeineWorks &amp; Teatro Contacto, and exhibiting retro Game Boy games at MNAH, Castillo de Chapultepec, and CCD.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/retro-gaming-mexican-heritage-boturini-naia/";
+          
+        },
+      },{id: "post-mgwj-2025-el-tesoro-de-boturini",
         
           title: "MGWJ 2025 - El Tesoro de Boturini",
         
@@ -167,6 +178,11 @@ ninja.data = [{
           description: "Mixed Reality application for Drivers&#39; Ed",
           section: "Projects",handler: () => {
               window.location.href = "/projects/metadrive-xr/";
+            },},{id: "projects-naia",
+          title: 'NAIA',
+          description: "Prehistoric adventure in the Yucatán Peninsula with turn-based combat, made with GB Studio.",
+          section: "Projects",handler: () => {
+              window.location.href = "/projects/naia/";
             },},{id: "projects-patologico",
           title: 'Patologico',
           description: "SVG super resolution duck character",
